@@ -1,7 +1,7 @@
 <?php
 
 /**
- * HALLO
+ * Hello there this is another test
  */
 class ClassName extends AnotherClass {
 	
