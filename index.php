@@ -1,28 +1,16 @@
 <?php
 
-/**
- * TO DO
- *
- *
- body #wrapper #contentmargin #content .messages p{
- margin-bottom: 3px;
- }
- body #wrapper #contentmargin #content .success{
- color:green;
- }
- */
-
 /*
  * @Author Florian Stettler
  * Create Date:   14.03.2013  create of the file
  */
 
-// Include all the files
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
+
+// Include all the files
 include_once 'classes/include.php';
 
 if (post('event')) {
