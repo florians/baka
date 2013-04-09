@@ -1,9 +1,13 @@
 <?php
 
 /**
- * Hello there this is another test
+ * Hello there this is another test.
  */
-class ClassName extends AnotherClass {
+class BattleChar extends Model {
+	
+	private $bcUserId;
+	private $bcCharId;
+	private $bcHp;
 	
 	function __construct($argument) {
 		
