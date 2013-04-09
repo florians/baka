@@ -1,0 +1,78 @@
+/*
+ * @Author Florian Stettler
+ * Create Date:   01.12.2012  create of the file    
+ */
+
+.reset(){
+	margin:0;
+	padding:0;
+	font-family:@base_font_family;
+}
+
+.set_center(
+  @max_width:@base_width,
+  @margin_center:auto auto auto auto
+ ){
+  width:@max_width;
+  margin:@margin_center;  
+}
+
+.box-shadow(@shadow:@base_box_shadow){
+	box-shadow:@shadow;
+	-moz-box-shadow:@shadow;
+	-webkit-box-shadow:@shadow;
+}
+
+.radius(@radius: 5px) {
+	border-radius: @radius;
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+}
+
+.border(
+  @border-width:@base_border_width,
+  @border-style:@base_border_style,
+  @border-color:@base_border_color
+ ){
+	border-width:@border-width;
+	border-style:@border-style;
+	border-color:@border-color;
+}
+
+.background(
+  @url:@base_background_url,
+  @repeat:@base_background_repeat,
+  @position:@base_background_position,
+  @size:@base_background_size,
+  @color:@base_background_color
+ ){
+	background-image:@url;
+	background-position:@position;
+	background-repeat:@repeat;
+	background-size:@size;
+	background-color:@color;
+}
+
+.background-gradient(
+  @origin:@base_gradient_origin,
+  @start:@base_gradient_start,
+  @stop:@base_gradient_stop
+){
+  background-color: @start;
+  background-image: -webkit-linear-gradient(@origin, @start, @stop);
+  background-image: -moz-linear-gradient(@origin, @start, @stop);
+  background-image: -o-linear-gradient(@origin, @start, @stop);
+  background-image: -ms-linear-gradient(@origin, @start, @stop);
+  background-image: linear-gradient(@origin, @start, @stop);
+}
+.font(
+  @family:@base_font_family,
+  @size:@base_font_size,
+  @weight:@base_font_weight,
+  @color:@base_font_color
+ ){
+	font-family:@family;
+	font-size:@size;
+	font-weight:@weight;
+	color:@color;
+}

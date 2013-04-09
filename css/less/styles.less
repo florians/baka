@@ -1,0 +1,71 @@
+/*
+ * @Author Florian Stettler
+ * Create Date:   01.12.2012  create of the file  
+ *                05.01.2013  update of #content  
+ */
+
+/* import functions */
+  @import 'functions';
+
+/* base constants */
+
+/* body */
+  @body_color:#424242;
+  @body_width:100%;
+  @body_height:auto;
+
+/* Base */
+  @base_width:1200px;
+  @base_box_shadow:0 0 10px #000000;
+  
+  @base_border_width:1px;
+  @base_border_style:solid;
+  @base_border_color:#000000;
+  
+  @base_background_url:none;
+  @base_background_repeat:no-repeat;
+  @base_background_position:top;
+  @base_background_size:auto;
+  @base_background_color:#000000;
+  
+  @base_font_family:Arial;
+  @base_font_size:12px;
+  @base_font_weight:normal;
+  @base_font_color:#000000;
+
+  @base_gradient_origin:left;
+  @base_gradient_start:white;
+  @base_gradient_stop:black;
+  
+/* CSS */
+*{
+  .reset;
+}
+body{
+  background-color:@body_color;
+  background-image:url(../../img/design/textur.png);
+  pre{
+    padding:10px;
+    background-color:#FFFFFF;
+    border:1px solid black;
+  }
+  #wrapper{
+    padding-top:10px;
+    .set_center(@body_width,auto auto auto auto);
+    height:@body_height;
+    
+    // Siteparts
+    @import 'banner';
+    @import 'navi';
+    @import 'content';
+    
+    // different Contents
+    @import 'battle';
+    @import 'character';
+    @import 'dashboard';
+    @import 'home';
+    @import 'login';
+    @import 'profile';
+    @import 'registration';
+  }
+}

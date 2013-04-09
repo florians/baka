@@ -1,0 +1,38 @@
+/* Navigation constants */
+  @navigation_min_width:@base_width;
+  @navigation_box_shadow:@base_box_shadow;
+  @navigation_height:40px;
+  @navigation_padding:10px;
+    
+#navimargin{
+  margin:10px 0 10px 0;
+  height:@navigation_height;
+  min-width:@navigation_min_width;
+  .box-shadow(@navigation_box_shadow);
+  .background(@color:#121212);
+  #navi{
+    .set_center;
+    height:@navigation_height;
+    #navipoints{
+      width:@base_width;
+      height:@navigation_height;
+      line-height:@navigation_height;
+      a{
+        text-decoration:none;
+        color:#EDA709;
+        padding:@navigation_padding;
+      }
+      a:hover{
+        .active;
+      }
+      .active{
+        color:white;
+        .border(
+          @border-width:1px 0px,
+          @border-color:#FFFFFF
+        );
+        .box-shadow;
+      }
+    }
+  }
+}

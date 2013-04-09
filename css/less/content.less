@@ -1,0 +1,31 @@
+/* Content constants */
+  @content_padding:20px;
+  @content_box_shadow:@base_box_shadow;
+
+#contentmargin{
+  .set_center;
+  #content{
+    width:@base_width;
+    //background-image:url(../../img/design/textur.png);
+    float:left;
+    //padding:@content_padding @content_padding @content_padding+20 @content_padding;
+    .box-shadow(@content_box_shadow);
+    .background(@color:rgba(73, 75, 74,0.9));
+    min-height:500px;
+    height:100%;
+    .messages{
+      font-style: italic;
+      font-size: 90%;
+      background-color: #F2F2F2;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px black;
+      margin-bottom: 10px;
+      font-weight: bold;
+      margin:10px;
+    }
+    .success{color:green}
+    .error{color:red}
+    .notice{color:darkyellow}
+  }
+}

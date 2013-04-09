@@ -1,0 +1,232 @@
+#dashboard{
+  .left {
+    width: 400px;
+    float:left;
+  }
+  .usercontainer {
+    padding: 10px 10px 0 10px;
+    float:left;
+  }
+  .userinfo{
+    width:370px;
+    height:110px;
+    float:left;
+    background-color:grey;
+    padding:5px;
+    .radius(5px);
+  }
+  .right{
+    width:800px;
+    float:left;
+    padding-top:10px;
+  }
+  .challangecontainer{
+    float:left;
+    height:100px;
+    padding:10px;
+    .background-gradient(@origin:top,@start:#D3D3D3,@stop:#8c8a8a);
+    margin-bottom:10px;
+    .radius(5px);
+    .charimg{
+      width:100px;
+      height:100px;
+      background-color:lightgrey;
+      float:left;
+      margin-right:20px;
+    }
+    .charinfo{
+      width:550px;
+      height:100px;
+      float:left;
+    }
+    .charbutton{
+      width:100px;
+      height:100px;
+      float:left;
+    }
+    .charbutton a{
+      .radius(3px);
+      font-weight:bold;
+      float:right;
+      padding:3px 10px 3px 10px;
+      color:black;
+      text-decoration:none;
+      background-color:lightgrey;
+      display:block;
+      margin-top:35px;
+    }
+  }
+  .charcontainer{
+    width:380px;
+    border-width:0px;
+    border-style:solid;
+    border-color:black;
+    padding:10px;
+    float:left;
+    .chartop{
+      float:left;
+      margin-bottom:10px;
+      .radius(5px);
+    }
+    .chartop .charimg{
+      background-color:grey;
+      height:190px;
+      width:190px;
+      float:left;
+      .radius(5px 0 0 5px);
+      img{.radius(5px 0 0 5px)}
+    }
+    .chartop .charattr{
+      background-color:lightgrey;
+      height:190px;
+      width:190px;
+      float:left;
+      .radius(0 5px 5px 0);
+    }
+    .chartop .charattr h2{
+      font-size:20px;
+      height:30px;
+      border-bottom:1px solid black;
+      padding:5px 5px 5px 5px;
+    }
+    .chartop .charattr h3{
+      font-size:17px;
+      height:20px;
+      padding:5px 5px 5px 5px;
+    }
+    .chartop .charattr table.charattrtable{
+      width:178px;
+      padding:5px 5px 5px 5px;
+    }
+    .chartop .charattr table.charattrtable td{
+      width:98px;
+    }
+    .charmiddle{
+      height:30px;
+      width:378px;
+      float:left;
+      margin-bottom:10px;
+      position:relative;
+    }
+    .charmiddle progress,          /* All HTML5 progress enabled browsers */
+    .charmiddle progress[role]{     /* polyfill */
+      /* Turns off styling - not usually needed, but good to know. */
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      /* gets rid of default border in Firefox and Opera.  */
+      border: none;
+      border-radius:7px;
+      /* Needs to be in here for Safari polyfill so background images work as expected. */
+      background-size: auto;
+    
+      /* Dimensions */
+      height:30px;
+      width:380px;
+    }
+    /* Polyfill */
+    progress[role]:after {
+      background-image: none; /* removes default background from polyfill */
+    }
+    /* Ensure fallback text doesn't appear in polyfill */
+    progress[role] strong {
+      display: none;
+    }
+    progress,                          /* Firefox  */ 
+    progress[role][aria-valuenow] {    /* Polyfill */
+      //background: lightgrey !important; /* !important is needed by the polyfill */
+      background: -moz-linear-gradient(#808080, #5a5a5a) !important;
+      .radius(7px);
+      .box-shadow(0 0 10px #8b0000);
+    }
+    /* Chrome */
+    progress::-webkit-progress-bar {
+        .radius(7px);
+        .box-shadow(0 0 10px #8b0000);
+        background: lightgrey;
+        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#808080), to(#5a5a5a));
+        background: -webkit-linear-gradient(#808080, #5a5a5a);
+        background: -ms-linear-gradient(#808080, #5a5a5a);
+        background: -o-linear-gradient(#808080, #5a5a5a);
+        background: linear-gradient(#808080, #5a5a5a)
+    }
+    /* IE10 */
+    progress {
+      background: darkred;  
+      background: -ms-linear-gradient(#e60000, #8b0000);
+      .radius(7px);
+    }
+    /* Firefox */
+    progress::-moz-progress-bar { 
+        background: darkred;  
+        background: -moz-linear-gradient(#e60000, #8b0000);
+        .radius(7px);
+    }
+    /* Chrome */
+    progress::-webkit-progress-value {
+        background: darkred;       
+        .radius(7px);
+        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#e60000), to(#8b0000));
+        background: -webkit-linear-gradient(#e60000, #8b0000);
+        background: -ms-linear-gradient(#e60000, #8b0000);
+        background: -o-linear-gradient(#e60000, #8b0000);
+        background: linear-gradient(#e60000, #8b0000);
+    }
+    /* Polyfill */
+    progress[aria-valuenow]:before  {
+        background: darkred;
+    }
+    .charmiddle span.progresstext{
+      position:absolute;
+      height:20px;
+      width:300px;
+      display:block;
+      margin-top:-25px;
+      margin-left:-150px;
+      left:50%;
+      text-align:center;
+      color:#FFFFFF;
+      font-weight:bold;
+    }
+    .charbottom{
+      float:left;
+      margin-bottom:5px;
+      width:371px;
+      padding:5px 4px 0 5px;
+      background-color:lightgrey;
+      .radius(5px);
+      .skill{
+        float:left;
+        width:60px;
+        height:60px;
+        padding:5px;
+        margin:0px 5px 4px 0px;
+        background-color:grey;
+        .radius(5px);
+        text-decoration:none;
+        color:black;
+        font-weight:normal;
+      }
+      .skillright{
+        margin-right:0px;
+      }
+    }
+  }
+  .battlelog{
+    margin-top:3px;
+    width:398px;
+    min-height:500px;
+    float:left;
+    .border(0 1px 0 1px, solid, black);
+    .battlelogvs{
+      font-size:80px;
+      height:150px;
+      line-height:150px;
+      text-align:center;
+      .border(0 0 1px 0, solid, black);
+    }
+    .battlelogtext{
+      padding:10px;
+    }
+  }
+}
