@@ -130,9 +130,5 @@ class Battle extends Model {
   public function getWhosTurn(){
     return $this->bWhosTurn;
   }
-  
-  public static function hit($battleChar, $){
-    
-  }
 }
 ?>
