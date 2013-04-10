@@ -10,8 +10,13 @@ class views_character extends views {
     $character = new Character();
     $this -> character = $character -> byUserId(session('id'));
     
-    $attack = new Attack();
-    $this->attack = $attack->select();
+    $charAtk = new CharAtk();
+    $this->charAtks = $charAtk->byId($this -> character->getId());
+    
+    $attak = new Attack();
+    $this->phyAtk = $attak::select('WHERE aTyp = "p"');
+    $this->magAtk = $attak::select('WHERE aTyp = "m"');
+    $this->specialAtk = $attak::select('WHERE aTyp = "a"');
   }
 
   public function processAction() {

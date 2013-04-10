@@ -16,16 +16,23 @@ include_once 'classes/include.php';
 if (post('event')) {
   Events::event(post('event'), post());
 }
+if (session('id')) {
+  $allowed = array('Dashboard', 'Battle', 'Character', 'Profile', 'Logout');
+} else {
+  $allowed = array('Home', 'Login', 'Registration');
+}
 $viewId = null;
-if (get('page') != '') {
+if (get('page') != '' && in_array(get('page'), $allowed)) {
   $viewId = 'views_' . strtolower(get('page'));
 } elseif (session('id')) {
   $viewId = 'views_dashboard';
 } elseif (get('page') == '') {
   $viewId = 'views_home';
 }
-if (!class_exists($viewId))
-  die('Class ' . $viewId . ' not found!');
+if (!class_exists($viewId)){
+  //die('Class ' . $viewId . ' not found!');
+  header('Location:index.php');
+}
 
 $viewObject = new $viewId;
 
@@ -43,10 +50,10 @@ $viewObject -> hasMessagse();
     echo $viewObject -> additionalHeaders();
     if (session('id') != '') {
       $header = '
-        <script>
-          onlineCheck(1);
-          setInterval("onlineCheck(1)", 3000);
-        </script>';
+<script>
+onlineCheck(1);
+setInterval("onlineCheck(1)", 3000);
+</script>';
       echo $header;
     }
     ?>

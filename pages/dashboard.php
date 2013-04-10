@@ -24,7 +24,7 @@
 
 <?php
 if ($this -> character) {
-  characterProfile($this -> character, $this -> attack);
+  characterProfile($this -> character, $this -> charAtks);
 } else {
   echo '
   <div class="usercontainer">

@@ -163,6 +163,9 @@ class Character extends Model {
     }
     return false;
   }
+  public function getId() {
+    return $this -> cId;
+  }
   
   public function getUser() {
     return User::byId($this -> userId);

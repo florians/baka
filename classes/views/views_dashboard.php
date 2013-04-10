@@ -8,8 +8,8 @@ class views_dashboard extends views {
     $character = new Character();
     $this -> character = $character -> byUserId(session('id'));
 
-    $attack = new Attack();
-    $this -> attack = $attack -> select();
+    $charAtk = new CharAtk();
+    $this->charAtks = $charAtk->byId($this -> character->getId());
   }
 
   public function processAction() {

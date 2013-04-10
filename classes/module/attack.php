@@ -67,7 +67,9 @@ class Attack extends Model {
     }
     return null;
   }
-
+  public function getId(){
+    return $this->aId;
+  }
   public function setName($setVal){
     $this -> aName = $setVal;
   }

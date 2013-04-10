@@ -384,61 +384,11 @@ body #wrapper #battle .battlelog .battlelogtext {
 body #wrapper #character {
   padding: 10px;
 }
-body #wrapper #character .char {
+body #wrapper #character .left {
   float: left;
-  width: 30%;
-  height: 100px;
-  margin: 10px 10px 10px 0;
-  padding: 10px;
-  background-color: grey;
-  background-color: #dddddd;
-  background-image: -webkit-linear-gradient(top, #dddddd, #f5f5f5);
-  background-image: -moz-linear-gradient(top, #dddddd, #f5f5f5);
-  background-image: -o-linear-gradient(top, #dddddd, #f5f5f5);
-  background-image: -ms-linear-gradient(top, #dddddd, #f5f5f5);
-  background-image: linear-gradient(top, #dddddd, #f5f5f5);
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  box-shadow: 0 0 10px;
-  -moz-box-shadow: 0 0 10px;
-  -webkit-box-shadow: 0 0 10px;
+  padding-right: 20px;
 }
-body #wrapper #character .char .charimg {
-  height: 100px;
-  width: 100px;
-  float: left;
-  background-color: lightgrey;
-  margin-right: 10px;
-}
-body #wrapper #character .char .charinfo {
-  width: 244px;
-  float: left;
-  margin-bottom: 8px;
-}
-body #wrapper #character .char .select {
-  width: 244px;
-  float: left;
-  margin-top: 13px;
-}
-body #wrapper #character .char .select a {
-  border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  font-weight: bold;
-  float: right;
-  padding: 3px 10px 3px 10px;
-  color: black;
-  text-decoration: none;
-  background-color: lightgrey;
-  display: block;
-}
-body #wrapper #character .char .newchar {
-  height: 100px;
-  padding-top: 10px;
-  margin-left: 127px;
-}
-body #wrapper #character .charcontainer {
+body #wrapper #character .left .charcontainer {
   width: 380px;
   border-width: 0px;
   border-style: solid;
@@ -456,14 +406,14 @@ body #wrapper #character .charcontainer {
   /* Polyfill */
 
 }
-body #wrapper #character .charcontainer .chartop {
+body #wrapper #character .left .charcontainer .chartop {
   float: left;
   margin-bottom: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
 }
-body #wrapper #character .charcontainer .chartop .charimg {
+body #wrapper #character .left .charcontainer .chartop .charimg {
   background-color: grey;
   height: 190px;
   width: 190px;
@@ -472,12 +422,12 @@ body #wrapper #character .charcontainer .chartop .charimg {
   -webkit-border-radius: 5px 0 0 5px;
   -moz-border-radius: 5px 0 0 5px;
 }
-body #wrapper #character .charcontainer .chartop .charimg img {
+body #wrapper #character .left .charcontainer .chartop .charimg img {
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
   -moz-border-radius: 5px 0 0 5px;
 }
-body #wrapper #character .charcontainer .chartop .charattr {
+body #wrapper #character .left .charcontainer .chartop .charattr {
   background-color: lightgrey;
   height: 190px;
   width: 190px;
@@ -486,33 +436,33 @@ body #wrapper #character .charcontainer .chartop .charattr {
   -webkit-border-radius: 0 5px 5px 0;
   -moz-border-radius: 0 5px 5px 0;
 }
-body #wrapper #character .charcontainer .chartop .charattr h2 {
+body #wrapper #character .left .charcontainer .chartop .charattr h2 {
   font-size: 20px;
   height: 30px;
   border-bottom: 1px solid black;
   padding: 5px 5px 5px 5px;
 }
-body #wrapper #character .charcontainer .chartop .charattr h3 {
+body #wrapper #character .left .charcontainer .chartop .charattr h3 {
   font-size: 17px;
   height: 20px;
   padding: 5px 5px 5px 5px;
 }
-body #wrapper #character .charcontainer .chartop .charattr table.charattrtable {
+body #wrapper #character .left .charcontainer .chartop .charattr table.charattrtable {
   width: 178px;
   padding: 5px 5px 5px 5px;
 }
-body #wrapper #character .charcontainer .chartop .charattr table.charattrtable td {
+body #wrapper #character .left .charcontainer .chartop .charattr table.charattrtable td {
   width: 98px;
 }
-body #wrapper #character .charcontainer .charmiddle {
+body #wrapper #character .left .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
   float: left;
   margin-bottom: 10px;
   position: relative;
 }
-body #wrapper #character .charcontainer .charmiddle progress,
-body #wrapper #character .charcontainer .charmiddle progress[role] {
+body #wrapper #character .left .charcontainer .charmiddle progress,
+body #wrapper #character .left .charcontainer .charmiddle progress[role] {
   /* polyfill */
 
   /* Turns off styling - not usually needed, but good to know. */
@@ -532,16 +482,16 @@ body #wrapper #character .charcontainer .charmiddle progress[role] {
   height: 30px;
   width: 380px;
 }
-body #wrapper #character .charcontainer progress[role]:after {
+body #wrapper #character .left .charcontainer progress[role]:after {
   background-image: none;
   /* removes default background from polyfill */
 
 }
-body #wrapper #character .charcontainer progress[role] strong {
+body #wrapper #character .left .charcontainer progress[role] strong {
   display: none;
 }
-body #wrapper #character .charcontainer progress,
-body #wrapper #character .charcontainer progress[role][aria-valuenow] {
+body #wrapper #character .left .charcontainer progress,
+body #wrapper #character .left .charcontainer progress[role][aria-valuenow] {
   /* Polyfill */
 
   background: -moz-linear-gradient(#808080, #5a5a5a) !important;
@@ -552,7 +502,7 @@ body #wrapper #character .charcontainer progress[role][aria-valuenow] {
   -moz-box-shadow: 0 0 10px #8b0000;
   -webkit-box-shadow: 0 0 10px #8b0000;
 }
-body #wrapper #character .charcontainer progress::-webkit-progress-bar {
+body #wrapper #character .left .charcontainer progress::-webkit-progress-bar {
   border-radius: 7px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
@@ -566,21 +516,21 @@ body #wrapper #character .charcontainer progress::-webkit-progress-bar {
   background: -o-linear-gradient(#808080, #5a5a5a);
   background: linear-gradient(#808080, #5a5a5a);
 }
-body #wrapper #character .charcontainer progress {
+body #wrapper #character .left .charcontainer progress {
   background: darkred;
   background: -ms-linear-gradient(#e60000, #8b0000);
   border-radius: 7px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
 }
-body #wrapper #character .charcontainer progress::-moz-progress-bar {
+body #wrapper #character .left .charcontainer progress::-moz-progress-bar {
   background: darkred;
   background: -moz-linear-gradient(#e60000, #8b0000);
   border-radius: 7px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
 }
-body #wrapper #character .charcontainer progress::-webkit-progress-value {
+body #wrapper #character .left .charcontainer progress::-webkit-progress-value {
   background: darkred;
   border-radius: 7px;
   -webkit-border-radius: 7px;
@@ -591,10 +541,10 @@ body #wrapper #character .charcontainer progress::-webkit-progress-value {
   background: -o-linear-gradient(#e60000, #8b0000);
   background: linear-gradient(#e60000, #8b0000);
 }
-body #wrapper #character .charcontainer progress[aria-valuenow]:before {
+body #wrapper #character .left .charcontainer progress[aria-valuenow]:before {
   background: darkred;
 }
-body #wrapper #character .charcontainer .charmiddle span.progresstext {
+body #wrapper #character .left .charcontainer .charmiddle span.progresstext {
   position: absolute;
   height: 20px;
   width: 300px;
@@ -606,7 +556,7 @@ body #wrapper #character .charcontainer .charmiddle span.progresstext {
   color: #FFFFFF;
   font-weight: bold;
 }
-body #wrapper #character .charcontainer .charbottom {
+body #wrapper #character .left .charcontainer .charbottom {
   float: left;
   margin-bottom: 5px;
   width: 371px;
@@ -616,7 +566,7 @@ body #wrapper #character .charcontainer .charbottom {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
 }
-body #wrapper #character .charcontainer .charbottom .skill {
+body #wrapper #character .left .charcontainer .charbottom .skill {
   float: left;
   width: 60px;
   height: 60px;
@@ -630,8 +580,91 @@ body #wrapper #character .charcontainer .charbottom .skill {
   color: black;
   font-weight: normal;
 }
-body #wrapper #character .charcontainer .charbottom .skillright {
+body #wrapper #character .left .charcontainer .charbottom .skillright {
   margin-right: 0px;
+}
+body #wrapper #character .right {
+  float: left;
+  width: 600px;
+}
+body #wrapper #character .right .variation {
+  float: left;
+  height: 400px;
+  width: 165px;
+}
+body #wrapper #character .right .variation .physical,
+body #wrapper #character .right .variation .magical,
+body #wrapper #character .right .variation .special {
+  height: 100px;
+  width: 150px;
+  line-height: 100px;
+  text-align: center;
+  margin: 0 10px 10px 0;
+  display: block;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+body #wrapper #character .right .variation .physical {
+  background-color: #ff0000;
+}
+body #wrapper #character .right .variation .magical {
+  background-color: #008000;
+}
+body #wrapper #character .right .variation .special {
+  background-color: #ffa500;
+}
+body #wrapper #character .right .variation .chosen {
+  margin-right: 0px;
+  padding-right: 15px;
+  border-radius: 5px 0px 0px 5px;
+  -webkit-border-radius: 5px 0px 0px 5px;
+  -moz-border-radius: 5px 0px 0px 5px;
+}
+body #wrapper #character .right .skills .physical,
+body #wrapper #character .right .skills .magical,
+body #wrapper #character .right .skills .special {
+  float: left;
+  height: 315px;
+  width: 400px;
+  margin-bottom: 5px;
+  margin-left: -5px;
+  padding: 5px 4px 0 5px;
+  background-color: #D3D3D3;
+  display: none;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+body #wrapper #character .right .skills .physical .skill,
+body #wrapper #character .right .skills .magical .skill,
+body #wrapper #character .right .skills .special .skill {
+  float: left;
+  width: 60px;
+  height: 60px;
+  padding: 5px;
+  margin: 0px 5px 4px 0px;
+  background-color: grey;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  text-decoration: none;
+  color: black;
+  font-weight: normal;
+}
+body #wrapper #character .right .skills .physical {
+  background-color: #ff0000;
+}
+body #wrapper #character .right .skills .magical {
+  background-color: #008000;
+}
+body #wrapper #character .right .skills .special {
+  background-color: #ffa500;
+}
+body #wrapper #character .right .skills .show {
+  display: block;
 }
 body #wrapper #dashboard .left {
   width: 400px;

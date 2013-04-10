@@ -19,8 +19,9 @@ include_once '../classes/utils/database.php';
 
 $character = new Character();
 $user = new User();
-$content = null;
+$charAtk = new CharAtk();
 
+$content = null;
 switch(post('event')) {
   case 'dashboard' :
     $opponents = Character::select('AS c INNER JOIN user AS u ON u.uId = c.cUserId WHERE c.cUserId <>' . session('id') . ' AND u.uOnline = "1" ORDER BY c.cLvlExp,c.cName ASC');
@@ -38,14 +39,24 @@ switch(post('event')) {
     }
     break;
   case 'onlineCheck' :
-    // timestamp
-    // check timestamp older than 1 min ago
-    // UPDATE user SET uOnline = 0 WHERE uLastActivity <= oldTime AND uOnline = '1'
-    //User::select();
+    $oldTime = strtotime('-1 Minute');
+    User::updates('uOnline = "0" WHERE uLastActivity <= ' . $oldTime . ' AND uOnline = "1"');
     $user = User::byId(session('id'));
     $user -> setOnline(post('value'));
-    //$user -> setLastActivity();
+    $user -> setLastActivity(strtotime('now'));
     $user -> save();
+    break;
+  case 'setCharAtk' :
+    $char = $character->byUserId(session('id'));
+    $charAtk -> setAtkId(post('value'));
+    $charAtk -> setCharId($char->getId());
+    $charAtk -> save();
+    break;
+  case 'delCharAtk' :
+    $char = $character->byUserId(session('id'));
+    $charAtk -> setCharId($char->getId());
+    $charAtk -> delete();
+    $content = '<script> location.reload();</script>';   
     break;
 }
 echo $content;
