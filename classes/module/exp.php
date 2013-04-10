@@ -2,10 +2,10 @@
 /**
  *
  */
-class Battle extends Model {
+class Exp extends Model {
  
-  const TABLENAME = 'battle';
-  const CLASSNAME = 'Battle';
+  const TABLENAME = 'exp';
+  const CLASSNAME = 'Exp';
   
   private $eId;
   private $eLvl;

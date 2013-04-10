@@ -130,5 +130,19 @@ class Battle extends Model {
   public function getWhosTurn(){
     return $this->bWhosTurn;
   }
+  
+  public function attack($myBattleChar,$oBattleChar,$attack){
+  	$oChar = $oBattleChar->getChar();
+  	$myChar = $myBattleChar->getChar();
+	$hitInfo = $myBattleChar->hit($attack,$oChar);
+	$this->bLog .= "<p>".$oChar->getName()." attacked ".$myChar->getName()." with ".$attack->getName().".</p>"; 
+	$this->bLog .= "<p>".$hitInfo['status']." ".$myChar->getName()." took ".$hitInfo['dmg']." damage</p>"; 
+	if($myBattleChar->getHp() <= 0){
+		$this->bOver = 1;
+		$this->bWinner = $myBattleChar->getPlayer();
+	} else {
+		$this->bWhosTurn = $myBattleChar->getPlayer();
+	}
+  }
 }
 ?>

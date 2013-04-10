@@ -10,6 +10,7 @@ class BattleChar extends Model {
   private $bcBattleId;
   private $bcCharId;
   private $bcHp;
+  private $bcPlayer;
 
   public static function select($clause = ""){
     $objs = array();
@@ -23,11 +24,12 @@ class BattleChar extends Model {
   }
   
   private function insert(){
-  SQL::getInstance()->insert(self::$TABLENAME, "(bcBattleId,bcCharId,bcHp) VALUES('".
-  encode($this->bcBattleId)."','".
-  encode($this->bcCharId)."','".
-  encode($this->bcHp)."');");
-  return (is_numeric($this->bcBattleId) && $this->bcBattleId > 0 && is_numeric($this->bcCharId) && $this->bcCharId > 0);
+	  SQL::getInstance()->insert(self::$TABLENAME, "(bcBattleId,bcCharId,bcHp) VALUES('".
+	  encode($this->bcBattleId)."','".
+	  encode($this->bcCharId)."','".
+	  encode($this->bcHp)."');");
+	  $this->setId(SQL::getInstance()->insertId());
+	  return (is_numeric($this->bcBattleId) && $this->bcBattleId > 0 && is_numeric($this->bcCharId) && $this->bcCharId > 0);
   }
   
   
@@ -67,6 +69,10 @@ class BattleChar extends Model {
   return null;
   }
   
+  public function getBattle(){
+    return Battle::$this->bcBattleId;
+  }
+  
   public function getBattleId(){
     return $this->bcBattleId;
   }
@@ -77,6 +83,10 @@ class BattleChar extends Model {
   
   public function getCharId(){
     return $this->bcCharId;
+  }
+  
+  public function getChar(){
+  	return Character::byId($this->bcCharId);
   }
 
   public function setCharId($setVal){
@@ -89,6 +99,82 @@ class BattleChar extends Model {
 
   public function setHp($setVal){
     $this->bcHp = $setVal;
+  }
+  
+  public function getPlayer(){
+    return $this->bcPlayer;
+  }
+
+  public function setPlayer($setVal){
+    $this->bcPlayer = $setVal;
+  }
+  
+  private static function hitCrit($damage){
+  	$returnValue = array();
+  	$hitCrit = rand(0, 1000);
+	switch (TRUE) {
+		case 0 <= $hitCrit && $hitCrit <= 50:
+			$returnValue['status'] = "Missed";
+			$returnValue['dmg'] = 0 * $damage;
+			return $returnValue;
+			break;
+		
+		case 51 <= $hitCrit && $hitCrit <= 200:
+			$returnValue['status'] = "Bad hit";
+			$returnValue['dmg'] = 0.5 * $damage;
+			return $returnValue;
+			break;
+		
+		case 201 <= $hitCrit && $hitCrit <= 800:
+			$returnValue['status'] = "Normal hit";
+			$returnValue['dmg'] = 1 * $damage;
+			return $returnValue;
+			break;
+		
+		case 801 <= $hitCrit && $hitCrit <= 950:
+			$returnValue['status'] = "Good hit";
+			$returnValue['dmg'] = 1.5 * $damage;
+			return $returnValue;
+			break;
+		
+		case 951 <= $hitCrit && $hitCrit <= 1000:
+			$returnValue['status'] = "Excellent hit";
+			$returnValue['dmg'] = 0.5 * $damage;
+			return $returnValue;
+			break;
+			
+		default:
+			return 1 * $damage;
+			break;
+	}
+  }
+  
+  public function hit($attack, $oChar){
+  	$myChar = $this->getChar();
+	$atk = 0;
+  	$def = 0;
+	switch ($attack->getTyp()) {
+		case 'p':
+			$def = $myChar->getPhyDef();
+			$atk = $oChar->getPhyAtk();
+			break;
+		case 'm':
+			$def = $myChar->getMagDef();
+			$atk = $oChar->getMagAtk();
+			break;
+		case 'a':
+			$def = ($myChar->getMagDef()+$myChar->getPhyDef())/2;
+			$atk = ($oChar->getMagAtk()+$oChar->getMagAtk())/2;
+			break;
+		default:
+			$def = $myChar->getPhyDef();
+			$atk = $oChar->getPhyAtk();
+			break;
+	}
+	$hit = hitCrit( $attack->getDmgPt()+$atk-$def);
+	$this->bcHp -= $hit['dmg'];
+	$this->save();
+	return $hit;
   }
   
 }
