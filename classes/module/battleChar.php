@@ -1,7 +1,6 @@
-<?php
-
+<?php 
 /**
- * Hello there this is another test.
+ *
  */
 /*class BattleChar extends Model {
 
