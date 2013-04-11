@@ -58,5 +58,15 @@ switch(post('event')) {
     $charAtk -> delete();
     $content = '<script> location.reload();</script>';   
     break;
+  case 'hasChallange' :
+    $response = array();
+    if(post('charId') == 22){
+     $response['has'] = "yes";
+     $response['message'] = "You've got Mail! It's not spam!";
+    } else {
+     $response['has'] = "no";   
+    }
+    $content = json_encode($response);
+    break;
 }
 echo $content;

@@ -26,6 +26,42 @@ function dashboard() {
   });
 }
 
+
+function battleRequest(challenger, challengee){
+	$.ajax({
+		type : 'POST',
+		url : 'pages/ajax.php',
+		data : {
+			'event' : 'makeRequest',
+			'challenger' : challenger,
+			'challengee' : challengee
+		}
+	});
+}
+
+function hasChallange(charId){
+	$.ajax({
+		type : 'POST',
+		url : 'pages/ajax.php',
+		data : {
+			'event' : 'hasChallange',
+			'charId' : charId
+		}
+	}).done(function(data){
+	  var obj = $.parseJSON(data);
+	  if(obj.has == "no"){
+	    hasChallange(charId+1);
+	  } else if(obj.has == "yes"){
+	    var c = confirm(obj.message);
+	    if(c= true){
+	      alert("you've accepted");
+	    } else {
+	      alert("you've dislined");
+	    }
+	  }
+	});
+}
+
 function setCharAtk(val) {
   jQuery.ajax({
     type : 'POST',

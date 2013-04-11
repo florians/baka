@@ -36,4 +36,6 @@ jQuery(document).ready(function() {
     delCharAtk();
     e.preventDefault();
   });
+  
+  hasChallange(1);
 });
