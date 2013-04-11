@@ -8,8 +8,8 @@ class CharAtk extends Model {
   private $caAtkId;
 
   public static function select($clause = "") {
-    $obj = array();
-    $query = SQL::getInstance() -> select(self::TABLENAME, $clause);
+    $objs = array();
+    $query = Database::getInstance() -> select(self::TABLENAME, $clause);
     while ($row = $query -> fetch_object(self::CLASSNAME)) {
       $obj = new CharAtk();
       $obj = $row;
@@ -19,23 +19,20 @@ class CharAtk extends Model {
   }
 
   protected function insert() {
-    SQL::getInstance() -> insert(self::$TABLENAME, "(caCharId,caAtkId) VALUES('" 
-    . encode($this -> caCharId) . "','" 
-    . encode($this -> caAtkId).";");
+    Database::getInstance() -> insert(self::TABLENAME, "(caCharId,caAtkId) VALUES('" . encode($this -> caCharId) . "','" . encode($this -> caAtkId) . "');");
     return (is_numeric($this -> caCharId) && $this -> caCharId > 0);
   }
 
   public static function updates($clause = "") {
-    SQL::getInstance() -> update(self::TABLENAME, $clause);
+    Database::getInstance() -> update(self::TABLENAME, $clause);
   }
 
   protected function update() {
-    self::updates("
-    caAtkId='" . encode($this -> caAtkId). "' WHERE caCharId='" . encode($this -> caCharId) . "';");
+    self::updates("caAtkId='" . encode($this -> caAtkId) . "' WHERE caCharId='" . encode($this -> caCharId) . "';");
   }
 
   public static function deletes($clause = "") {
-    SQL::getInstance() -> delete(self::TABLENAME, $clause);
+    Database::getInstance() -> delete(self::TABLENAME, $clause);
   }
 
   public function delete() {
@@ -43,35 +40,34 @@ class CharAtk extends Model {
   }
 
   public function save() {
-    if (is_null($this -> caCharId)) {
-      self::insert();
-    } else {
-      self::update();
-    }
+    self::insert();
   }
 
   public static function byId($id = 0) {
     if (is_numeric($id)) {
-      $charAtk = self::select(" WHERE caCharId = '" . encode($this -> caCharId) . "';");
-      if (count($charAtk) == 1) {
-        return $charAtk[0];
+      $charAtk = self::select("AS ca INNER JOIN attack AS a ON ca.caAtkId = a.aId WHERE caCharId = '" . $id . "';");
+      if (count($charAtk) >= 1) {
+        return $charAtk;
       }
     }
     return null;
   }
-  
-  public function setCharId($setVal){
-    $this->caCharId = $setVal;
+
+  public function setCharId($setVal) {
+    $this -> caCharId = $setVal;
   }
-  public function getCharId(){
-    return $this->caCharId;
+
+  public function getCharId() {
+    return $this -> caCharId;
   }
-  public function setAtkId($setVal){
-    $this->caCharId = $setVal;
+
+  public function setAtkId($setVal) {
+    $this -> caAtkId = $setVal;
   }
-  public function getAtkId(){
-    return $this->caCharId;
+
+  public function getAtkId() {
+    return $this -> caCharId;
   }
-  
+
 }
 ?>

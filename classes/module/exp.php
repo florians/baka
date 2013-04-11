@@ -2,10 +2,10 @@
 /**
  *
  */
-class Battle extends Model {
+class Exp extends Model {
  
-  const TABLENAME = 'battle';
-  const CLASSNAME = 'Battle';
+  const TABLENAME = 'exp';
+  const CLASSNAME = 'Exp';
   
   private $eId;
   private $eLvl;
@@ -23,7 +23,7 @@ class Battle extends Model {
     return $objs;
   }
   
-  private function insert(){
+  protected function insert(){
   SQL::getInstance()->insert(self::$TABLENAME, "(eLvl,eExp,eTyp) VALUES('".
   encode($this->eLvl)."','".
   encode($this->eExp)."','".
@@ -37,7 +37,7 @@ class Battle extends Model {
   SQL::getInstance()->update(self::TABLENAME,$clause);
   }
   
-  private function update(){
+  protected function update(){
   self::updates("
    eLvl='".encode($this->eLvl)."',
    eExp='".encode($this->eExp)."',
@@ -63,7 +63,7 @@ class Battle extends Model {
   public static function byId($id = 0){
   if(is_numeric($id)){
     $objs = self::select(" WHERE eId = '".encode($this->eId)."';");
-    if(count($objs) = 1){
+    if(count($objs) == 1){
       return $objs[0];
     }     
   }

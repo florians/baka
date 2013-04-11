@@ -1,5 +1,5 @@
 <?php
-  characterProfile($this->character,$this->attack,'retreat');
+  characterProfile($this->character,$this->charAtks,'retreat');
   battlelog();
-  characterProfile($this->character2);
+  characterProfile($this->character2,$this->charAtks2);
 ?>

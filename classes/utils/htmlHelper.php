@@ -1,6 +1,6 @@
 <?php
 
-function characterProfile($char, $atks = null, $retreat = null) {
+function characterProfile($char, $atks = null, $button = null) {
   $content = '
     <div class="charcontainer">
       <div class="chartop">
@@ -38,13 +38,18 @@ function characterProfile($char, $atks = null, $retreat = null) {
     $countatk = 1;
     foreach ($atks as $atk) {
       ($countatk % 5 == 0) ? $addclass = 'skillright' : $addclass = '';
-      $content .= '<a href="#" class="skill ' . $addclass . '" title="' . $atk -> getName() . '">' . $atk -> getName() . '</a>';
+      $content .= '<a href="#" class="skill ' . $addclass . '" title="' . $atk -> aName . '">' . $atk -> aName . '</a>';
       $countatk++;
     }
     $content .= '</div>';
+  }else{
+    $content .= '
+      <div class="charbottom"><p style="height:50px">There aren\'t any Skills learned!</p></div>';
   }
-  if ($retreat == 'retreat') {
-    $content .= '<a href="#">Retreat</a>';
+  if ($button == 'retreat') {
+    $content .= '<a href="#" class="retreat">Retreat</a>';
+  }elseif($button == 'delAtk'){
+    $content .= '<a href="#" class="delAtk">Delete Attaks</a>';
   }
   $content .= '</div>';
   echo $content;

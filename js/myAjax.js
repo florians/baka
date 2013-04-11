@@ -25,3 +25,26 @@ function dashboard() {
     jQuery('.right').html(html);
   });
 }
+
+function setCharAtk(val) {
+  jQuery.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'setCharAtk',
+      'value' : val
+    }
+  });
+}
+
+function delCharAtk(val) {
+  jQuery.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'delCharAtk'
+    }
+  }).done(function(html) {
+    jQuery('head').append(html);
+  });
+}
