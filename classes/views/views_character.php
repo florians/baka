@@ -4,22 +4,25 @@ class views_character extends views {
   public $view_id = 'character';
 
   public function init() {
-    $user = new User();
-    $user = $user -> byId(session('id'));
-    $this -> uId = $user -> getId();
-    $character = new Character();
-    $this -> character = $character -> byUserId(session('id'));
-    
-    $charAtk = new CharAtk();
-    $this->charAtks = $charAtk->byId($this -> character->getId());
-    
-    $attak = new Attack();
-    $this->phyAtk = $attak::select('WHERE aTyp = "p"');
-    $this->magAtk = $attak::select('WHERE aTyp = "m"');
-    $this->specialAtk = $attak::select('WHERE aTyp = "a"');
+    $this -> attak = new Attack();
+    $this -> charAtk = new CharAtk();
   }
 
   public function processAction() {
+    // gets the userinformation of the logged in user
+    $this -> user = User::byId(session('id'));
+    // gets tht user ID to write it in the character db
+    $this -> uId = $this -> user -> getId();
+    // gets the character of the logged in user
+    $this -> character = $this -> user -> getChar();
+    // gets the character lvl out of the exp db
+    if ($this -> character) {
+      // gets all attaks
+      $attak = new Attack();
+      $this -> phyAtk = Attack::select('WHERE aTyp = "p"');
+      $this -> magAtk = Attack::select('WHERE aTyp = "m"');
+      $this -> specialAtk = Attack::select('WHERE aTyp = "a"');
+    }
   }
 
   public function additionalHeaders() {

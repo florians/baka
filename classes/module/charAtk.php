@@ -25,22 +25,24 @@ class CharAtk extends Model {
 
   public static function updates($clause = "") {
     Database::getInstance() -> update(self::TABLENAME, $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   protected function update() {
-    self::updates("caAtkId='" . encode($this -> caAtkId) . "' WHERE caCharId='" . encode($this -> caCharId) . "';");
+    return self::updates("caAtkId='" . encode($this -> caAtkId) . "' WHERE caCharId='" . encode($this -> caCharId) . "';");
   }
 
   public static function deletes($clause = "") {
     Database::getInstance() -> delete(self::TABLENAME, $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   public function delete() {
-    self::deletes(" WHERE caCharId='" . encode($this -> caCharId) . "';");
+    return self::deletes(" WHERE caCharId='" . encode($this -> caCharId) . "';");
   }
 
   public function save() {
-    self::insert();
+    return self::insert();
   }
 
   public static function byId($id = 0) {
@@ -66,7 +68,11 @@ class CharAtk extends Model {
   }
 
   public function getAtkId() {
-    return $this -> caCharId;
+    return $this -> caAtkId;
+  }
+
+  public function getAtk() {
+    return Attack::select(" WHERE aID = '" . encode($this -> caAtkId) . "'");
   }
 
 }

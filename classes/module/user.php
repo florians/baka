@@ -38,15 +38,17 @@ class User extends Model {
       encode($this -> uLastActivity) . "','" . 
       encode($this -> uOnline) . "','" . 
       encode($this -> uActive) . "');");
-    return (is_numeric($this -> uId) && $this -> uId > 0);
+      $this->uId = Database::getInstance()->insertId();
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   public static function updates($clause = "") {
-    Database::getInstance() -> update(self::TABLENAME, $clause);
+    return Database::getInstance() -> update(self::TABLENAME, $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   protected function update() {
-    self::updates("
+    return self::updates("
 	    uFirstname='" . encode($this -> uFirstname) . "',
   	  uLastname='" . encode($this -> uLastname) . "',
   	  uUsername='" . encode($this -> uUsername) . "',
@@ -59,17 +61,18 @@ class User extends Model {
 
   public static function deletes($clause = "") {
     Database::getInstance() -> delete(self::TABLENAME, $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   public function delete() {
-    self::deletes(" WHERE uId='" . encode($this -> uId) . "';");
+    return self::deletes(" WHERE uId='" . encode($this -> uId) . "';");
   }
 
   public function save() {
     if (is_null($this -> uId)) {
-      self::insert();
+      return self::insert();
     } else {
-      self::update();
+      return self::update();
     }
   }
 
@@ -295,6 +298,9 @@ class User extends Model {
   public function getActive() {
     return $this -> uActive;
   }
-
+  
+  public function getChar(){
+    return Character::byUserId($this->uId);
+  }
 }
 ?>

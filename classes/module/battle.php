@@ -1,6 +1,10 @@
 <?php 
 /**
- *
+ * ChallangeStatus:
+ *    'a' = accepted
+ *    'r' = rejected
+ *    'p' = pending
+ *    'u' = unavailable
  */
 class Battle extends Model {
  
@@ -8,16 +12,16 @@ class Battle extends Model {
   const CLASSNAME = 'Battle';
   
   private $bId;
-  private $bTimeOfChallange;
+  private $bTimeOfChallenge;
   private $bRound;
   private $bWinner;
-  private $bExepted;
+  private $bChallengeStatus;
   private $bOver;
   private $bWhosTurn;
 
   public static function select($clause = ""){
     $objs = array();
-    $query=  SQL::getInstance()->select(self::TABLENAME,$clause);
+    $query=  Database::getInstance()->select(self::TABLENAME,$clause);
     while($row = $query->fetch_object(self::CLASSNAME)){
       $obj = new Battle();
       $obj = $row;
@@ -27,45 +31,51 @@ class Battle extends Model {
   }
   
   protected function insert(){
-  SQL::getInstance()->insert(self::$TABLENAME, "(bTimeOfChallange,bRounds,bWinner,bExepted,bOver,bWhosTurn) VALUES('".
-  encode($this->bTimeOfChallange)."','".
-  encode($this->bRounds)."','".
-  encode($this->bWinner)."','".
-  encode($this->bExepted)."','".
-  encode($this->bOver)."','".
-  encode($this->bWhosTurn)."');");
-  return (is_numeric($this->bId) && $this->bId > 0);
+    Database::getInstance()->insert(self::TABLENAME, "(bTimeOfChallenge,bRound,bWinner,bChallengeStatus,bOver,bWhosTurn) VALUES('".
+    encode($this->bTimeOfChallenge)."','".
+    encode($this->bRound)."','".
+    encode($this->bWinner)."','".
+    encode($this->bChallengeStatus)."','".
+    encode($this->bOver)."','".
+    encode($this->bWhosTurn)."');");
+    $this->bId = Database::getInstance()->insertId();
+    return (Database::getInstance()->affectedRows() > 0);
   }
   
   
   
   public static function updates($clause = ""){
-  SQL::getInstance()->update(self::TABLENAME,$clause);
+    Database::getInstance()->update(self::TABLENAME,$clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
   
   protected  function update(){
-  self::updates("
-   bTimeOfChallange='".encode($this->bTimeOfChallange)."',
-   bRounds='".encode($this->bRounds)."',
-   bWinner='".encode($this->bWinner)."',
-   bExepted='".encode($this->bExepted)."',
-   bOver='".encode($this->bOver)."',
-   bWhosTurn='".encode($this->bWhosTurn)."' WHERE bId='".encode($this->bId)."';");
+    return self::updates("
+     bTimeOfChallenge='".encode($this->bTimeOfChallenge)."',
+     bRound='".encode($this->bRound)."',
+     bWinner='".encode($this->bWinner)."',
+     bChallengeStatus='".encode($this->bChallengeStatus)."',
+     bOver='".encode($this->bOver)."',
+     bWhosTurn='".encode($this->bWhosTurn)."' WHERE bId='".encode($this->bId)."';");
   }
 
   public static function deletes($clause = ""){
-  SQL::getInstance()->delete(self::TABLENAME,$clause);
+    Database::getInstance()->delete(self::TABLENAME,$clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
   
   public function delete(){
-  self::deletes(" WHERE bId='".encode($this->bId)."';");
+    foreach($this->getBattleChars() as $battleChar){
+      $battleChar->delete();
+    }
+    return self::deletes(" WHERE bId='".encode($this->bId)."';");
   }
   
   public function save(){
     if(is_null($this->bId)){
-      self::insert();
+      return self::insert();
     } else {
-      self::update();
+      return self::update();
     }
   }
   
@@ -84,11 +94,11 @@ class Battle extends Model {
   }
 
   public function setTimeOfChallange($setVal){
-    $this->bTimeOfChallange = $setVal;
+    $this->bTimeOfChallenge = $setVal;
   }
   
   public function getTimeOfChallange(){
-    return $this->bTimeOfChallange;
+    return $this->bTimeOfChallenge;
   }
 
   public function setRound($setVal){
@@ -107,12 +117,12 @@ class Battle extends Model {
     return $this->bWinner;
   }
 
-  public function setExepted($setVal){
-    $this->bExepted = $setVal;
+  public function setChallengeStatus($setVal){
+    $this->bChallengeStatus = $setVal;
   }
   
-  public function getExepted(){
-    return $this->bExepted;
+  public function getChallengeStatus(){
+    return $this->bChallengeStatus;
   }
 
   public function setOver($setVal){
@@ -131,18 +141,38 @@ class Battle extends Model {
     return $this->bWhosTurn;
   }
   
+  public function getBattleChars(){
+    return BattleChar::select(" WHERE bcBattleId = '".$this->bId."';");
+  }
+  
+  public function getPlayer($num){
+    return BattleChar::select(" WHERE bcBattleId = '".$this->bId."' AND bcPlayer = '".encode($num)."' LIMIT 1;")[0];
+  }
+  
+  public static function challanges($charId){
+    return self::select(" JOIN battleChar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".$charId."' AND bcPlayer = '2' ORDER BY bTimeOfChallenge, bId ASC;");
+  }
+  
+  public static function wins($charId){
+    return count(self::select(" JOIN battleChar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".$charId."' bcPlayer = bWinner AND bOver = true;"));
+  }
+  
+  public static function loses($charId){
+    return count(self::select(" JOIN battleChar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".$charId."' bcPlayer <> bWinner AND bOver = true;"));
+  }
+  
   public function attack($myBattleChar,$oBattleChar,$attack){
     $oChar = $oBattleChar->getChar();
     $myChar = $myBattleChar->getChar();
-  $hitInfo = $myBattleChar->hit($attack,$oChar);
-  $this->bLog .= "<p>".$oChar->getName()." attacked ".$myChar->getName()." with ".$attack->getName().".</p>"; 
-  $this->bLog .= "<p>".$hitInfo['status']." ".$myChar->getName()." took ".$hitInfo['dmg']." damage</p>"; 
-  if($myBattleChar->getHp() <= 0){
-    $this->bOver = 1;
-    $this->bWinner = $myBattleChar->getPlayer();
-  } else {
-    $this->bWhosTurn = $myBattleChar->getPlayer();
-  }
+    $hitInfo = $myBattleChar->hit($attack,$oChar);
+    $this->bLog .= "<p>".$oChar->getName()." attacked ".$myChar->getName()." with ".$attack->getName().".</p>"; 
+    $this->bLog .= "<p>".$hitInfo['status']." ".$myChar->getName()." took ".$hitInfo['dmg']." damage</p>"; 
+    if($myBattleChar->getHp() <= 0){
+      $this->bOver = 1;
+      $this->bWinner = $myBattleChar->getPlayer();
+    } else {
+      $this->bWhosTurn = $myBattleChar->getPlayer();
+    }
   }
 }
 ?>

@@ -14,7 +14,7 @@ class BattleChar extends Model {
 
   public static function select($clause = ""){
     $objs = array();
-    $query=  SQL::getInstance()->select(self::TABLENAME,$clause);
+    $query=  Database::getInstance()->select(self::TABLENAME,$clause);
     while($row = $query->fetch_object(self::CLASSNAME)){
       $obj = new Battle();
       $obj = $row;
@@ -24,44 +24,54 @@ class BattleChar extends Model {
   }
   
   protected function insert(){
-    SQL::getInstance()->insert(self::$TABLENAME, "(bcBattleId,bcCharId,bcHp) VALUES('".
+    Database::getInstance()->insert(self::TABLENAME, "(bcBattleId,bcCharId,bcHp,bcPlayer) VALUES('".
     encode($this->bcBattleId)."','".
     encode($this->bcCharId)."','".
-    encode($this->bcHp)."');");
-    $this->setId(SQL::getInstance()->insertId());
-    return (is_numeric($this->bcBattleId) && $this->bcBattleId > 0 && is_numeric($this->bcCharId) && $this->bcCharId > 0);
+    encode($this->bcHp)."','".
+    encode($this->bcPlayer)."');");
+    return (Database::getInstance()->affectedRows() > 0);
   }
   
   
   
   public static function updates($clause = ""){
-  SQL::getInstance()->update(self::TABLENAME,$clause);
+    Database::getInstance()->update(self::TABLENAME,$clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
   
   protected function update(){
-  self::updates("
-   bcHp='".encode($this->bcHp)."' WHERE bcCharId='".encode($this->bcCharId)."' and bcBattleId='".encode($this->bcBattleId)."';");
+   return self::updates("
+   bcHp='".encode($this->bcHp)."', 
+   bcPlayer='".encode($this->bcPlayer)."' 
+   WHERE bcCharId='".encode($this->bcCharId)."' and bcBattleId='".encode($this->bcBattleId)."';");
+  
   }
 
   public static function deletes($clause = ""){
-  SQL::getInstance()->delete(self::TABLENAME,$clause);
+    Database::getInstance()->delete(self::TABLENAME,$clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
   
   public function delete(){
-  self::deletes(" WHERE bcCharId='".encode($this->bcCharId)."' and bcBattleId='".encode($this->bcBattleId)."';");
+    return self::deletes(" WHERE bcCharId='".encode($this->bcCharId)."' and bcBattleId='".encode($this->bcBattleId)."';");
   }
   
   public function save(){
-    if(is_null($this->uId)){
-      self::insert();
-    } else {
-      self::update();
-    }
+     if(self::byId($this->bcBattleId, $this->bcCharId)){
+       return $this->update();
+     } else {
+       return $this->insert();
+     }     
+  }
+  
+  public function reduceHP($lose){
+    $this->bcHp -= $lose;
+    $this->update();
   }
   
   public static function byId($bcBattleId = 0, $bcCharId = 0){
   if(is_numeric($bcBattleId) && is_numeric($bcCharId)){
-    $objs = self::select(" WHERE bcCharId='".encode($this->bcCharId)."' and bcBattleId='".encode($this->bcBattleId)."';");
+    $objs = self::select(" WHERE bcCharId='".encode($bcCharId)."' and bcBattleId='".encode($bcBattleId)."';");
     if(count($objs) == 1){
       return $objs[0];
     }     
@@ -108,7 +118,7 @@ class BattleChar extends Model {
   public function setPlayer($setVal){
     $this->bcPlayer = $setVal;
   }
-  
+  /*
   private static function hitCrit($damage){
     $returnValue = array();
     $hitCrit = rand(0, 1000);
@@ -175,7 +185,7 @@ class BattleChar extends Model {
   $this->bcHp -= $hit['dmg'];
   $this->save();
   return $hit;
-  }
+  }*/
   
 }
 ?>

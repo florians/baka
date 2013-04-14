@@ -27,15 +27,17 @@ class Attack extends Model {
     . encode($this -> aDmgPt) . "','" 
     . encode($this -> aLearnLvl) . "','" 
     . encode($this -> aTyp) . "');");
-    return (is_numeric($this -> aId) && $this -> aId > 0);
+    $this->aId = Database::getInstance()->insertId();
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   public static function updates($clause = "") {
     Database::getInstance() -> update(self::TABLENAME, $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   protected function update() {
-    self::updates("
+    return self::updates("
     aName='" . encode($this -> aName) . "',
     aDmgPt='" . encode($this -> aDmgPt) . "',
     aLearnLvl='" . encode($this -> aLearnLvl) . "',
@@ -44,17 +46,18 @@ class Attack extends Model {
 
   public static function deletes($clause = "") {
     Database::getInstance() -> delete(self::TABLENAME, $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   public function delete() {
-    self::deletes(" WHERE aId='" . encode($this -> aId) . "';");
+    return self::deletes(" WHERE aId='" . encode($this -> aId) . "';");
   }
 
   public function save() {
     if (is_null($this -> aId)) {
-      self::insert();
+      return self::insert();
     } else {
-      self::update();
+      return self::update();
     }
   }
 

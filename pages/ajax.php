@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_STRICT);
+ini_set('display_errors', 1);
 session_start();
 
 // include module
@@ -31,7 +33,7 @@ switch(post('event')) {
         <div class="challangecontainer">
           <div class="charimg"><img style="height:100px;width:100px;"src="' . $opponent -> getImage() . '" /></div>
           <div class="charinfo"><h1>' . $opponent -> getName() . '</h1><h2>Level 1</h2></div>
-          <div class="charbutton"><a href="#">Fight!</a></div>
+          <div class="charbutton"><button id="' . $opponent -> getId() . '" class="challenge">Fight!</button></div>
         </div>';
       }
     } else {
@@ -47,24 +49,114 @@ switch(post('event')) {
     $user -> save();
     break;
   case 'setCharAtk' :
-    $char = $character->byUserId(session('id'));
+    $char = $character -> byUserId(session('id'));
     $charAtk -> setAtkId(post('value'));
-    $charAtk -> setCharId($char->getId());
+    $charAtk -> setCharId($char -> getId());
+
     $charAtk -> save();
     break;
   case 'delCharAtk' :
-    $char = $character->byUserId(session('id'));
-    $charAtk -> setCharId($char->getId());
+    $char = $character -> byUserId(session('id'));
+    $charAtk -> setCharId($char -> getId());
     $charAtk -> delete();
-    $content = '<script> location.reload();</script>';   
+    $content = '<script> location.reload();</script>';
+    break;
+  case 'makeRequest' :
+    $response = array();
+    if (!is_null(post("challenger")) && is_numeric(post("challenger")) && post("challenger") > 0 && !is_null(post("challengee")) && is_numeric(post("challengee")) && post("challenger") > 0) {
+      $chars = array();
+      $chars[] = Character::byId(post("challenger"));
+      $chars[] = Character::byId(post("challengee"));
+      $i = 1;
+
+      $battle = new Battle();
+      $battle -> setTimeOfChallange(date("Y-m-d"));
+      $battle -> setChallengeStatus("p");
+      $battle -> setWhosTurn(rand(1, 2));
+      $battle -> setRound(0);
+      $battle -> setOver(FALSE);
+
+      if ($battle -> save()) {
+
+        foreach ($chars as $char) {
+          $battleChar = new BattleChar();
+          $battleChar -> setBattleId($battle -> getId());
+          $battleChar -> setCharId($char -> getId());
+          $battleChar -> setHp($char -> getHp());
+          $battleChar -> setPlayer($i);
+          if (!$battleChar -> save()) {
+            $response['success'] = false;
+            $response['message'] = "There was a mistake battle could not be started. Player " . $i;
+            $battle -> delete();
+            break;
+          }
+          $i++;
+        }
+
+        if (!isset($response['success'])) {
+          $response['success'] = true;
+          $response['battleId'] = $battle -> getId();
+        }
+
+      } else {
+        $response['success'] = false;
+        $response['message'] = "There was a mistake battle could not be started. battle could not be saved";
+      }
+
+    }
+
+    if (!isset($response['success'])) {
+      $response['success'] = false;
+      $response['message'] = "Ids have an mistake";
+    }
+    $content = json_encode($response);
     break;
   case 'hasChallange' :
+//    $oldTime = strtotime('-1 Minute');
+//    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
     $response = array();
-    if(post('charId') == 22){
-     $response['has'] = "yes";
-     $response['message'] = "You've got Mail! It's not spam!";
+    $challenges = Battle::challanges(post('charId'));
+    if (count($challenges) > 0) {
+      $challenge = $challenges[0];
+      $oppenent = $challenge -> getPlayer(1) -> getChar();
+      $response['has'] = TRUE;
+      $response['message'] = $oppenent -> getName() . " has challenged you to a fight";
+      $response['battle'] = $challenge -> getId();
     } else {
-     $response['has'] = "no";   
+      $response['has'] = FALSE;
+      $response['message'] = "No challenge";
+    }
+    $content = json_encode($response);
+    break;
+  case 'checkRequest' :
+//    $oldTime = strtotime('-1 Minute');
+//    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
+    $response = array();
+    $challenge = Battle::byId(post("battleId"));
+    if (isset($challenge)) {
+      switch ($challenge->getChallengeStatus()) {
+        case 'a':
+            $response['accepted'] = TRUE;
+            $response['rejected'] = FALSE;
+          break;
+        case 'r':
+            $response['accepted'] = FALSE;
+            $response['rejected'] = TRUE;
+            $response['message'] = "Your request was rejected.";
+          break;
+        case 'u':
+            $response['accepted'] = FALSE;
+            $response['rejected'] = TRUE;
+            $response['message'] = "Your opponent isn't available";
+          break;
+        default:
+          $response['accepted'] = FALSE;
+          $response['rejected'] = FALSE;
+          break;
+      }
+    } else {
+      $response['accepted'] = FALSE;
+      $response['rejected'] = FALSE;
     }
     $content = json_encode($response);
     break;

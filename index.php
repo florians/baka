@@ -5,7 +5,7 @@
  * Create Date:   14.03.2013  create of the file
  */
 
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_STRICT);
 ini_set('display_errors', 1);
 
 session_start();
@@ -57,6 +57,7 @@ setInterval("onlineCheck(1)", 3000);
       echo $header;
     }
     ?>
+    <LINK REL="SHORTCUT ICON" HREF="img/design/favicon.png" />
   </head>
   <body>
     <div class="asd"></div>
@@ -83,7 +84,7 @@ setInterval("onlineCheck(1)", 3000);
       </div>
       <div id='contentmargin'>
         <div id='content'>
-          <div id="<? echo $viewObject -> view_id ?>">
+          <div id="<?= $viewObject -> view_id ?>">
             <?php
             if ($viewObject -> getMessages()) {
               echo $viewObject -> getMessages();

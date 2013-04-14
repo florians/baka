@@ -37,5 +37,16 @@ jQuery(document).ready(function() {
     e.preventDefault();
   });
   
-  hasChallange(1);
+
+  jQuery(".right").on("click",".challenge" ,function(){
+    clearInterval(dashboardTime);
+    clearInterval(receiveChallengeTime);
+    renewDash = false;
+    challengeable = false;
+    var challengee = $(this).attr("id");
+    var challenger = $("#myCharId").val();
+    battleRequest(challenger, challengee);
+  });
+  
+  jQuery('.succes').hide('slow').delay(2000);
 });

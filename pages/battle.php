@@ -1,5 +1,11 @@
+<div class="charcontainer">
+  <?php
+  characterProfile($this -> player);
+  characterLife($this -> player ->  getHp(), $this -> player ->  getHp());
+  characterAtk($this -> player -> getAttaks());
+  characterButton('retreat');
+  ?>
+</div>
 <?php
-  characterProfile($this->character,$this->charAtks,'retreat');
-  battlelog();
-  characterProfile($this->character2,$this->charAtks2);
+battlelog()
 ?>

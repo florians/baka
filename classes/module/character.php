@@ -39,15 +39,17 @@ class Character extends Model {
       encode($this -> cPhyDef) . "','" . 
       encode($this -> cHp) . "','" . 
       encode($this -> cImage) . "');");
+      $this->cId = Database::getInstance()->insertId();
     return (is_numeric($this -> cId) && $this -> cId > 0);
   }
 
   public static function updates($clause = "") {
     Database::getInstance() -> update('`'.self::TABLENAME.'`', $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   protected function update() {
-    self::updates("
+    return self::updates("
   	  cUserId='" . encode($this -> cUserId) . "',
   	  cName='" . encode($this -> cName) . "',
   	  cLvlExp='" . encode($this -> cLvlExp) . "',
@@ -62,23 +64,24 @@ class Character extends Model {
 
   public static function deletes($clause = "") {
     Database::getInstance() -> delete('`'.self::TABLENAME.'`', $clause);
+    return (Database::getInstance()->affectedRows() > 0);
   }
 
   public function delete() {
-    self::deletes(" WHERE cId='" . encode($this -> cId) . "';");
+    return self::deletes(" WHERE cId='" . encode($this -> cId) . "';");
   }
 
   public function save() {
     if (is_null($this -> cId)) {
-      self::insert();
+      return self::insert();
     } else {
-      self::update();
+      return self::update();
     }
   }
 
   public static function byId($id = 0) {
     if (is_numeric($id)) {
-      $character = self::select(" WHERE cId = '" . encode($this -> cId) . "';");
+      $character = self::select(" WHERE cId = '" . encode($id) . "';");
       if (count($character) == 1) {
         return $character[0];
       }
@@ -104,7 +107,9 @@ class Character extends Model {
     $filesize = $image['size'];
     $charactername = strtolower($this->cName);
     $extension = end(explode('.', $image['name']));
-    
+    $errorUserId = false;
+    $errorName = false;
+     
     if ($caracterwrite == false) {
       if (self::byUserId($this->cUserId) == true) {
         $errorUserId = true;
@@ -112,7 +117,7 @@ class Character extends Model {
       if (self::byCharacterName($this->cName) == true) {
         $errorName = true;
       }
-      if ($errorUsername == false && $errorEmail == false) {
+      if ($errorUserId == false && $errorName == false) {
         $caracterwrite = true;
       }
     }
@@ -125,9 +130,9 @@ class Character extends Model {
         }else{
           move_uploaded_file($image['tmp_name'],'img/avatar/' . $charactername.'.'.$extension);
           $this->cImage = 'img/avatar/' . $charactername.'.'.$extension;
-          $im = new imagick($this->cImage);
-          $im->cropThumbnailImage(190, 190);
-          $im->writeImage($this->cImage);
+        //  $im = new imagick($this->cImage);
+       //   $im->cropThumbnailImage(190, 190);
+       //   $im->writeImage($this->cImage);
           $this->save();
           return true;
         }
@@ -145,7 +150,7 @@ class Character extends Model {
     return false;
   }
 
-  function byUserId($uId){
+  static function byUserId($uId){
     if (isset($uId)) {
       $character = self::select("WHERE cUserId = '" . $uId . "'");
       if(count($character)){
@@ -168,7 +173,7 @@ class Character extends Model {
   }
   
   public function getUser() {
-    return User::byId($this -> userId);
+    return User::byId($this -> cUserId);
   }
 
   public function setUserId($setVal) {
@@ -251,5 +256,20 @@ class Character extends Model {
     return $this -> cImage;
   }
 
+  public function getLevel(){
+    return Exp::getCharLvl($this->cLvlExp);
+  }
+  
+  public function getCharAtks(){
+    return CharAtk::select(" WHERE caCharId = '".encode($this->cId)."' ");
+  }
+  
+  public function getAttaks(){
+    $attacks = array();
+    foreach($this->getCharAtks() as $charAtk){
+      $attacks = $charAtk->getAtk();
+    }
+    return $attacks;
+  }
 }
 ?>
