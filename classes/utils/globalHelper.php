@@ -75,7 +75,7 @@ function session($parameter = null) {
 // injections encode
 function encode($entry) {
   $encoded = htmlspecialchars($entry);
-  $encoded = mysql_real_escape_string($encoded);
+  $encoded = Database::getInstance()->mysqlRealEscapeStringCheck($encoded);
   return $encoded;
 }
 

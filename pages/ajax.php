@@ -160,5 +160,14 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
+  case 'requestResponse' :
+//    $oldTime = strtotime('-1 Minute');
+//    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
+    $response = array();
+    $battle = Battle::byId(post("battleId"));
+    $battle->setChallengeStatus(post("status"));
+    $battle->save();
+    $content = "yay";
+    break;
 }
 echo $content;

@@ -102,9 +102,9 @@ class Exp extends Model {
   }
   
   public static function getCharLvl($lvlExp){
-    $exp = self::select('WHERE eExp <= ' . encode($lvlExp) . ' AND eTyp = "n"  ORDER BY eExp DESC LIMIT 1')[0];
-    if(isset($exp) && is_numeric($exp->getLvl())){
-      return $exp->getLvl();
+    $exp = self::select('WHERE eExp <= ' . encode($lvlExp) . ' AND eTyp = "n"  ORDER BY eExp DESC LIMIT 1');
+    if(isset($exp[0]) && is_numeric($exp[0]->getLvl())){
+      return $exp[0]->getLvl();
     } else {
       return 0;
     }

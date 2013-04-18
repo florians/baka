@@ -12,24 +12,41 @@ jQuery(document).ready(function() {
   jQuery('.skills a').draggable({
     helper : 'clone'
   });
-  var atkArray = new Array();
+  
+
+  function checkAtkNrs(atkNr) {
+    var atkArray = [];
+    jQuery('.charbottom a').each(function(index, value) {
+      atkArray.push(jQuery(this).attr('rel'));
+    });
+    if (jQuery.inArray(atkNr, atkArray) === -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function countSkills() {
+    count = jQuery('.charbottom .skill').length;
+    return count;
+  }
+
+
   jQuery('.charbottom').droppable({
     drop : function(event, ui) {
       jQuery('.charbottom p').hide();
       var atkId = ui.helper.attr('rel');
-      if (jQuery.inArray(atkId, atkArray)) {
+      if (checkAtkNrs(atkId) == true) {
         jQuery(this).append(jQuery(ui.draggable).clone());
-        atkArray += atkId + ',';
         setCharAtk(atkId);
-        countSkills = jQuery('.charbottom .skill').length;
       } else {
         alert('Skill already learned!')
       }
-      if ((countSkills % 5) == 0) {
-        jQuery('.charbottom').find('a').eq(countSkills - 1).addClass('skillright');
+      if ((countSkills() % 5) == 0) {
+        jQuery('.charbottom').find('a').eq(countSkills() - 1).addClass('skillright');
       }
     }
-  });
+  
   jQuery('#character .charbottom p').replaceWith('<p style="height:50px">Drag your Skills to this place</p>');
 
   jQuery('a.delAtk').click(function(e) {
@@ -48,5 +65,5 @@ jQuery(document).ready(function() {
     battleRequest(challenger, challengee);
   });
   
-  jQuery('.succes').hide('slow').delay(2000);
+  jQuery('.success').delay(5000).fadeOut('3000');
 });

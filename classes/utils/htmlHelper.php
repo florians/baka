@@ -47,7 +47,7 @@ function characterAtk($atks = null) {
     $countatk = 1;
     foreach ($atks as $atk) {
       ($countatk % 5 == 0) ? $addclass = 'skillright' : $addclass = '';
-      $content .= '<a href="#" class="skill ' . $addclass . '" title="' . $atk -> getName() . '">' . $atk -> getName() . '</a>';
+      $content .= '<a href="#" rel="'.$atk[0] -> getId().'" class="skill ' . $addclass . '" title="' . $atk[0] -> getName() . '">' . $atk[0] -> getName() . '</a>';
       $countatk++;
     }
     $content .= '</div>';

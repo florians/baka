@@ -81,7 +81,7 @@ class Battle extends Model {
   
   public static function byId($id = 0){
   if(is_numeric($id)){
-    $objs = self::select(" WHERE bId = '".encode($this->bId)."';");
+    $objs = self::select(" WHERE bId = '".encode($id)."';");
     if(count($objs) == 1){
       return $objs[0];
     }     
@@ -146,7 +146,8 @@ class Battle extends Model {
   }
   
   public function getPlayer($num){
-    return BattleChar::select(" WHERE bcBattleId = '".$this->bId."' AND bcPlayer = '".encode($num)."' LIMIT 1;")[0];
+    $getPlayer = BattleChar::select(" WHERE bcBattleId = '".$this->bId."' AND bcPlayer = '".encode($num)."' LIMIT 1;");
+    return $getPlayer[0];
   }
   
   public static function challanges($charId){

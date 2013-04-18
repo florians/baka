@@ -267,7 +267,7 @@ class Character extends Model {
   public function getAttaks(){
     $attacks = array();
     foreach($this->getCharAtks() as $charAtk){
-      $attacks = $charAtk->getAtk();
+      $attacks[] = $charAtk->getAtk();
     }
     return $attacks;
   }

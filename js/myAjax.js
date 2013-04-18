@@ -64,15 +64,34 @@ function hasChallange(charId){
 	    challangeable = false;
 	    clearInterval(receiveChallengeTime);
 	    if(confirm(obj.message)){
-	      alert("you've accepted");
-	    } else {
-	      challangeable = true;
-	      receiveChallengeTime = setInterval("hasChallange(charId)", 3000);
+        requestResponse(obj.battle,"a");
+        alert("you've accepted");
+      } else {
+        requestResponse(obj.battle,"r");
+        challangeable = true;
+        receiveChallengeTime = setInterval("hasChallange(charId)", 3000);
 	    }
-	  } else {
-	    alert(obj.message);
 	  }
 	});
+}
+
+function requestResponse(battleId,val){
+   $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'requestResponse',
+      'battleId' : battleId,
+      'status' : val
+    }
+  }).done(function(data){
+    alert(data);
+    if(val = "a"){
+      window.location.href = "?page=Battle&fight="+battleId;
+    } else {
+      window.location.href = "?page=Dashboard";
+    }
+  });
 }
 
 function checkRequest($battleId){
@@ -84,20 +103,7 @@ function checkRequest($battleId){
       'battleId' : battleId
     }
   }).done(function(data){
-    // alert(data);
-    var obj = $.parseJSON(data);
-    if(obj.has == true && challangeable){
-      challangeable = false;
-      clearInterval(receiveChallengeTime);
-      if(confirm(obj.message)){
-        alert("you've accepted");
-      } else {
-        challangeable = true;
-        receiveChallengeTime = setInterval("hasChallange(charId)", 3000);
-      }
-    } else {
-      alert(obj.message);
-    }
+    alert(data);
   });
 }
 
