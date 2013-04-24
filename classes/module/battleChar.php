@@ -4,7 +4,7 @@
  */
 class BattleChar extends Model {
  
-  const TABLENAME = 'battleChar';
+  const TABLENAME = 'battlechar';
   const CLASSNAME = 'BattleChar';
   
   private $bcBattleId;

@@ -197,7 +197,7 @@ class User extends Model {
           Message::getInstance() -> addError('Wrong Password!');
         }
         if ($user->getActive() == '0') {
-          Message::getInstance() -> addError('Account not acctivated');
+          Message::getInstance() -> addError('Account not activated');
         }
         if ($username == '') {
           Message::getInstance() -> addError('Username has to be set!');
@@ -218,7 +218,7 @@ class User extends Model {
     $absendermail = "stettler.florian@gmail.com";
     $betreff = "Password Activation";
     $text = "Here is your Password Activation Link \n
-    htttp://".$_SERVER['HTTP_HOST']."/index.php?page=registration&activate=".$link;
+    http://".$_SERVER['HTTP_HOST']."/index.php?page=Registration&activate=".$link;
     mail($empfaenger, $betreff, $text, "From:".$absendername." <".$absendermail.">"."Reply-To: ".$absendername." <".$absendermail.">");
   }
   

@@ -1,51 +1,31 @@
 <h1>Character</h1>
 <?php
 if($this->character){
-  ?>
-  <div class="left">
-    <div class="charcontainer">
-      <?php
-        characterProfile($this -> character);
-        characterLife($this -> character ->  getHp(), $this -> character ->  getHp());
-        characterAtk($this -> character -> getAttaks());
-        characterButton('del');
-      ?>
-    </div>
+?>
+<div class="left">
+  <div class="charcontainer">
+    <?php
+    characterProfile($this -> character);
+    characterLife($this -> character -> getHp(), $this -> character -> getHp());
+    characterAtk($this -> character -> getAttaks());
+    characterButton('del');
+    ?>
   </div>
-  <div class="right">
-    <div class="variation">
-      <a href="#" rel="physical" class="physical variation"> Physical </a>
-      <a href="#" rel="magical" class="magical variation"> Magical </a>
-      <a href="#" rel="special" class="special variation"> Special </a>
-    </div>
-    <div class="skills">
-      <div class="physical selectable">
-        <?php
-        $content = null;
-        foreach ($this->phyAtk as $pAtk) {
-          echo '<a href="#" rel="' . $pAtk -> getId() . '" class="skill" title="' . $pAtk -> getName() . '">' . $pAtk -> getName() . '</a>';
-        }
-        ?>
-      </div>
-      <div class="magical selectable">
-        <?php
-        foreach ($this->magAtk as $mAtk) {
-          echo '<a href="#" rel="' . $mAtk -> getId() . '" class="skill" title="' . $mAtk -> getName() . '">' . $mAtk -> getName() . '</a>';
-        }
-        ?>
-      </div>
-      <div class="special selectable">
-        <?php
-        foreach ($this->specialAtk as $sAtk) {
-          echo '<a href="#" rel="' . $sAtk -> getId() . '" class="skill" title="' . $sAtk -> getName() . '">' . $sAtk -> getName() . '</a>';
-        }
-        ?>
-      </div>
-      <?php
-      echo $content;
-      ?>
-    </div>
+</div>
+<div class="right">
+  <div class="variation">
+    <a href="#" rel="physical" class="physical variation"> Physical </a>
+    <a href="#" rel="magical" class="magical variation"> Magical </a>
+    <a href="#" rel="special" class="special variation"> Special </a>
   </div>
+  <div class="skills">
+    <?php
+    getSkillTable($this -> phyAtk, 'physical');
+    getSkillTable($this -> magAtk, 'magical');
+    getSkillTable($this -> specialAtk, 'special');
+    ?>
+  </div>
+</div>
 <?php
 }else{
 ?>

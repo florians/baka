@@ -31,7 +31,7 @@ switch(post('event')) {
       foreach ($opponents as $opponent) {
         $content .= '
         <div class="challangecontainer">
-          <div class="charimg"><img style="height:100px;width:100px;"src="' . $opponent -> getImage() . '" /></div>
+          <div class="charimg"><img style="height:100px;"src="' . $opponent -> getImage() . '" /></div>
           <div class="charinfo"><h1>' . $opponent -> getName() . '</h1><h2>Level 1</h2></div>
           <div class="charbutton"><button id="' . $opponent -> getId() . '" class="challenge">Fight!</button></div>
         </div>';
@@ -70,7 +70,7 @@ switch(post('event')) {
       $i = 1;
 
       $battle = new Battle();
-      $battle -> setTimeOfChallange(date("Y-m-d"));
+      $battle -> setTimeOfChallange(time());
       $battle -> setChallengeStatus("p");
       $battle -> setWhosTurn(rand(1, 2));
       $battle -> setRound(0);
@@ -112,8 +112,8 @@ switch(post('event')) {
     $content = json_encode($response);
     break;
   case 'hasChallange' :
-//    $oldTime = strtotime('-1 Minute');
-//    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
+    $oldTime = strtotime('-1 Minute');
+    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
     $response = array();
     $challenges = Battle::challanges(post('charId'));
     if (count($challenges) > 0) {
@@ -128,9 +128,9 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
-  case 'checkRequest' :
-//    $oldTime = strtotime('-1 Minute');
-//    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
+  case 'requestCheck' :
+    $oldTime = strtotime('-1 Minute');
+    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
     $response = array();
     $challenge = Battle::byId(post("battleId"));
     if (isset($challenge)) {
@@ -168,6 +168,19 @@ switch(post('event')) {
     $battle->setChallengeStatus(post("status"));
     $battle->save();
     $content = "yay";
+    break;
+   case 'waiting' :
+    $battle = Battle::byId(post("battleId"));
+    $response = array();
+    $response['over'] = (boolean) $battle-> getOver();
+    if($battle -> getWhosTurn() != post("attackingPlayer")){
+      $response['change'] = true;
+      $battleChar = $battle->getPlayer($battle -> getWhosTurn());
+      $response['hp'] =   characterLife($battleChar -> getChar() ->  getHp(), $battleChar ->  getHp());
+    } else {
+      $response['change'] = false;
+    }
+    $content = json_encode($response);
     break;
 }
 echo $content;

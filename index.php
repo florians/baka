@@ -16,30 +16,14 @@ include_once 'classes/include.php';
 if (post('event')) {
   Events::event(post('event'), post());
 }
-if (session('id')) {
-  $allowed = array('Dashboard', 'Battle', 'Character', 'Profile', 'Logout');
-} else {
-  $allowed = array('Home', 'Login', 'Registration');
-}
+
 $viewId = null;
-if (get('page') != '' && in_array(get('page'), $allowed)) {
-  $viewId = 'views_' . strtolower(get('page'));
-} elseif (session('id')) {
-  $viewId = 'views_dashboard';
-} elseif (get('page') == '') {
-  $viewId = 'views_home';
-}
-if (!class_exists($viewId)){
-  //die('Class ' . $viewId . ' not found!');
-  header('Location:index.php');
-}
+$viewId = getViewId(get('page'));
 
 $viewObject = new $viewId;
-
 $viewObject -> init();
-
 $viewObject -> processAction();
-$viewObject -> hasMessagse();
+$viewObject -> hasMessages();
 ?>
 
 <!doctype html>
@@ -60,7 +44,6 @@ setInterval("onlineCheck(1)", 3000);
     <LINK REL="SHORTCUT ICON" HREF="img/design/favicon.png" />
   </head>
   <body>
-    <div class="asd"></div>
     <div id='wrapper'>
       <div id='bannermargin'>
         <div id='banner'>
@@ -68,7 +51,7 @@ setInterval("onlineCheck(1)", 3000);
             <b>B.A.K.A</b>
           </p>
           <p>
-            <span>B</span>attle <span>a</span>nd <span>K</span>nokout <span>A</span>rena
+            <span>B</span>attle <span>a</span>nd <span>K</span>nockout <span>A</span>rena
           </p>
         </div>
       </div>
@@ -76,8 +59,7 @@ setInterval("onlineCheck(1)", 3000);
         <div id='navi'>
           <div id='navipoints'>
             <?php
-
-            include 'pages/navi.php';
+            getNavigation(getConfig('navi'));
             ?>
           </div>
         </div>

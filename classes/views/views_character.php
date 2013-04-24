@@ -17,7 +17,7 @@ class views_character extends views {
     $this -> character = $this -> user -> getChar();
     // gets the character lvl out of the exp db
     if ($this -> character) {
-      // gets all attaks
+      // gets all attacks
       $attak = new Attack();
       $this -> phyAtk = Attack::select('WHERE aTyp = "p"');
       $this -> magAtk = Attack::select('WHERE aTyp = "m"');

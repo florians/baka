@@ -1,12 +1,12 @@
 <?php
 
 function characterProfile($char, $button = null) {
-   $content = '
+  $content = '
     <div class="chartop">
       <div class="charimg"><img style="height:190px" src="' . $char -> getImage() . '" /></div>
       <div class="charattr">
         <h2>' . $char -> getName() . '</h2>
-        <h3>Level ' . $char->getLevel() . '</h3>
+        <h3>Level ' . $char -> getLevel() . '</h3>
         <table class="charattrtable">
           <tr>
             <td>PhyAtk</td>
@@ -32,9 +32,16 @@ function characterProfile($char, $button = null) {
 }
 
 function characterLife($maxLife, $liveLeft) {
+  /*$content = '
+   <div class="charmiddle">
+   <progress value="' . $liveLeft . '" max="' . $maxLife . '"></progress>
+   <span class="progresstext">' . $liveLeft . ' / ' . $maxLife . '</span>
+   </div>';*/
+  $liveLeftProzent = (100 / $maxLife) * $liveLeft;
   $content = '
     <div class="charmiddle">
-      <progress value="' . $liveLeft . '" max="' . $maxLife . '"></progress>
+      <div style="width:' . $liveLeftProzent . '%"class="progressbar_top"></div>
+      <div class="progressbar_bottom"></div>
       <span class="progresstext">' . $liveLeft . ' / ' . $maxLife . '</span>
     </div>';
   echo $content;
@@ -47,7 +54,8 @@ function characterAtk($atks = null) {
     $countatk = 1;
     foreach ($atks as $atk) {
       ($countatk % 5 == 0) ? $addclass = 'skillright' : $addclass = '';
-      $content .= '<a href="#" rel="'.$atk[0] -> getId().'" class="skill ' . $addclass . '" title="' . $atk[0] -> getName() . '">' . $atk[0] -> getName() . '</a>';
+      $content .= '<a href="#" rel="' . $atk[0] -> getId() . '" class="skill ' . $addclass . '" title="' . $atk[0] -> getName() . '"><img src="' . getAtkImag($atk[0] -> getId()) . '" /></a>
+                    <span class="skilltext"><b>' . $atk[0] -> getName() . '</b><br />Damage ' . $atk[0] -> getDmgPt() . '<br />Typ ' . $atk[0] -> getTyp() . '</span>';
       $countatk++;
     }
     $content .= '</div>';
@@ -63,7 +71,7 @@ function characterButton($button) {
   if ($button == 'retreat') {
     $content .= '<a href="#" class="retreat">Retreat</a>';
   } elseif ($button == 'del') {
-    $content .= '<a href="#" class="delAtk">Delete Attaks</a>';
+    $content .= '<a href="#" class="delAtk">Delete Attacks</a>';
   }
   echo $content;
 }
@@ -81,35 +89,28 @@ function battlelog() {
   echo $content;
 }
 
-// will may get uneccessary
-function getMessages($action) {
-  if ($action) {
-    $content = '<div class="messages">';
-    switch($action) {
-      case 'newUser' :
-        $content .= 'New User has been added!';
-        break;
-      case 'noUser' :
-        $content .= 'User already exists!';
-        break;
-      case 'noAnswer' :
-        $content .= 'Answer could not be set!';
-        break;
-      case 'Answeradd' :
-        $content .= 'Answer added!';
-        break;
-      case 'loggedin' :
-        $content .= 'Successfully logged in!';
-        break;
-      case 'loggedout' :
-        $content .= 'Successfully logged out!';
-        break;
-      case 'noUserFound' :
-        $content .= 'User not found!';
-        break;
-    }
-    $content .= '</div>';
-    echo $content;
+function getSkillTable($val, $typ) {
+  $content = '';
+  $content .= '<div class="' . $typ . ' selectable">';
+  foreach ($val as $atk) {
+    $content .= '
+      <div class="skillcontainer">
+        <a href="#" rel="' . $atk -> getId() . '" class="skill" title="' . $atk -> getName() . '"><img src="' . getAtkImag($atk -> getId()) . '" /></a>
+        <span class="skilltext"><b>' . $atk -> getName() . '</b><br />Damage ' . $atk -> getDmgPt() . '<br />Typ ' . $atk -> getTyp() . '</span>
+      </div>';
   }
+  $content .= '</div>';
+  echo $content;
 }
+
+function getAtkImag($atk) {
+  $atkimgpath = 'img/atkimg/' . $atk . '.jpg';
+  if (file_exists($atkimgpath)) {
+    $atkimg = $atkimgpath;
+  } else {
+    $atkimg = 'img/atkimg/def.jpg';
+  }
+  return $atkimg;
+}
+
 ?>

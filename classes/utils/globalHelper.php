@@ -75,7 +75,7 @@ function session($parameter = null) {
 // injections encode
 function encode($entry) {
   $encoded = htmlspecialchars($entry);
-  $encoded = Database::getInstance()->mysqlRealEscapeStringCheck($encoded);
+  $encoded = Database::getInstance() -> mysqlRealEscapeStringCheck($encoded);
   return $encoded;
 }
 
@@ -98,5 +98,50 @@ function pwCrypt($password) {
     $pw = explode('$', $pw);
     return $pw[4];
   }
+}
+
+// generates the Whole Navigation
+function getNavigation($navigation) {
+  $mainlink = 'index.php?page=';
+  foreach ($navigation as $navipoint) {
+    if (get('page') == "" && $navipoint == $navigation[0] || get('page') == $navipoint) {
+      echo "<a class='active' href='" . $mainlink . $navipoint . "'>" . $navipoint . "</a>";
+    } else {
+      echo "<a href='" . $mainlink . $navipoint . "'>" . $navipoint . "</a>";
+    }
+  }
+}
+
+// gets the ViweId of the actual page if exists
+function getViewId($value) {
+  if ($value != '' && in_array($value, getConfig('allowed'))) {
+    $viewId = 'views_' . strtolower($value);
+  } elseif ($value == '') {
+    $viewId = 'views_' . strtolower(getConfig('redirect'));
+  }
+  if (!class_exists($viewId)) {
+    header('Location:index.php');
+  } else {
+    return $viewId;
+  }
+}
+
+// get configs which you have written in config.php
+function getConfig($val = null) {
+  $config = new Config();
+  if (!$val) {
+    $returnval = $config;
+  } else {
+    if (session('id')) {
+      $value = $val . 'Log';
+      $returnval = $config -> $value;
+    } else {
+      $returnval = $config -> $val;
+    }
+    if (empty($returnval) == 1) {
+      $returnval = $config -> $val;
+    }
+  }
+  return $returnval;
 }
 ?>

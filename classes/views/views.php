@@ -11,7 +11,7 @@ abstract class views {
     include ('pages/' . $this -> view_id . '.php');
   }
 
-  public function hasMessagse() {
+  public function hasMessages() {
     if (get('success')) {
       Message::getInstance() -> addSuccess(get('success'));
     }

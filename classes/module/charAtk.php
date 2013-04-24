@@ -1,7 +1,7 @@
 <?php
 class CharAtk extends Model {
 
-  const TABLENAME = 'charAtk';
+  const TABLENAME = 'charatk';
   const CLASSNAME = 'CharAtk';
 
   private $caCharId;

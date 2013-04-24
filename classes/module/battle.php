@@ -145,21 +145,48 @@ class Battle extends Model {
     return BattleChar::select(" WHERE bcBattleId = '".$this->bId."';");
   }
   
+  public function getChars(){
+    $chars = array();
+    foreach($this->getBattleChars() as $battleChar){
+      $chars[] = $battleChar-> getChar();
+    }
+    return $chars;
+  }
+  
   public function getPlayer($num){
     $getPlayer = BattleChar::select(" WHERE bcBattleId = '".$this->bId."' AND bcPlayer = '".encode($num)."' LIMIT 1;");
     return $getPlayer[0];
   }
   
   public static function challanges($charId){
-    return self::select(" JOIN battleChar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".$charId."' AND bcPlayer = '2' ORDER BY bTimeOfChallenge, bId ASC;");
+    return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".encode($charId)."' AND bcPlayer = '2' ORDER BY bTimeOfChallenge, bId ASC;");
   }
   
+  public static function challengeings($charId){
+    return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".encode($charId)."' AND bcPlayer = '1' ORDER BY bTimeOfChallenge, bId ASC;");
+  }
+  
+  public static function fightExists($battleId, $charId){
+    return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bId = ".encode($battleId)." AND bChallengeStatus = 'a' AND bOver = 0 AND bcCharId = '".encode($charId)."' ORDER BY bTimeOfChallenge, bId ASC;");
+  }
+  
+  public function getOpponent($myCharId =''){
+    $opponent = null;
+    $chars = array();
+    $chars = $this->getChars();
+    foreach ($chars as $char) {
+      if($myCharId != $char->getId()){
+        $opponent = $char;
+      }
+    }
+    return $opponent;
+  }
   public static function wins($charId){
-    return count(self::select(" JOIN battleChar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".$charId."' bcPlayer = bWinner AND bOver = true;"));
+    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".encode($charId)."' bcPlayer = bWinner AND bOver = true;"));
   }
   
   public static function loses($charId){
-    return count(self::select(" JOIN battleChar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".$charId."' bcPlayer <> bWinner AND bOver = true;"));
+    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".encode($charId)."' bcPlayer <> bWinner AND bOver = true;"));
   }
   
   public function attack($myBattleChar,$oBattleChar,$attack){

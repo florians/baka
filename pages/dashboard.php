@@ -21,20 +21,20 @@
       </table>
     </div>
   </div>
- <div class="charcontainer">
-   <input type="hidden" id="myCharId" value="<?= $this -> character -> getId() ?>">
-<?php
-if ($this -> character) {
-  characterProfile($this -> character);
-  characterLife($this -> character ->  getHp(), $this -> character ->  getHp());
-  characterAtk($this -> character -> getAttaks());
-} else {
-  echo '
-    <div class="userinfo">
-      There is no Character yet
-    </div>';
-}
-?>
-</div>
+  <div class="charcontainer">
+    <?php
+    if ($this -> character) {
+      ?><input type="hidden" id="myCharId" value="<?= $this -> character -> getId() ?>"><?php
+      characterProfile($this -> character);
+      characterLife($this -> character -> getHp(), $this -> character -> getHp());
+      characterAtk($this -> character -> getAttaks());
+    } else {
+      echo '
+        <div class="userinfo">
+          There is no Character yet
+        </div>';
+    }
+    ?>
+  </div>
 </div>
 <div class="right"><?= pre('Playerlist ist loading'); ?></div>

@@ -24,7 +24,7 @@ function dashboard() {
   }).done(function(html) {
     if(renewDash){
       jQuery('.right').html(html);
-    }
+    } 
   });
 }
 
@@ -41,8 +41,11 @@ function battleRequest(challenger, challengee){
 	}).done(function(data){
    var response = $.parseJSON(data);
    if(response.success == true){
-      alert("Challenge sent");
       $(".right").html('<pre>You have challanged an opponent</pre>');
+      checkRequest = true;
+      battleId = response.battleId;
+      requestCheck(battleId);
+      checkRequestTime = setInterval("requestCheck(battleId)", 3000);
     } else {
       alert(response.message);
     }
@@ -67,9 +70,9 @@ function hasChallange(charId){
         requestResponse(obj.battle,"a");
         alert("you've accepted");
       } else {
+        alert("you've rejected");
         requestResponse(obj.battle,"r");
-        challangeable = true;
-        receiveChallengeTime = setInterval("hasChallange(charId)", 3000);
+        checkRequestTime = setInterval("hasChallange(thisCharId)", 3000);
 	    }
 	  }
 	});
@@ -85,25 +88,11 @@ function requestResponse(battleId,val){
       'status' : val
     }
   }).done(function(data){
-    alert(data);
-    if(val = "a"){
+    if(val == "a"){
       window.location.href = "?page=Battle&fight="+battleId;
     } else {
-      window.location.href = "?page=Dashboard";
+      challangeable = true;
     }
-  });
-}
-
-function checkRequest($battleId){
-  $.ajax({
-    type : 'POST',
-    url : 'pages/ajax.php',
-    data : {
-      'event' : 'checkRequest',
-      'battleId' : battleId
-    }
-  }).done(function(data){
-    alert(data);
   });
 }
 
@@ -128,4 +117,63 @@ function delCharAtk(val) {
   }).done(function(html) {
     jQuery('head').append(html);
   });
+}
+
+function requestCheck(battleId){
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'requestCheck',
+      'battleId' : battleId
+    }
+  }).done(function(data){  
+    if(checkRequest){
+      var obj = $.parseJSON(data);
+      if(obj.accepted == true){
+        window.location.href = "?page=Battle&fight="+battleId;
+      } else {
+        if(obj.rejected == true){
+          alert(obj.message);
+          checkRequest = false;
+          challangeable = true;
+          renewDash = true;
+          clearInterval(checkRequestTime);
+          receiveChallengeTime = setInterval("hasChallange(thisCharId)", 3000);
+          dashboardTime = setInterval("dashboard()", 3000);
+        } 
+      }
+    } 
+  });
+}
+
+function waiting(){
+  if(){
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'waiting',
+      'battleId' : battleId,
+      'attackingPlayer' : attackingPlayer
+    }
+  }).done(function(data){
+    console.log(data);
+      var obj = $.parseJSON(data);
+      if(obj.over){
+        alert("It's over!");
+      } else {
+        if(obj.change == true){
+          jQuery(".myChar .charmiddle").replaceWith(obj.hp);
+          waiting = false;
+          attacking = true;
+          clear(waitingTime);
+        } 
+      }
+  });
+  }
+}
+
+function attack(atkId){
+  
 }

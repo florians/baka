@@ -105,7 +105,7 @@ class Character extends Model {
     
     $filetype = $image['type'];
     $filesize = $image['size'];
-    $charactername = strtolower($this->cName);
+    $charactername = str_replace(' ','_', strtolower($this->cName));
     $extension = end(explode('.', $image['name']));
     $errorUserId = false;
     $errorName = false;

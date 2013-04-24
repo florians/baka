@@ -20,6 +20,7 @@ include_once 'classes/utils/globalHelper.php';
 include_once 'classes/utils/htmlHelper.php';
 include_once 'classes/utils/messages.php';
 include_once 'classes/utils/database.php';
+include_once 'classes/utils/config.php';
 
 // include views
 include_once 'classes/views/views.php';

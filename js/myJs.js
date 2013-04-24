@@ -1,4 +1,12 @@
 jQuery(document).ready(function() {
+  var mouseX;
+  var mouseY;
+  
+  jQuery(document).mousemove(function(e) {
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+  });
+  
   jQuery('.variation .physical').addClass('chosen');
   jQuery('.skills .physical').addClass('show');
   jQuery('.variation a').click(function(e) {
@@ -12,7 +20,7 @@ jQuery(document).ready(function() {
   jQuery('.skills a').draggable({
     helper : 'clone'
   });
-  
+  var atkNr = '';
 
   function checkAtkNrs(atkNr) {
     var atkArray = [];
@@ -30,8 +38,17 @@ jQuery(document).ready(function() {
     count = jQuery('.charbottom .skill').length;
     return count;
   }
-
-
+  
+  function isChallenging(battleId){
+    renewDash = false;
+    challangeable = true;
+    clearInterval(dashboardTime);
+    checkRequest = true;
+    $(".right").html('<pre>You have challanged an opponent</pre>');
+    requestCheck(battleId);
+    checkRequestTime = setInterval("requestCheck(battleId)", 3000);
+  }
+  
   jQuery('.charbottom').droppable({
     drop : function(event, ui) {
       jQuery('.charbottom p').hide();
@@ -40,12 +57,13 @@ jQuery(document).ready(function() {
         jQuery(this).append(jQuery(ui.draggable).clone());
         setCharAtk(atkId);
       } else {
-        alert('Skill already learned!')
+        alert('Skill already learned!');
       }
       if ((countSkills() % 5) == 0) {
         jQuery('.charbottom').find('a').eq(countSkills() - 1).addClass('skillright');
       }
     }
+  });
   
   jQuery('#character .charbottom p').replaceWith('<p style="height:50px">Drag your Skills to this place</p>');
 
@@ -54,6 +72,18 @@ jQuery(document).ready(function() {
     e.preventDefault();
   });
   
+  jQuery('.charbottom a').mouseover(function() {
+    jQuery(this).next('span').css({
+      'top' : mouseY - 100,
+      'left' : mouseX
+    }).fadeIn('100');
+  });
+  jQuery('.charbottom a').mouseleave(function() {
+    jQuery(this).next('span').css({
+      'top' : mouseY - 100,
+      'left' : mouseX
+    }).fadeOut('100');
+  });
 
   jQuery(".right").on("click",".challenge" ,function(){
     clearInterval(dashboardTime);
@@ -63,6 +93,12 @@ jQuery(document).ready(function() {
     var challengee = $(this).attr("id");
     var challenger = $("#myCharId").val();
     battleRequest(challenger, challengee);
+  });
+  
+  jQuery(".myChar a.skill").click(function(e){
+    e.preventDefault();
+    var attackId = $(this).attr("rel");
+    attaking(attackId);
   });
   
   jQuery('.success').delay(5000).fadeOut('3000');
