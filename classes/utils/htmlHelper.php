@@ -31,7 +31,7 @@ function characterProfile($char, $button = null) {
   echo $content;
 }
 
-function characterLife($maxLife, $liveLeft) {
+function characterLifeRaw($maxLife, $liveLeft) {
   /*$content = '
    <div class="charmiddle">
    <progress value="' . $liveLeft . '" max="' . $maxLife . '"></progress>
@@ -44,7 +44,11 @@ function characterLife($maxLife, $liveLeft) {
       <div class="progressbar_bottom"></div>
       <span class="progresstext">' . $liveLeft . ' / ' . $maxLife . '</span>
     </div>';
-  echo $content;
+  return $content;
+}
+
+function characterLife($maxLife, $liveLeft) {
+  echo characterLifeRaw($maxLife, $liveLeft);
 }
 
 function characterAtk($atks = null) {
@@ -54,8 +58,8 @@ function characterAtk($atks = null) {
     $countatk = 1;
     foreach ($atks as $atk) {
       ($countatk % 5 == 0) ? $addclass = 'skillright' : $addclass = '';
-      $content .= '<a href="#" rel="' . $atk[0] -> getId() . '" class="skill ' . $addclass . '" title="' . $atk[0] -> getName() . '"><img src="' . getAtkImag($atk[0] -> getId()) . '" /></a>
-                    <span class="skilltext"><b>' . $atk[0] -> getName() . '</b><br />Damage ' . $atk[0] -> getDmgPt() . '<br />Typ ' . $atk[0] -> getTyp() . '</span>';
+      $content .= '<a href="#" rel="' . $atk -> getId() . '" class="skill ' . $addclass . '" title="' . $atk -> getName() . '"><img src="' . getAtkImag($atk -> getId()) . '" /></a>
+                    <span class="skilltext"><b>' . $atk -> getName() . '</b><br />Damage ' . $atk -> getDmgPt() . '<br />Typ ' . $atk -> getTyp() . '</span>';
       $countatk++;
     }
     $content .= '</div>';

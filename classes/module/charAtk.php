@@ -72,7 +72,8 @@ class CharAtk extends Model {
   }
 
   public function getAtk() {
-    return Attack::select(" WHERE aID = '" . encode($this -> caAtkId) . "'");
+    $atks = Attack::select(" WHERE aID = '" . encode($this -> caAtkId) . "'");
+    return (is_array($atks))?$atks[0]:null;
   }
 
 }

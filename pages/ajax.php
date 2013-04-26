@@ -15,7 +15,7 @@ include_once '../classes/module/user.php';
 
 // include utils
 include_once '../classes/utils/globalHelper.php';
-//include_once '../classes/utils/htmlHelper.php';
+include_once '../classes/utils/htmlHelper.php';
 include_once '../classes/utils/messages.php';
 include_once '../classes/utils/database.php';
 
@@ -169,16 +169,44 @@ switch(post('event')) {
     $battle->save();
     $content = "yay";
     break;
-   case 'waiting' :
+  case 'waiting' :
     $battle = Battle::byId(post("battleId"));
+    $myChar = Character::byId(post("charId"));
     $response = array();
     $response['over'] = (boolean) $battle-> getOver();
     if($battle -> getWhosTurn() != post("attackingPlayer")){
       $response['change'] = true;
-      $battleChar = $battle->getPlayer($battle -> getWhosTurn());
-      $response['hp'] =   characterLife($battleChar -> getChar() ->  getHp(), $battleChar ->  getHp());
+      
+      $response['bLog'] = $battle->getLog();
     } else {
       $response['change'] = false;
+    }
+    $oChar = $battle->getOpponent(post("charId"));
+    $response['oHp'] =   characterLifeRaw($oChar ->  getHp(), $oChar -> getHpLeft(post("battleId")));
+    $response['myHp'] =   characterLifeRaw($myChar ->  getHp(), $myChar ->  getHpLeft(post("battleId")));
+    $response['bLog'] = $battle->getLog();
+    $content = json_encode($response);
+    break;
+    
+  case 'attack' :
+    
+    $response = array();
+    $battle = Battle::byId(post("battleId"));
+    $agrChar = Character::byId(post("charId"));
+    $attack = $agrChar->getAttack(post("atkId"));
+    
+    if($agrChar != null && $battle != null && $attack != null){
+      $response['valid'] = true;
+      $defChar = $battle->getOpponent(post("charId"));      
+      $battle->attack($agrChar, $defChar, $attack);
+      $hp = $defChar ->  getHp();
+      $leftHp = $defChar -> getHpLeft(post("battleId"));
+      $response['oHp'] =   characterLifeRaw($defChar ->  getHp(), $defChar -> getHpLeft(post("battleId")));
+      $response['myHp'] =   characterLifeRaw($agrChar ->  getHp(), $agrChar ->  getHpLeft(post("battleId")));
+      $response['bLog'] = $battle->getLog();
+      $response['over'] = (boolean) $battle-> getOver();
+    } else {
+      $response['valid'] = false;
     }
     $content = json_encode($response);
     break;

@@ -24,8 +24,6 @@ class views_battle extends views {
         $this -> opponent = $this -> battle -> getOpponent($this->character -> getId());
       }
     } else {
-      echo "fuck you";
-      exit;
       header("location: index.php");
     }
   }
@@ -50,10 +48,10 @@ class views_battle extends views {
             battleId = '.$this -> battle -> getId().';
             attackingPlayer = '.$this->battle->getWhosTurn().'
           ';
-          if($this->character -> getId() != $this -> battle -> getPlayer($this->battle->getWhosTurn())){
+          if($this->character -> getId() != $this -> battle -> getPlayer($this->battle->getWhosTurn()) -> getCharId()){
             $header .= '
               waiting();
-              setInterval("waiting()",3000);
+              waitingTime = setInterval("waiting()",3000);
           ';
           } else {
             $header .= '

@@ -148,32 +148,63 @@ function requestCheck(battleId){
 }
 
 function waiting(){
-  if(){
-  $.ajax({
-    type : 'POST',
-    url : 'pages/ajax.php',
-    data : {
-      'event' : 'waiting',
-      'battleId' : battleId,
-      'attackingPlayer' : attackingPlayer
-    }
-  }).done(function(data){
-    console.log(data);
-      var obj = $.parseJSON(data);
-      if(obj.over){
-        alert("It's over!");
-      } else {
-        if(obj.change == true){
-          jQuery(".myChar .charmiddle").replaceWith(obj.hp);
-          waiting = false;
-          attacking = true;
-          clear(waitingTime);
-        } 
+  if(theWait == true){
+    $.ajax({
+      type : 'POST',
+      url : 'pages/ajax.php',
+      data : {
+        'event' : 'waiting',
+        'battleId' : battleId,
+        'charId' : thisCharId,
+        'attackingPlayer' : attackingPlayer
       }
-  });
+    }).done(function(data){
+        var obj = $.parseJSON(data);
+        if(obj.over){
+          alert("It's over!");
+        } else {
+          if(obj.change == true){
+            theWait = false;
+            attacking = true;
+            clearInterval(waitingTime);
+          } 
+          jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
+          jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
+          var log = obj.bLog.replace(/\n/g, "<br>");
+          jQuery(".battlelogtext").html(log);
+        }
+    });
   }
 }
 
 function attack(atkId){
-  
+  console.log(attacking);
+  if (attacking == true) {
+     attacking = false;
+     $.ajax({
+      type : 'POST',
+      url : 'pages/ajax.php',
+      data : {
+        'event' : 'attack',
+        'battleId' : battleId,
+        'charId' : thisCharId,
+        'atkId' : atkId
+      }
+    }).done(function(data){
+      var obj = $.parseJSON(data);
+      if(obj.valid){
+        jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
+        jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
+        var log = obj.bLog.replace(/\n/g, "<br>");
+        jQuery(".battlelogtext").html(log);
+        if(obj.over){
+          alert("");
+        } else {
+          theWait = true;
+          waiting();
+          waitingTime = setInterval("waiting()",3000);
+        }
+      }
+    });
+  };
 }

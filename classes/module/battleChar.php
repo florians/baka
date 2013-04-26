@@ -118,7 +118,7 @@ class BattleChar extends Model {
   public function setPlayer($setVal){
     $this->bcPlayer = $setVal;
   }
-  /*
+  
   private static function hitCrit($damage){
     $returnValue = array();
     $hitCrit = rand(0, 1000);
@@ -159,33 +159,33 @@ class BattleChar extends Model {
   }
   }
   
-  public function hit($attack, $oChar){
-    $myChar = $this->getChar();
-  $atk = 0;
+  public function hit($attack, $agrChar){
+    $defChar = $this->getChar();
+    $atk = 0;
     $def = 0;
   switch ($attack->getTyp()) {
     case 'p':
-      $def = $myChar->getPhyDef();
-      $atk = $oChar->getPhyAtk();
+      $def = $defChar->getPhyDef();
+      $atk = $agrChar->getPhyAtk();
       break;
     case 'm':
-      $def = $myChar->getMagDef();
-      $atk = $oChar->getMagAtk();
+      $def = $defChar->getMagDef();
+      $atk = $agrChar->getMagAtk();
       break;
     case 'a':
-      $def = ($myChar->getMagDef()+$myChar->getPhyDef())/2;
-      $atk = ($oChar->getMagAtk()+$oChar->getMagAtk())/2;
+      $def = ($defChar->getMagDef()+$defChar->getPhyDef())/2;
+      $atk = ($agrChar->getMagAtk()+$agrChar->getMagAtk())/2;
       break;
     default:
       $def = $myChar->getPhyDef();
       $atk = $oChar->getPhyAtk();
       break;
   }
-  $hit = hitCrit( $attack->getDmgPt()+$atk-$def);
+  $hit = self::hitCrit( $attack->getDmgPt()+$atk-$def);
   $this->bcHp -= $hit['dmg'];
   $this->save();
   return $hit;
-  }*/
+  }
   
 }
 ?>

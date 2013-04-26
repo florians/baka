@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
   jQuery(".myChar a.skill").click(function(e){
     e.preventDefault();
     var attackId = $(this).attr("rel");
-    attaking(attackId);
+    attack(attackId);
   });
   
   jQuery('.success').delay(5000).fadeOut('3000');

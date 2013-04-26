@@ -264,12 +264,56 @@ class Character extends Model {
     return CharAtk::select(" WHERE caCharId = '".encode($this->cId)."' ");
   }
   
+  public function getCharAtk($atkId){
+    $charAtks = CharAtk::select(" WHERE caCharId = '".encode($this->cId)."' AND caAtkId = '".encode($atkId)."'");
+    if(is_array($charAtks)){
+      return $charAtks[0];
+    }
+    return null;
+  }
+  
   public function getAttaks(){
     $attacks = array();
     foreach($this->getCharAtks() as $charAtk){
       $attacks[] = $charAtk->getAtk();
     }
     return $attacks;
+  }
+  
+  public function getAttack($atkId){
+    $charAtk = $this -> getCharAtk($atkId);
+    if($charAtk != null){
+      return $charAtk->getAtk();      
+    } else {
+      return NULL;
+    }
+  }
+  
+  public function getBattleChars(){
+    return BattleChar::select(" WHERE bcCharId = '".encode($this->cId)."' ");
+  }
+  
+  public function getBattleChar($battleId){
+    $battleChars = BattleChar::select(" WHERE bcCharId = '".encode($this->cId)."' AND bcBattleId = '".encode($battleId)."' ;");
+    if(is_array($battleChars)){
+      return $battleChars[0];
+    } else {
+      return null;
+    }
+    
+  }
+  
+  public function getHpLeft($battleId = 0){
+    if($battleId == 0){
+      return $this->getHp();
+    } else {
+      $battleChar = $this->getBattleChar($battleId);
+      if(is_object($battleChar)){
+        return  $battleChar->getHp();
+      } else {
+        return $this->getHp();
+      }
+    }
   }
 }
 ?>

@@ -18,6 +18,7 @@ class Battle extends Model {
   private $bChallengeStatus;
   private $bOver;
   private $bWhosTurn;
+  private $bLog;
 
   public static function select($clause = ""){
     $objs = array();
@@ -31,13 +32,14 @@ class Battle extends Model {
   }
   
   protected function insert(){
-    Database::getInstance()->insert(self::TABLENAME, "(bTimeOfChallenge,bRound,bWinner,bChallengeStatus,bOver,bWhosTurn) VALUES('".
+    Database::getInstance()->insert(self::TABLENAME, "(bTimeOfChallenge,bRound,bWinner,bChallengeStatus,bOver,bWhosTurn,bLog) VALUES('".
     encode($this->bTimeOfChallenge)."','".
     encode($this->bRound)."','".
     encode($this->bWinner)."','".
     encode($this->bChallengeStatus)."','".
     encode($this->bOver)."','".
-    encode($this->bWhosTurn)."');");
+    encode($this->bWhosTurn)."','".
+    encode($this->bLog)."');");
     $this->bId = Database::getInstance()->insertId();
     return (Database::getInstance()->affectedRows() > 0);
   }
@@ -56,7 +58,8 @@ class Battle extends Model {
      bWinner='".encode($this->bWinner)."',
      bChallengeStatus='".encode($this->bChallengeStatus)."',
      bOver='".encode($this->bOver)."',
-     bWhosTurn='".encode($this->bWhosTurn)."' WHERE bId='".encode($this->bId)."';");
+     bWhosTurn='".encode($this->bWhosTurn)."',
+     bLog='".encode($this->bLog)."' WHERE bId='".encode($this->bId)."';");
   }
 
   public static function deletes($clause = ""){
@@ -158,6 +161,10 @@ class Battle extends Model {
     return $getPlayer[0];
   }
   
+  public function getLog(){
+    return $this->bLog;
+  }
+  
   public static function challanges($charId){
     return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".encode($charId)."' AND bcPlayer = '2' ORDER BY bTimeOfChallenge, bId ASC;");
   }
@@ -189,18 +196,18 @@ class Battle extends Model {
     return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".encode($charId)."' bcPlayer <> bWinner AND bOver = true;"));
   }
   
-  public function attack($myBattleChar,$oBattleChar,$attack){
-    $oChar = $oBattleChar->getChar();
-    $myChar = $myBattleChar->getChar();
-    $hitInfo = $myBattleChar->hit($attack,$oChar);
-    $this->bLog .= "<p>".$oChar->getName()." attacked ".$myChar->getName()." with ".$attack->getName().".</p>"; 
-    $this->bLog .= "<p>".$hitInfo['status']." ".$myChar->getName()." took ".$hitInfo['dmg']." damage</p>"; 
-    if($myBattleChar->getHp() <= 0){
+  public function attack($agrChar, $defChar, $attack){
+    $defBattleChar = $defChar->getBattleChar($this->bId);
+    $hitInfo = $defBattleChar->hit($attack,$agrChar);
+    $this->bLog .= "".$agrChar->getName()." attacked ".$defChar->getName()." with ".$attack->getName().".\n"; 
+    $this->bLog .= "".$hitInfo['status']." ".$defChar->getName()." took ".$hitInfo['dmg']." damage\n\n"; 
+    if($defBattleChar->getHp() <= 0){
       $this->bOver = 1;
-      $this->bWinner = $myBattleChar->getPlayer();
+      $this->bWinner = $agrChar->getBattleChar($this->bId)->getPlayer();
     } else {
-      $this->bWhosTurn = $myBattleChar->getPlayer();
+      $this->bWhosTurn = $defBattleChar->getPlayer();
     }
+    $this->save();
   }
 }
 ?>
