@@ -32,7 +32,7 @@ switch(post('event')) {
         $content .= '
         <div class="challangecontainer">
           <div class="charimg"><img style="height:100px;"src="' . $opponent -> getImage() . '" /></div>
-          <div class="charinfo"><h1>' . $opponent -> getName() . '</h1><h2>Level 1</h2></div>
+          <div class="charinfo"><h1>' . $opponent -> getName() . '</h1><h2>Level ' . $opponent -> getLevel() . '</h2></div>
           <div class="charbutton"><button id="' . $opponent -> getId() . '" class="challenge">Fight!</button></div>
         </div>';
       }
@@ -161,33 +161,59 @@ switch(post('event')) {
     $content = json_encode($response);
     break;
   case 'requestResponse' :
-//    $oldTime = strtotime('-1 Minute');
-//    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
     $response = array();
     $battle = Battle::byId(post("battleId"));
     $battle->setChallengeStatus(post("status"));
     $battle->save();
+    if(post("status") == "a"){
+      $challenges = Battle::challanges(post('charId'));
+      foreach ($challenges as $challenge) {
+        $challenge->setChallengeStatus("u");
+        $challenge->save();
+      }
+    }
     $content = "yay";
     break;
   case 'waiting' :
+    $response = array();
     $battle = Battle::byId(post("battleId"));
     $myChar = Character::byId(post("charId"));
-    $response = array();
-    $response['over'] = (boolean) $battle-> getOver();
-    if($battle -> getWhosTurn() != post("attackingPlayer")){
-      $response['change'] = true;
-      
-      $response['bLog'] = $battle->getLog();
-    } else {
-      $response['change'] = false;
-    }
     $oChar = $battle->getOpponent(post("charId"));
+    
+    $response['fled'] = ($battle->getChallengeStatus() == "f" || $oChar->isOnline() == false)?true:false;
+    if($response['fled']){
+      $battle->setOver(true);
+      $battle->setWinner($myChar->getBattleChar($battle->getId())->getPlayer());
+      $battle->save();
+      $myChar->winGrow($oChar);
+    } 
+    $myBattleChar = BattleChar::byId(post("battleId"),post("charId"));
+    $response['attack'] = ($battle->getWhosTurn() == $myBattleChar->getPlayer());
+    $response['over'] = (boolean) $battle-> getOver();
     $response['oHp'] =   characterLifeRaw($oChar ->  getHp(), $oChar -> getHpLeft(post("battleId")));
-    $response['myHp'] =   characterLifeRaw($myChar ->  getHp(), $myChar ->  getHpLeft(post("battleId")));
+    $response['myHp'] =   characterLifeRaw($myChar ->  getHp(), $myBattleChar->getHp());
     $response['bLog'] = $battle->getLog();
     $content = json_encode($response);
     break;
-    
+  case 'livepoints':
+    $response = array();
+    $battle = Battle::byId(post("battleId"));
+    $agrChar = Character::byId(post("charId"));
+    $defChar = $battle->getOpponent(post("charId"));
+    $response['oHp'] =   characterLifeRaw($defChar ->  getHp(), $defChar -> getHpLeft(post("battleId")));
+    $response['myHp'] =   characterLifeRaw($agrChar ->  getHp(), $agrChar ->  getHpLeft(post("battleId")));
+    $response['bLog'] = $battle->getLog();
+    $content = json_encode($response);
+    break;
+  case 'hasLevelUp':
+    $response = array();
+    $agrChar = Character::byId(post("charId"));
+    $response['levelup'] = $agrChar->getLevelUp();
+    $agrChar->setLevelUp(FALSE);
+    $agrChar->save();
+    $response['message'] = "you have reached Level ".$agrChar->getLevel();
+    $content = json_encode($response);
+    break;
   case 'attack' :
     
     $response = array();
@@ -197,10 +223,17 @@ switch(post('event')) {
     
     if($agrChar != null && $battle != null && $attack != null){
       $response['valid'] = true;
-      $defChar = $battle->getOpponent(post("charId"));      
-      $battle->attack($agrChar, $defChar, $attack);
-      $hp = $defChar ->  getHp();
-      $leftHp = $defChar -> getHpLeft(post("battleId"));
+      $defChar = $battle->getOpponent(post("charId"));
+      $response['fled'] = (count( Battle::select(" WHERE bId = '".encode($battle->getId())."' AND bChallengeStatus = 'f';")) <= 0 || $oChar->isOnline() == false)? true : false;
+      if($response['fled']){
+        $battle->setChallengeStatus("f");
+        $battle->setOver(true);
+        $battle->setWinner($myChar->getBattleChar($battle->getId())->getPlayer());
+        $battle->save();
+        $myChar->winGrow($oChar);
+      } else {
+        $battle->attack($agrChar, $defChar, $attack);
+      }
       $response['oHp'] =   characterLifeRaw($defChar ->  getHp(), $defChar -> getHpLeft(post("battleId")));
       $response['myHp'] =   characterLifeRaw($agrChar ->  getHp(), $agrChar ->  getHpLeft(post("battleId")));
       $response['bLog'] = $battle->getLog();
@@ -209,6 +242,22 @@ switch(post('event')) {
       $response['valid'] = false;
     }
     $content = json_encode($response);
+    break;
+  case 'getRole' :
+    $response = array();
+    $battle = Battle::byId(post("battleId"));
+    $myBattleChar = BattleChar::byId(post("battleId"),post("charId"));
+    $response['attack'] = ($battle->getWhosTurn() == $myBattleChar->getPlayer());
+    $response['waiting'] = ($battle->getWhosTurn() != $myBattleChar->getPlayer());
+    break;
+  case 'flee' :
+    $response = array();
+    $battle = Battle::byId(post("battleId"));
+    if($battle->getOver() == false){
+      $battle->setChallengeStatus("f");
+      $battle->setOver(true);
+      $battle->save();
+    }
     break;
 }
 echo $content;

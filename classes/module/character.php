@@ -15,6 +15,9 @@ class Character extends Model {
   private $cPhyDef;
   private $cHp;
   private $cImage;
+  private $cAp;
+  private $cLevelUp;
+  private $cDurability;
 
   public static function select($clause = "") {
     $objs = array();
@@ -28,7 +31,7 @@ class Character extends Model {
   }
 
   protected function insert() {
-    Database::getInstance() -> insert('`'.self::TABLENAME.'`', "(cUserId,cName,cLvlExp,cNextLvlExp,cMagAtk,cMagDef,cPhyAtk,cPhyDef,cHp,cImage) VALUES('" . 
+    Database::getInstance() -> insert('`'.self::TABLENAME.'`', "(cUserId,cName,cLvlExp,cNextLvlExp,cMagAtk,cMagDef,cPhyAtk,cPhyDef,cHp,cImage,cAp,cLevelUp,) VALUES('" . 
       encode($this -> cUserId) . "','" . 
       encode($this -> cName) . "','" . 
       encode($this -> cLvlExp) . "','" . 
@@ -37,8 +40,11 @@ class Character extends Model {
       encode($this -> cMagDef) . "','" . 
       encode($this -> cPhyAtk) . "','" . 
       encode($this -> cPhyDef) . "','" . 
-      encode($this -> cHp) . "','" . 
-      encode($this -> cImage) . "');");
+      encode($this -> cHp) . "','" .  
+      encode($this -> cImage) . "','" .  
+      encode($this -> cAp) . "','" . 
+      encode($this -> cLevelUp) .  "','" . 
+      encode($this -> cDurability) . "');");
       $this->cId = Database::getInstance()->insertId();
     return (is_numeric($this -> cId) && $this -> cId > 0);
   }
@@ -59,7 +65,10 @@ class Character extends Model {
   	  cMagDef='" . encode($this -> cMagDef) . "',
   	  cPhyDef='" . encode($this -> cPhyDef) . "',
   	  cHp='" . encode($this -> cHp) . "', 
-  	  cImage" . encode($this -> cImage) . "' WHERE cId='" . encode($this -> cId) . "';");
+  	  cImage='" . encode($this -> cImage) . "', 
+      cAp='" . encode($this -> cAp) . "', 
+      cLevelUp='" . encode($this -> cLevelUp) . "', 
+      cDurability='" . encode($this -> cDurability) . "' WHERE cId='" . encode($this -> cId) . "';");
   }
 
   public static function deletes($clause = "") {
@@ -96,12 +105,12 @@ class Character extends Model {
     
     $this->setLvlExp('0');
     $this->setNextLvlExp('100');
-    $this->setMagAtk('10');
-    $this->setPhyAtk('10');
-    $this->setMagDef('10');
-    $this->setPhyDef('10');
-    $this->setMagAtk('10');
-    $this->setHp('100');
+    $this->setMagAtk('5');
+    $this->setPhyAtk('5');
+    $this->setMagDef('5');
+    $this->setPhyDef('5');
+    $this->setMagAtk('5');
+    $this->setDurability('5');
     
     $filetype = $image['type'];
     $filesize = $image['size'];
@@ -255,6 +264,32 @@ class Character extends Model {
   public function getImage() {
     return $this -> cImage;
   }
+  
+  public function setDurability($setVal) {
+    $this -> cDurability = $setVal;
+    $this -> cHp = $setVal * 30;
+  }
+
+  public function getDurability() {
+    return $this -> cDurability;
+  }
+  
+  public function setAp($setVal) {
+    $this -> cAp = $setVal;
+  }
+
+  public function getAp() {
+    return $this -> cAp;
+  }
+
+  public function setLevelUp($setVal) {
+    $this -> cLevelUp = $setVal;
+  }
+
+  public function getLevelUp() {
+    return (boolean) $this -> cLevelUp;
+  }
+  
 
   public function getLevel(){
     return Exp::getCharLvl($this->cLvlExp);
@@ -314,6 +349,124 @@ class Character extends Model {
         return $this->getHp();
       }
     }
+  }
+  
+  public function winGrow($otherChar){
+   // error_log("got in winGrow\n",3,"C:/xampp/apache/logs/baka.log");
+    $exp = Exp::getWinLvlUp($otherChar->getLevel());
+    $this->growing($exp);
+  }
+  
+  public function loseGrow($otherChar){
+   // error_log("got in loseGrow"."\n",3,"C:/xampp/apache/logs/baka.log");
+    $exp = Exp::getLoseLvlUp($otherChar->getLevel());
+    $this->growing($exp);
+  }
+  
+  private function growing($exp){
+   //  error_log("Exp = ".$exp."\n",3,"C:/xampp/apache/logs/baka.log");
+    $this->cLvlExp += $exp;
+  //  error_log("cLvlExp = ".$this->cLvlExp."\n",3,"C:/xampp/apache/logs/baka.log");
+    $this->cNextLvlExp -= $exp;
+  //  error_log("cNextLvlExp = ".$this->cNextLvlExp."\n",3,"C:/xampp/apache/logs/baka.log");
+    if($this->cNextLvlExp <= 0 && $this->cLvlExp ){
+  //    error_log("level up"."\n",3,"C:/xampp/apache/logs/baka.log");
+      $this->cLevelUp = true;
+      $this->cNextLvlExp = (Exp::getExpToNext($this->cLvlExp) - $this->cLvlExp);
+      $this->grow();
+    } else {
+      $this->cLevelUp = false;
+      if($this->cLvlExp > 1570909908495){
+        $this->cLvlExp = 1570909908495;
+      }
+    }
+    $this->save();
+   // error_log("saved winGrow\n",3,"C:/xampp/apache/logs/baka.log");
+  }
+  private function grow(){
+  //  error_log("growing",3,"C:/xampp/apache/logs/baka.log");
+    $lvl = $this->getLevel();
+    $growth = 1;
+    $giveaway = 1;
+    switch (true) {
+      case $lvl == 100:
+        $growth += 1;
+      case $lvl > 89 && $lvl < 100:
+        $growth += 1;
+      case $lvl > 79 && $lvl < 90:
+        $growth += 1;
+      case $lvl > 69 && $lvl < 80:
+        $growth += 1;
+      case $lvl > 59 && $lvl < 70:
+        $growth += 1;
+      case $lvl > 49 && $lvl < 60:
+        $growth += 1;
+      case $lvl > 39 && $lvl < 50:
+        $growth += 1;
+      case $lvl > 29 && $lvl < 40:
+        $growth += 1;
+      case $lvl > 19 && $lvl < 30:
+        $growth += 1;
+      case $lvl > 9 && $lvl < 20:
+        $growth += 1;
+        break;
+    }
+    switch (true) {
+      case $lvl == 100:
+        $giveaway +=  1;
+      case $lvl > 94 && $lvl < 100:
+        $giveaway +=  1;
+      case $lvl > 89 && $lvl < 95:
+        $giveaway +=  1;
+      case $lvl > 84 && $lvl < 90:
+        $giveaway +=  1;
+      case $lvl > 79 && $lvl < 85:
+        $giveaway +=  1;
+      case $lvl > 74 && $lvl < 80:
+        $giveaway +=  1;
+      case $lvl > 69 && $lvl < 75:
+        $giveaway +=  1;
+      case $lvl > 64 && $lvl < 70:
+        $giveaway +=  1;
+      case $lvl > 59 && $lvl < 65:
+        $giveaway +=  1;
+      case $lvl > 54 && $lvl < 60:
+        $giveaway +=  1;
+      case $lvl > 49 && $lvl < 55:
+        $giveaway +=  1;
+      case $lvl > 44 && $lvl < 50:
+        $giveaway +=  1;
+      case $lvl > 39 && $lvl < 45:
+        $giveaway +=  1;
+      case $lvl > 34 && $lvl < 40:
+        $giveaway +=  1;
+      case $lvl > 29 && $lvl < 35:
+        $giveaway +=  1;
+      case $lvl > 24 && $lvl < 30:
+        $giveaway +=  1;
+      case $lvl > 19 && $lvl < 25:
+        $giveaway +=  1;
+      case $lvl > 14 && $lvl < 20:
+        $giveaway +=  1;
+      case $lvl > 9 && $lvl < 15:
+        $giveaway +=  1;
+      case $lvl > 4 && $lvl < 10:
+        $giveaway +=  1;
+        break;
+    }
+    //error_log("giveaway =".$giveaway,3,"C:/xampp/apache/logs/baka.log");
+    //error_log("growth =".$growth,3,"C:/xampp/apache/logs/baka.log");
+    $this->cAp += $giveaway;
+    $this->cDurability += $growth;
+    $this->cHp = $this->cDurability * 30;
+    $this->cMagAtk += $growth;
+    $this->cMagDef += $growth;
+    $this->cPhyAtk += $growth;
+    $this->cPhyDef += $growth;
+  }
+
+  public function isOnline(){
+    return (boolean) $this->getUser()->getOnline();
   }
 }
 ?>

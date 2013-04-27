@@ -6,7 +6,7 @@ jQuery(document).ready(function() {
     mouseX = e.pageX;
     mouseY = e.pageY;
   });
-  
+    
   jQuery('.variation .physical').addClass('chosen');
   jQuery('.skills .physical').addClass('show');
   jQuery('.variation a').click(function(e) {
@@ -17,6 +17,7 @@ jQuery(document).ready(function() {
     jQuery('.skills .' + attrClass).addClass('show');
     e.preventDefault();
   });
+  
   jQuery('.skills a').draggable({
     helper : 'clone'
   });
@@ -101,5 +102,11 @@ jQuery(document).ready(function() {
     attack(attackId);
   });
   
+  jQuery(".myChar a.retreat").click(function(e){
+    e.preventDefault();
+    if(confirm("Are you sure you want to flee?")){
+      retreat();
+    }
+  });
   jQuery('.success').delay(5000).fadeOut('3000');
 });

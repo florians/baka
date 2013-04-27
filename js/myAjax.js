@@ -68,9 +68,7 @@ function hasChallange(charId){
 	    clearInterval(receiveChallengeTime);
 	    if(confirm(obj.message)){
         requestResponse(obj.battle,"a");
-        alert("you've accepted");
       } else {
-        alert("you've rejected");
         requestResponse(obj.battle,"r");
         checkRequestTime = setInterval("hasChallange(thisCharId)", 3000);
 	    }
@@ -85,6 +83,7 @@ function requestResponse(battleId,val){
     data : {
       'event' : 'requestResponse',
       'battleId' : battleId,
+      'charId' : thisCharId,
       'status' : val
     }
   }).done(function(data){
@@ -148,33 +147,102 @@ function requestCheck(battleId){
 }
 
 function waiting(){
-  if(theWait == true){
+  console.debug("waiting");
+    $(".otherChar .status").text("Attacking");
     $.ajax({
       type : 'POST',
       url : 'pages/ajax.php',
       data : {
         'event' : 'waiting',
         'battleId' : battleId,
-        'charId' : thisCharId,
-        'attackingPlayer' : attackingPlayer
+        'charId' : thisCharId
       }
     }).done(function(data){
-        var obj = $.parseJSON(data);
-        if(obj.over){
-          alert("It's over!");
+      var obj = $.parseJSON(data);
+      if(obj.fled){
+        alert("you're opponent has fled");
+      }
+      if(obj.over){
+        livepoints();
+        hasLevelUp();
+      } else {
+        if(obj.attack == true){
+          attacking = true;
+          clearInterval(waitingTime);
+          $(".myChar .status").text("Attacking");
+          $(".otherChar .status").text("Waiting");
+          livepoints();
         } else {
-          if(obj.change == true){
-            theWait = false;
-            attacking = true;
-            clearInterval(waitingTime);
-          } 
-          jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
-          jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
-          var log = obj.bLog.replace(/\n/g, "<br>");
-          jQuery(".battlelogtext").html(log);
+          if(waitingTime == null){
+            waitingTime = setInterval("waiting()",3000);
+          }
+          $(".myChar .status").text("Waiting");
+          $(".otherChar .status").text("Attacking");
         }
-    });
-  }
+        jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
+        jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
+        var log = obj.bLog.replace(/\n/g, "<br>");
+        jQuery(".battlelogtext").html(log);
+      }
+  });
+}
+
+function livepoints(){
+  console.debug("livepoints!");
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'livepoints',
+      'battleId' : battleId,
+      'charId' : thisCharId
+    }
+  }).done(function(data){
+      var obj = $.parseJSON(data);
+      jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
+      jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
+      var log = obj.bLog.replace(/\n/g, "<br>");
+      jQuery(".battlelogtext").html(log);
+      console.debug("logged");
+  });
+}
+
+function hasLevelUp(){
+  console.debug("haslevelup check started");
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'hasLevelUp',
+      'charId' : thisCharId
+    }
+  }).done(function(data){
+      console.debug(data);
+      var obj = $.parseJSON(data);
+      if(obj.levelup == true){
+        alert(obj.message);
+        console.debug("bye");
+        window.location.href = "?page=Character";
+      } else {
+        console.debug("bye 2");
+        window.location.href = "index.php";
+      }
+  });
+}
+
+function retreat(){
+  console.debug("flee");
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'flee',
+      'battleId' : battleId
+    }
+  }).done(function(data){
+    window.location.href = "index.php";
+    console.debug("fled");
+  });
 }
 
 function attack(atkId){
@@ -191,6 +259,7 @@ function attack(atkId){
         'atkId' : atkId
       }
     }).done(function(data){
+      console.log(data);
       var obj = $.parseJSON(data);
       if(obj.valid){
         jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
@@ -198,11 +267,13 @@ function attack(atkId){
         var log = obj.bLog.replace(/\n/g, "<br>");
         jQuery(".battlelogtext").html(log);
         if(obj.over){
-          alert("");
+          livepoints();
+          hasLevelUp();
         } else {
-          theWait = true;
           waiting();
           waitingTime = setInterval("waiting()",3000);
+          $(".myChar .status").text("Waiting");
+          $(".otherChar .status").text("Attacking");
         }
       }
     });

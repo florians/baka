@@ -123,13 +123,13 @@ class BattleChar extends Model {
     $returnValue = array();
     $hitCrit = rand(0, 1000);
   switch (TRUE) {
-    case 0 <= $hitCrit && $hitCrit <= 50:
+    case 0 <= $hitCrit && $hitCrit <= 30:
       $returnValue['status'] = "Missed";
       $returnValue['dmg'] = 0 * $damage;
       return $returnValue;
       break;
     
-    case 51 <= $hitCrit && $hitCrit <= 200:
+    case 31 <= $hitCrit && $hitCrit <= 200:
       $returnValue['status'] = "Bad hit";
       $returnValue['dmg'] = 0.5 * $damage;
       return $returnValue;
@@ -147,9 +147,15 @@ class BattleChar extends Model {
       return $returnValue;
       break;
     
-    case 951 <= $hitCrit && $hitCrit <= 1000:
+    case 951 <= $hitCrit && $hitCrit < 1000:
       $returnValue['status'] = "Excellent hit";
-      $returnValue['dmg'] = 0.5 * $damage;
+      $returnValue['dmg'] = 2 * $damage;
+      return $returnValue;
+      break;
+    
+    case 951 <= $hitCrit && $hitCrit < 1000:
+      $returnValue['status'] = "Incredible hit";
+      $returnValue['dmg'] = 4 * $damage;
       return $returnValue;
       break;
       
@@ -165,23 +171,24 @@ class BattleChar extends Model {
     $def = 0;
   switch ($attack->getTyp()) {
     case 'p':
-      $def = $defChar->getPhyDef();
-      $atk = $agrChar->getPhyAtk();
+      $def = ($defChar->getPhyDef())/2;
+      $atk = ($agrChar->getPhyAtk())/2;
       break;
     case 'm':
-      $def = $defChar->getMagDef();
-      $atk = $agrChar->getMagAtk();
+      $def = ($defChar->getMagDef())/2;
+      $atk = ($agrChar->getMagAtk())/2;
       break;
     case 'a':
-      $def = ($defChar->getMagDef()+$defChar->getPhyDef())/2;
-      $atk = ($agrChar->getMagAtk()+$agrChar->getMagAtk())/2;
+      $def = (($defChar->getMagDef()+$defChar->getPhyDef())/2)/2;
+      $atk = (($agrChar->getMagAtk()+$agrChar->getMagAtk())/2)/2;
       break;
     default:
-      $def = $myChar->getPhyDef();
-      $atk = $oChar->getPhyAtk();
+      $def = ($myChar->getPhyDef())/2;
+      $atk = ($oChar->getPhyAtk())/2;
       break;
   }
   $hit = self::hitCrit( $attack->getDmgPt()+$atk-$def);
+  $hit['dmg'] = round(($hit['dmg']>= 0)?$hit['dmg']:0);
   $this->bcHp -= $hit['dmg'];
   $this->save();
   return $hit;

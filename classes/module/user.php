@@ -16,6 +16,7 @@ class User extends Model {
   private $uLastActivity;
   private $uOnline;
   private $uActive;
+  private $uListOnDashboard;
 
   public static function select($clause = "") {
     $objs = array();
@@ -29,7 +30,7 @@ class User extends Model {
   }
 
   protected function insert() {
-    Database::getInstance() -> insert(self::TABLENAME, "(uFirstname,uLastname,uUsername,uPassword,uEmail,uLastActivity,uOnline,uActive) VALUES('" . 
+    Database::getInstance() -> insert(self::TABLENAME, "(uFirstname,uLastname,uUsername,uPassword,uEmail,uLastActivity,uOnline,uActive,uListOnDashboard) VALUES('" . 
       encode($this -> uFirstname) . "','" . 
       encode($this -> uLastname) . "','" . 
       encode($this -> uUsername) . "','" . 
@@ -37,7 +38,8 @@ class User extends Model {
       encode($this -> uEmail) . "','" . 
       encode($this -> uLastActivity) . "','" . 
       encode($this -> uOnline) . "','" . 
-      encode($this -> uActive) . "');");
+      encode($this -> uActive) . "','" . 
+      encode($this -> uListOnDashboard) . "');");
       $this->uId = Database::getInstance()->insertId();
     return (Database::getInstance()->affectedRows() > 0);
   }
@@ -56,6 +58,7 @@ class User extends Model {
   	  uEmail='" . encode($this -> uEmail) . "',
   	  uLastActivity='" . encode($this -> uLastActivity) . "',
   	  uOnline='" . encode($this -> uOnline) . "', 
+  	  uListOnDashboard='" . encode($this -> uListOnDashboard) . "', 
   	  uActive='" . encode($this -> uActive) . "' WHERE uId='" . encode($this -> uId) . "';");
   }
 
@@ -235,6 +238,15 @@ class User extends Model {
   public function getId() {
     return $this -> uId;
   }
+  
+  public function setListOnDashboard($setVal) {
+    $this -> uListOnDashboard = $setVal;
+  }
+
+  public function getListOnDashboard() {
+    return (boolean) $this -> uListOnDashboard;
+  }
+  
   public function setFirstname($setVal) {
     $this -> uFirstname = $setVal;
   }

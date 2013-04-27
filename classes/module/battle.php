@@ -5,6 +5,7 @@
  *    'r' = rejected
  *    'p' = pending
  *    'u' = unavailable
+ *    'f' = fled
  */
 class Battle extends Model {
  
@@ -197,17 +198,22 @@ class Battle extends Model {
   }
   
   public function attack($agrChar, $defChar, $attack){
+    $this->bRound++;
     $defBattleChar = $defChar->getBattleChar($this->bId);
     $hitInfo = $defBattleChar->hit($attack,$agrChar);
     $this->bLog .= "".$agrChar->getName()." attacked ".$defChar->getName()." with ".$attack->getName().".\n"; 
     $this->bLog .= "".$hitInfo['status']." ".$defChar->getName()." took ".$hitInfo['dmg']." damage\n\n"; 
     if($defBattleChar->getHp() <= 0){
+    error_log("battle is over",3,"C:/xampp/apache/logs/baka.log");
       $this->bOver = 1;
       $this->bWinner = $agrChar->getBattleChar($this->bId)->getPlayer();
+      $agrChar->winGrow($defChar);
+      $defChar->loseGrow($agrChar);
+      $this->save();
     } else {
       $this->bWhosTurn = $defBattleChar->getPlayer();
+      $this->save();
     }
-    $this->save();
   }
 }
 ?>

@@ -47,18 +47,9 @@ class views_battle extends views {
           $header .= '
             battleId = '.$this -> battle -> getId().';
             attackingPlayer = '.$this->battle->getWhosTurn().'
+            waiting();
+            battle = true;
           ';
-          if($this->character -> getId() != $this -> battle -> getPlayer($this->battle->getWhosTurn()) -> getCharId()){
-            $header .= '
-              waiting();
-              waitingTime = setInterval("waiting()",3000);
-          ';
-          } else {
-            $header .= '
-              attacking = true;
-              theWait = false;
-          ';
-          }
         }
       } else {
         $header .= ' 
