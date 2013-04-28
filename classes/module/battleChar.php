@@ -147,13 +147,13 @@ class BattleChar extends Model {
       return $returnValue;
       break;
     
-    case 951 <= $hitCrit && $hitCrit < 1000:
+    case 951 <= $hitCrit && $hitCrit <= 999:
       $returnValue['status'] = "Excellent hit";
       $returnValue['dmg'] = 2 * $damage;
       return $returnValue;
       break;
     
-    case 951 <= $hitCrit && $hitCrit < 1000:
+    case $hitCrit == 1000:
       $returnValue['status'] = "Incredible hit";
       $returnValue['dmg'] = 4 * $damage;
       return $returnValue;

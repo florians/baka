@@ -314,5 +314,17 @@ class User extends Model {
   public function getChar(){
     return Character::byUserId($this->uId);
   }
+  public function getWins(){
+    return $this->getChar()->getWins();
+  }
+  
+  public function getLoses(){
+    return $this->getChar()->getLoses();
+  }
+  
+  public function getBattleTotal(){
+    $char = $this->getChar();
+    return $char->getLoses()+$char->getWins();
+  }
 }
 ?>

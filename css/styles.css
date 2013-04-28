@@ -1,152 +1,172 @@
+/*
+ * @Author Florian Stettler
+ * Create Date:   01.12.2012  create of the file  
+ *                05.01.2013  update of #content  
+ */
+/* import functions */
+/*
+ * @Author Florian Stettler
+ * Create Date:   01.12.2012  create of the file    
+ */
+/* base constants */
+/* body */
+/* Base */
+/* CSS */
 * {
   margin: 0;
   padding: 0;
-  font-family: Arial
+  font-family: Arial;
 }
 body {
   background-color: #424242;
-  background-image: url(../img/design/textur.png)
+  background-image: url(../img/design/textur.png);
 }
 body pre {
   padding: 10px;
-  background-color: #fff;
-  border: 1px solid black
+  background-color: #FFFFFF;
+  border: 1px solid black;
 }
 body #wrapper {
   padding-top: 10px;
   width: 100%;
   margin: auto auto auto auto;
-  height: auto
+  height: auto;
+  /* Banner constants*/
+
+  /* Navigation constants */
+
+  /* Content constants */
+
 }
 body #wrapper #bannermargin #banner {
   width: 1200px;
   margin: auto auto auto auto;
-  box-shadow: 0 0 10px #000;
-  -moz-box-shadow: 0 0 10px #000;
-  -webkit-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000000;
+  -moz-box-shadow: 0 0 10px #000000;
+  -webkit-box-shadow: 0 0 10px #000000;
   height: 250px;
   position: relative;
   background-image: url(../img/design/logo3.png), url(../img/design/logo3.png);
   background-size: 250px;
-  background-position: 20px, 930px;
-  background-color: #000;
+  background-position: 20px,930px;
+  background-color: #000000;
   background-repeat: no-repeat;
-  color: #f2f2f2;
+  color: #F2F2F2;
   text-align: center;
-  font-weight: bold
+  font-weight: bold;
 }
 body #wrapper #bannermargin p {
   font-size: 20px;
   text-transform: uppercase;
-  font-family: 'Metal Mania', cursive
+  font-family: 'Metal Mania', cursive;
 }
 body #wrapper #bannermargin p b {
   font-size: 170px;
   font-family: 'Metal Mania', cursive;
-  color: #c20000
+  color: #C20000;
 }
 body #wrapper #bannermargin p span {
-  color: #c20000
+  color: #C20000;
 }
 body #wrapper #navimargin {
   margin: 10px 0 10px 0;
   height: 40px;
   min-width: 1200px;
-  box-shadow: 0 0 10px #000;
-  -moz-box-shadow: 0 0 10px #000;
-  -webkit-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000000;
+  -moz-box-shadow: 0 0 10px #000000;
+  -webkit-box-shadow: 0 0 10px #000000;
   background-image: none;
   background-position: top;
   background-repeat: no-repeat;
   background-size: auto;
-  background-color: #121212
+  background-color: #121212;
 }
 body #wrapper #navimargin #navi {
   width: 1200px;
   margin: auto auto auto auto;
-  height: 40px
+  height: 40px;
 }
 body #wrapper #navimargin #navi #navipoints {
   width: 1200px;
   height: 40px;
-  line-height: 40px
+  line-height: 40px;
 }
 body #wrapper #navimargin #navi #navipoints a {
   text-decoration: none;
-  color: #eda709;
-  padding: 10px
+  color: #EDA709;
+  padding: 10px;
 }
 body #wrapper #navimargin #navi #navipoints a:hover {
   color: white;
-  border-width: 1px 0;
+  border-width: 1px 0px;
   border-style: solid;
-  border-color: #fff;
-  box-shadow: 0 0 10px #000;
-  -moz-box-shadow: 0 0 10px #000;
-  -webkit-box-shadow: 0 0 10px #000
+  border-color: #ffffff;
+  box-shadow: 0 0 10px #000000;
+  -moz-box-shadow: 0 0 10px #000000;
+  -webkit-box-shadow: 0 0 10px #000000;
 }
 body #wrapper #navimargin #navi #navipoints .active {
   color: white;
-  border-width: 1px 0;
+  border-width: 1px 0px;
   border-style: solid;
-  border-color: #fff;
-  box-shadow: 0 0 10px #000;
-  -moz-box-shadow: 0 0 10px #000;
-  -webkit-box-shadow: 0 0 10px #000
+  border-color: #ffffff;
+  box-shadow: 0 0 10px #000000;
+  -moz-box-shadow: 0 0 10px #000000;
+  -webkit-box-shadow: 0 0 10px #000000;
 }
 body #wrapper #contentmargin {
   width: 1200px;
-  margin: auto auto auto auto
+  margin: auto auto auto auto;
 }
 body #wrapper #contentmargin #content {
   width: 1200px;
   float: left;
-  box-shadow: 0 0 10px #000;
-  -moz-box-shadow: 0 0 10px #000;
-  -webkit-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000000;
+  -moz-box-shadow: 0 0 10px #000000;
+  -webkit-box-shadow: 0 0 10px #000000;
   background-color: #494b4a;
   zoom: 1;
   background-color: transparent\9;
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#e6494b4a, endColorstr=#e6494b4a)";
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#e6494b4a,endColorstr=#e6494b4a);
-  background-color: rgba(73,75,74,0.9);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#e6494b4a, endColorstr=#e6494b4a);
+  background-color: rgba(73, 75, 74, 0.9);
   min-height: 500px;
-  height: 100%
+  height: 100%;
 }
 body #wrapper #contentmargin #content .messages {
   font-style: italic;
   font-size: 90%;
-  background-color: #f2f2f2;
+  background-color: #F2F2F2;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 10px black;
   margin-bottom: 10px;
   font-weight: bold;
-  margin: 10px
+  margin: 10px;
 }
 body #wrapper #contentmargin #content .success {
-  color: #008000
+  color: #008000;
 }
 body #wrapper #contentmargin #content .error {
-  color: #f00
+  color: #ff0000;
 }
 body #wrapper #contentmargin #content .notice {
-  color: darkyellow
+  color: darkyellow;
 }
 body #wrapper #battle .charcontainer {
   width: 380px;
-  border-width: 0;
+  border-width: 0px;
   border-style: solid;
   border-color: black;
   padding: 10px;
-  float: left
+  float: left;
 }
 body #wrapper #battle .charcontainer .chartop {
   float: left;
   margin-bottom: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #battle .charcontainer .chartop .charimg {
   background-color: grey;
@@ -155,12 +175,12 @@ body #wrapper #battle .charcontainer .chartop .charimg {
   float: left;
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  -moz-border-radius: 5px 0 0 5px;
 }
 body #wrapper #battle .charcontainer .chartop .charimg img {
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  -moz-border-radius: 5px 0 0 5px;
 }
 body #wrapper #battle .charcontainer .chartop .charattr {
   background-color: lightgrey;
@@ -169,32 +189,32 @@ body #wrapper #battle .charcontainer .chartop .charattr {
   float: left;
   border-radius: 0 5px 5px 0;
   -webkit-border-radius: 0 5px 5px 0;
-  -moz-border-radius: 0 5px 5px 0
+  -moz-border-radius: 0 5px 5px 0;
 }
 body #wrapper #battle .charcontainer .chartop .charattr h2 {
   font-size: 20px;
   height: 30px;
   border-bottom: 1px solid black;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #battle .charcontainer .chartop .charattr h3 {
   font-size: 17px;
   height: 20px;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #battle .charcontainer .chartop .charattr table.charattrtable {
   width: 178px;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #battle .charcontainer .chartop .charattr table.charattrtable td {
-  width: 98px
+  width: 98px;
 }
 body #wrapper #battle .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
   float: left;
   margin-bottom: 10px;
-  position: relative
+  position: relative;
 }
 body #wrapper #battle .charcontainer .progressbar_top {
   height: 30px;
@@ -202,15 +222,12 @@ body #wrapper #battle .charcontainer .progressbar_top {
   border-radius: 7px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  box-shadow: 0 0 10px #8b0000;
-  -moz-box-shadow: 0 0 10px #8b0000;
-  -webkit-box-shadow: 0 0 10px #8b0000;
-  background-color: #dc0000;
-  background-image: -webkit-linear-gradient(top,#dc0000,#c20000);
-  background-image: -moz-linear-gradient(top,#dc0000,#c20000);
-  background-image: -o-linear-gradient(top,#dc0000,#c20000);
-  background-image: -ms-linear-gradient(top,#dc0000,#c20000);
-  background-image: linear-gradient(top,#dc0000,#c20000)
+  background-color: #2f9e2e;
+  background-image: -webkit-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -moz-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -o-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -ms-linear-gradient(top, #2f9e2e, #387831);
+  background-image: linear-gradient(top, #2f9e2e, #387831);
 }
 body #wrapper #battle .charcontainer .progressbar_bottom {
   height: 30px;
@@ -221,12 +238,12 @@ body #wrapper #battle .charcontainer .progressbar_bottom {
   -moz-box-shadow: 0 0 10px #8b0000;
   -webkit-box-shadow: 0 0 10px #8b0000;
   background-color: #808080;
-  background-image: -webkit-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -moz-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -o-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -ms-linear-gradient(top,#808080,#5a5a5a);
-  background-image: linear-gradient(top,#808080,#5a5a5a);
-  width: 100%
+  background-image: -webkit-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -o-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -ms-linear-gradient(top, #808080, #5a5a5a);
+  background-image: linear-gradient(top, #808080, #5a5a5a);
+  width: 100%;
 }
 body #wrapper #battle .charcontainer .charmiddle span.progresstext {
   position: absolute;
@@ -237,8 +254,32 @@ body #wrapper #battle .charcontainer .charmiddle span.progresstext {
   margin-left: -150px;
   left: 50%;
   text-align: center;
-  color: #fff;
-  font-weight: bold
+  color: #FFFFFF;
+  font-weight: bold;
+}
+body #wrapper #battle .charcontainer .full {
+  background-color: #2f9e2e;
+  background-image: -webkit-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -moz-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -o-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -ms-linear-gradient(top, #2f9e2e, #387831);
+  background-image: linear-gradient(top, #2f9e2e, #387831);
+}
+body #wrapper #battle .charcontainer .half {
+  background-color: #d9b504;
+  background-image: -webkit-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -moz-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -o-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -ms-linear-gradient(top, #d9b504, #d98e04);
+  background-image: linear-gradient(top, #d9b504, #d98e04);
+}
+body #wrapper #battle .charcontainer .danger {
+  background-color: #a60303;
+  background-image: -webkit-linear-gradient(top, #a60303, #590202);
+  background-image: -moz-linear-gradient(top, #a60303, #590202);
+  background-image: -o-linear-gradient(top, #a60303, #590202);
+  background-image: -ms-linear-gradient(top, #a60303, #590202);
+  background-image: linear-gradient(top, #a60303, #590202);
 }
 body #wrapper #battle .charcontainer .charbottom {
   float: left;
@@ -248,14 +289,14 @@ body #wrapper #battle .charcontainer .charbottom {
   background-color: lightgrey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #battle .charcontainer .charbottom .skill {
   float: left;
   width: 70px;
   height: 70px;
-  padding: 0;
-  margin: 0 5px 4px 0;
+  padding: 0px;
+  margin: 0px 5px 4px 0px;
   background-color: grey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -263,7 +304,7 @@ body #wrapper #battle .charcontainer .charbottom .skill {
   text-decoration: none;
   color: black;
   font-weight: normal;
-  border: 0
+  border: 0px;
 }
 body #wrapper #battle .charcontainer .charbottom .skill img {
   border-radius: 5px;
@@ -272,22 +313,22 @@ body #wrapper #battle .charcontainer .charbottom .skill img {
   height: 70px;
   width: 70px;
   cursor: pointer;
-  border: 0
+  border: 0px;
 }
 body #wrapper #battle .charcontainer .charbottom .skilltext {
   position: absolute;
   display: none;
-  background-color: #f5ecec;
+  background-color: #F5ECEC;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  box-shadow: 0 0 5px #000;
-  -moz-box-shadow: 0 0 5px #000;
-  -webkit-box-shadow: 0 0 5px #000
+  box-shadow: 0 0 5px #000000;
+  -moz-box-shadow: 0 0 5px #000000;
+  -webkit-box-shadow: 0 0 5px #000000;
 }
 body #wrapper #battle .charcontainer .charbottom .skillright {
-  margin-right: 0
+  margin-right: 0px;
 }
 body #wrapper #battle .charcontainer a {
   border-radius: 3px;
@@ -300,7 +341,17 @@ body #wrapper #battle .charcontainer a {
   text-decoration: none;
   background-color: lightgrey;
   display: block;
-  margin-top: 15px
+  margin-top: 15px;
+}
+body #wrapper #battle .charcontainer .status {
+  width: 370px;
+  padding: 5px;
+  font-weight: bold;
+  background-color: lightgrey;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
 }
 body #wrapper #battle .battlelog {
   margin-top: 3px;
@@ -309,7 +360,7 @@ body #wrapper #battle .battlelog {
   float: left;
   border-width: 0 1px 0 1px;
   border-style: solid;
-  border-color: #000
+  border-color: #000000;
 }
 body #wrapper #battle .battlelog .battlelogvs {
   font-size: 80px;
@@ -318,32 +369,43 @@ body #wrapper #battle .battlelog .battlelogvs {
   text-align: center;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: #000
+  border-color: #000000;
 }
 body #wrapper #battle .battlelog .battlelogtext {
-  padding: 10px
+  height: 300px;
+  overflow: auto;
+}
+body #wrapper #battle .battlelog .battlelogtext span.even,
+body #wrapper #battle .battlelog .battlelogtext span.odd {
+  padding: 10px;
+  display: block;
+  background-color: #b2b2b2;
+}
+body #wrapper #battle .battlelog .battlelogtext span.odd {
+  background-color: #d8d8d8;
 }
 body #wrapper #character {
-  padding: 10px
+  padding: 10px;
 }
 body #wrapper #character .left {
   float: left;
-  padding-right: 20px
+  padding-right: 20px;
 }
 body #wrapper #character .left .charcontainer {
   width: 380px;
-  border-width: 0;
+  border-width: 0px;
   border-style: solid;
   border-color: black;
-  padding: 0;
-  float: left
+  padding: 0px;
+  float: left;
+  margin-bottom: 10px;
 }
 body #wrapper #character .left .charcontainer .chartop {
   float: left;
   margin-bottom: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #character .left .charcontainer .chartop .charimg {
   background-color: grey;
@@ -352,12 +414,12 @@ body #wrapper #character .left .charcontainer .chartop .charimg {
   float: left;
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  -moz-border-radius: 5px 0 0 5px;
 }
 body #wrapper #character .left .charcontainer .chartop .charimg img {
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  -moz-border-radius: 5px 0 0 5px;
 }
 body #wrapper #character .left .charcontainer .chartop .charattr {
   background-color: lightgrey;
@@ -366,32 +428,32 @@ body #wrapper #character .left .charcontainer .chartop .charattr {
   float: left;
   border-radius: 0 5px 5px 0;
   -webkit-border-radius: 0 5px 5px 0;
-  -moz-border-radius: 0 5px 5px 0
+  -moz-border-radius: 0 5px 5px 0;
 }
 body #wrapper #character .left .charcontainer .chartop .charattr h2 {
   font-size: 20px;
   height: 30px;
   border-bottom: 1px solid black;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #character .left .charcontainer .chartop .charattr h3 {
   font-size: 17px;
   height: 20px;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #character .left .charcontainer .chartop .charattr table.charattrtable {
   width: 178px;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #character .left .charcontainer .chartop .charattr table.charattrtable td {
-  width: 98px
+  width: 98px;
 }
 body #wrapper #character .left .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
   float: left;
   margin-bottom: 10px;
-  position: relative
+  position: relative;
 }
 body #wrapper #character .left .charcontainer .progressbar_top {
   height: 30px;
@@ -399,15 +461,12 @@ body #wrapper #character .left .charcontainer .progressbar_top {
   border-radius: 7px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  box-shadow: 0 0 10px #8b0000;
-  -moz-box-shadow: 0 0 10px #8b0000;
-  -webkit-box-shadow: 0 0 10px #8b0000;
-  background-color: #dc0000;
-  background-image: -webkit-linear-gradient(top,#dc0000,#c20000);
-  background-image: -moz-linear-gradient(top,#dc0000,#c20000);
-  background-image: -o-linear-gradient(top,#dc0000,#c20000);
-  background-image: -ms-linear-gradient(top,#dc0000,#c20000);
-  background-image: linear-gradient(top,#dc0000,#c20000)
+  background-color: #2f9e2e;
+  background-image: -webkit-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -moz-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -o-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -ms-linear-gradient(top, #2f9e2e, #387831);
+  background-image: linear-gradient(top, #2f9e2e, #387831);
 }
 body #wrapper #character .left .charcontainer .progressbar_bottom {
   height: 30px;
@@ -418,12 +477,12 @@ body #wrapper #character .left .charcontainer .progressbar_bottom {
   -moz-box-shadow: 0 0 10px #8b0000;
   -webkit-box-shadow: 0 0 10px #8b0000;
   background-color: #808080;
-  background-image: -webkit-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -moz-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -o-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -ms-linear-gradient(top,#808080,#5a5a5a);
-  background-image: linear-gradient(top,#808080,#5a5a5a);
-  width: 100%
+  background-image: -webkit-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -o-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -ms-linear-gradient(top, #808080, #5a5a5a);
+  background-image: linear-gradient(top, #808080, #5a5a5a);
+  width: 100%;
 }
 body #wrapper #character .left .charcontainer .charmiddle span.progresstext {
   position: absolute;
@@ -434,8 +493,32 @@ body #wrapper #character .left .charcontainer .charmiddle span.progresstext {
   margin-left: -150px;
   left: 50%;
   text-align: center;
-  color: #fff;
-  font-weight: bold
+  color: #FFFFFF;
+  font-weight: bold;
+}
+body #wrapper #character .left .charcontainer .full {
+  background-color: #2f9e2e;
+  background-image: -webkit-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -moz-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -o-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -ms-linear-gradient(top, #2f9e2e, #387831);
+  background-image: linear-gradient(top, #2f9e2e, #387831);
+}
+body #wrapper #character .left .charcontainer .half {
+  background-color: #d9b504;
+  background-image: -webkit-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -moz-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -o-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -ms-linear-gradient(top, #d9b504, #d98e04);
+  background-image: linear-gradient(top, #d9b504, #d98e04);
+}
+body #wrapper #character .left .charcontainer .danger {
+  background-color: #a60303;
+  background-image: -webkit-linear-gradient(top, #a60303, #590202);
+  background-image: -moz-linear-gradient(top, #a60303, #590202);
+  background-image: -o-linear-gradient(top, #a60303, #590202);
+  background-image: -ms-linear-gradient(top, #a60303, #590202);
+  background-image: linear-gradient(top, #a60303, #590202);
 }
 body #wrapper #character .left .charcontainer .charbottom {
   float: left;
@@ -445,14 +528,14 @@ body #wrapper #character .left .charcontainer .charbottom {
   background-color: lightgrey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #character .left .charcontainer .charbottom .skill {
   float: left;
   width: 70px;
   height: 70px;
-  padding: 0;
-  margin: 0 5px 4px 0;
+  padding: 0px;
+  margin: 0px 5px 4px 0px;
   background-color: grey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -460,7 +543,7 @@ body #wrapper #character .left .charcontainer .charbottom .skill {
   text-decoration: none;
   color: black;
   font-weight: normal;
-  border: 0
+  border: 0px;
 }
 body #wrapper #character .left .charcontainer .charbottom .skill img {
   border-radius: 5px;
@@ -469,22 +552,22 @@ body #wrapper #character .left .charcontainer .charbottom .skill img {
   height: 70px;
   width: 70px;
   cursor: pointer;
-  border: 0
+  border: 0px;
 }
 body #wrapper #character .left .charcontainer .charbottom .skilltext {
   position: absolute;
   display: none;
-  background-color: #f5ecec;
+  background-color: #F5ECEC;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  box-shadow: 0 0 5px #000;
-  -moz-box-shadow: 0 0 5px #000;
-  -webkit-box-shadow: 0 0 5px #000
+  box-shadow: 0 0 5px #000000;
+  -moz-box-shadow: 0 0 5px #000000;
+  -webkit-box-shadow: 0 0 5px #000000;
 }
 body #wrapper #character .left .charcontainer .charbottom .skillright {
-  margin-right: 0
+  margin-right: 0px;
 }
 body #wrapper #character .left .charcontainer a {
   border-radius: 3px;
@@ -497,18 +580,59 @@ body #wrapper #character .left .charcontainer a {
   text-decoration: none;
   background-color: lightgrey;
   display: block;
-  margin-top: 15px
+  margin-top: 15px;
 }
 body #wrapper #character .right {
   float: left;
-  width: 780px
+  width: 780px;
 }
-body #wrapper #character .right .variation {
+body #wrapper #character .right .parts .partnavi {
+  width: 100%;
   float: left;
-  height: 400px;
-  width: 165px
 }
-body #wrapper #character .right .variation .physical, body #wrapper #character .right .variation .magical, body #wrapper #character .right .variation .special {
+body #wrapper #character .right .parts .partnavi .partnavileft,
+body #wrapper #character .right .parts .partnavi .partnaviright {
+  width: 47.5%;
+  padding: 1%;
+  float: left;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  background-color: #F5ECEC;
+  font-weight: bold;
+}
+body #wrapper #character .right .parts .partnavi .partnaviright {
+  margin-left: 1%;
+}
+body #wrapper #character .right .parts .partnavi .active {
+  background-color: #d3d3d3;
+  background-image: -webkit-linear-gradient(top, #d3d3d3, #f5ecec);
+  background-image: -moz-linear-gradient(top, #d3d3d3, #f5ecec);
+  background-image: -o-linear-gradient(top, #d3d3d3, #f5ecec);
+  background-image: -ms-linear-gradient(top, #d3d3d3, #f5ecec);
+  background-image: linear-gradient(top, #d3d3d3, #f5ecec);
+  border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  padding-bottom: 15px;
+}
+body #wrapper #character .right .parts .leftdiv {
+  width: 98%;
+  float: left;
+  background-color: #F5ECEC;
+  padding: 1% 1% 0 1%;
+  border-radius: 0 5px 5px 5px;
+  -webkit-border-radius: 0 5px 5px 5px;
+  -moz-border-radius: 0 5px 5px 5px;
+}
+body #wrapper #character .right .parts .leftdiv .variation {
+  float: left;
+  width: 165px;
+}
+body #wrapper #character .right .parts .leftdiv .variation .physical,
+body #wrapper #character .right .parts .leftdiv .variation .magical,
+body #wrapper #character .right .parts .leftdiv .variation .special {
   height: 100px;
   width: 150px;
   line-height: 100px;
@@ -519,56 +643,63 @@ body #wrapper #character .right .variation .physical, body #wrapper #character .
   color: black;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
+  font-weight: bold;
 }
-body #wrapper #character .right .variation .physical {
-  background-color: #f5ecec
+body #wrapper #character .right .parts .leftdiv .variation .physical {
+  background-color: #d75d51;
 }
-body #wrapper #character .right .variation .magical {
-  background-color: #ececec
+body #wrapper #character .right .parts .leftdiv .variation .magical {
+  background-color: #5992cf;
 }
-body #wrapper #character .right .variation .special {
-  background-color: #ffa54b
+body #wrapper #character .right .parts .leftdiv .variation .special {
+  background-color: #ffa54b;
 }
-body #wrapper #character .right .variation .chosen {
-  margin-right: 0;
+body #wrapper #character .right .parts .leftdiv .variation .chosen {
+  margin-right: 0px;
   padding-right: 15px;
-  border-radius: 5px 0 0 5px;
-  -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  border-radius: 5px 0px 0px 5px;
+  -webkit-border-radius: 5px 0px 0px 5px;
+  -moz-border-radius: 5px 0px 0px 5px;
 }
-body #wrapper #character .right .skills .physical, body #wrapper #character .right .skills .magical, body #wrapper #character .right .skills .special {
+body #wrapper #character .right .parts .leftdiv .skills .physical,
+body #wrapper #character .right .parts .leftdiv .skills .magical,
+body #wrapper #character .right .parts .leftdiv .skills .special {
   float: left;
   min-height: 305px;
-  width: 600px;
+  width: 584px;
   margin-bottom: 5px;
   margin-left: -5px;
   padding: 15px 4px 0 16px;
-  background-color: #d3d3d3;
+  background-color: #D3D3D3;
   display: none;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
-body #wrapper #character .right .skills .physical .skillcontainer, body #wrapper #character .right .skills .magical .skillcontainer, body #wrapper #character .right .skills .special .skillcontainer {
+body #wrapper #character .right .parts .leftdiv .skills .physical .skillcontainer,
+body #wrapper #character .right .parts .leftdiv .skills .magical .skillcontainer,
+body #wrapper #character .right .parts .leftdiv .skills .special .skillcontainer {
   width: 31%;
   margin-right: 2%;
   margin-bottom: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  box-shadow: 0 0 5px #000;
-  -moz-box-shadow: 0 0 5px #000;
-  -webkit-box-shadow: 0 0 5px #000;
+  box-shadow: 0 0 5px #000000;
+  -moz-box-shadow: 0 0 5px #000000;
+  -webkit-box-shadow: 0 0 5px #000000;
   float: left;
-  background-color: #d3d3d3
+  background-color: #D3D3D3;
 }
-body #wrapper #character .right .skills .physical .skillcontainer .skill, body #wrapper #character .right .skills .magical .skillcontainer .skill, body #wrapper #character .right .skills .special .skillcontainer .skill {
+body #wrapper #character .right .parts .leftdiv .skills .physical .skillcontainer .skill,
+body #wrapper #character .right .parts .leftdiv .skills .magical .skillcontainer .skill,
+body #wrapper #character .right .parts .leftdiv .skills .special .skillcontainer .skill {
   float: left;
   width: 70px;
   height: 70px;
-  padding: 0;
-  margin: 0 5px 0 0;
+  padding: 0px;
+  margin: 0px 5px 0px 0px;
   background-color: grey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -576,39 +707,155 @@ body #wrapper #character .right .skills .physical .skillcontainer .skill, body #
   text-decoration: none;
   color: black;
   font-weight: normal;
-  border: 0
+  border: 0px;
 }
-body #wrapper #character .right .skills .physical .skillcontainer .skill img, body #wrapper #character .right .skills .magical .skillcontainer .skill img, body #wrapper #character .right .skills .special .skillcontainer .skill img {
+body #wrapper #character .right .parts .leftdiv .skills .physical .skillcontainer .skill img,
+body #wrapper #character .right .parts .leftdiv .skills .magical .skillcontainer .skill img,
+body #wrapper #character .right .parts .leftdiv .skills .special .skillcontainer .skill img {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   height: 70px;
   width: 70px;
-  border: 0
+  border: 0px;
 }
-body #wrapper #character .right .skills .physical .skillcontainer .skilltext, body #wrapper #character .right .skills .magical .skillcontainer .skilltext, body #wrapper #character .right .skills .special .skillcontainer .skilltext {
+body #wrapper #character .right .parts .leftdiv .skills .physical .skillcontainer .skilltext,
+body #wrapper #character .right .parts .leftdiv .skills .magical .skillcontainer .skilltext,
+body #wrapper #character .right .parts .leftdiv .skills .special .skillcontainer .skilltext {
   padding-top: 5px;
-  display: block
+  display: block;
 }
-body #wrapper #character .right .skills .physical {
-  background-color: #f5ecec
+body #wrapper #character .right .parts .leftdiv .skills .physical {
+  background-color: #d75d51;
 }
-body #wrapper #character .right .skills .magical {
-  background-color: #ececec
+body #wrapper #character .right .parts .leftdiv .skills .magical {
+  background-color: #5992cf;
 }
-body #wrapper #character .right .skills .special {
-  background-color: #ffa54b
+body #wrapper #character .right .parts .leftdiv .skills .special {
+  background-color: #ffa54b;
 }
-body #wrapper #character .right .skills .show {
-  display: block
+body #wrapper #character .right .parts .leftdiv .skills .show {
+  display: block;
+}
+body #wrapper #character .right .parts .rightdiv {
+  float: left;
+  width: 100%;
+}
+body #wrapper #character .right .parts .rightdiv .charap {
+  width: 98%;
+  padding: 1%;
+  border-radius: 5px 0 5px 5px;
+  -webkit-border-radius: 5px 0 5px 5px;
+  -moz-border-radius: 5px 0 5px 5px;
+  background-color: #F5ECEC;
+  float: left;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apheader {
+  width: 100%;
+  float: left;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apheader .headerleft,
+body #wrapper #character .right .parts .rightdiv .charap .apheader .headerright {
+  float: left;
+  width: 50%;
+  font-weight: bold;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apcontent {
+  width: 100%;
+  float: left;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentleft,
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentright {
+  width: 48%;
+  float: left;
+  margin-right: 2%;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentleft .att,
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentright .att {
+  width: 90%;
+  margin: 0 6% 10px 0;
+  padding: 20px 2% 20px 2%;
+  background-color: lightgreen;
+  text-align: center;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentleft .shadow,
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentright .shadow {
+  box-shadow: 0 0 10px #000000;
+  -moz-box-shadow: 0 0 10px #000000;
+  -webkit-box-shadow: 0 0 10px #000000;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentright {
+  float: left;
+}
+body #wrapper #character .right .parts .rightdiv .charap .apcontent .apcontentright .skillpoint {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  background-color: lightgreen;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+body #wrapper #character .right .parts .hidden {
+  display: none;
+}
+body #wrapper #character .newChar {
+  width: 300px;
+}
+body #wrapper #character .newChar table {
+  background-color: #d3d3d3;
+  background-image: -webkit-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -moz-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -o-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -ms-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: linear-gradient(top, #d3d3d3, #8c8a8a);
+  width: 95%;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+body #wrapper #character .newChar table td.label {
+  width: 150px;
+  display: block;
+}
+body #wrapper #character .newChar input[type="text"] {
+  padding: 3px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  width: 250px;
+  border: 1px solid white;
+  background: -webkit-gradient(linear, left top, left 20, from(#ffffff), color-stop(4%, #dddddd), to(#ffffff));
+}
+body #wrapper #character .newChar input[type="file"] {
+  padding: 3px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  width: 250px;
+  border: 1px solid white;
+  background: -webkit-gradient(linear, left top, left 20, from(#ffffff), color-stop(4%, #dddddd), to(#ffffff));
+}
+body #wrapper #character .newChar input[type="submit"] {
+  font-weight: bold;
+  float: right;
+  padding: 3px 10px 3px 10px;
 }
 body #wrapper #dashboard .left {
   width: 400px;
-  float: left
+  float: left;
 }
 body #wrapper #dashboard .usercontainer {
   padding: 10px 10px 0 10px;
-  float: left
+  float: left;
 }
 body #wrapper #dashboard .userinfo {
   width: 370px;
@@ -618,27 +865,27 @@ body #wrapper #dashboard .userinfo {
   padding: 5px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #dashboard .right {
   width: 800px;
   float: left;
-  padding-top: 10px
+  padding-top: 10px;
 }
 body #wrapper #dashboard .challangecontainer {
   float: left;
   height: 100px;
   padding: 10px;
   background-color: #d3d3d3;
-  background-image: -webkit-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -moz-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -o-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -ms-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: linear-gradient(top,#d3d3d3,#8c8a8a);
+  background-image: -webkit-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -moz-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -o-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -ms-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: linear-gradient(top, #d3d3d3, #8c8a8a);
   margin-bottom: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #dashboard .challangecontainer .charimg {
   width: 100px;
@@ -646,17 +893,17 @@ body #wrapper #dashboard .challangecontainer .charimg {
   background-color: lightgrey;
   float: left;
   margin-right: 20px;
-  overflow: hidden
+  overflow: hidden;
 }
 body #wrapper #dashboard .challangecontainer .charinfo {
   width: 550px;
   height: 100px;
-  float: left
+  float: left;
 }
 body #wrapper #dashboard .challangecontainer .charbutton {
   width: 100px;
   height: 100px;
-  float: left
+  float: left;
 }
 body #wrapper #dashboard .challangecontainer .charbutton button {
   border-radius: 3px;
@@ -669,22 +916,22 @@ body #wrapper #dashboard .challangecontainer .charbutton button {
   text-decoration: none;
   background-color: lightgrey;
   display: block;
-  margin-top: 35px
+  margin-top: 35px;
 }
 body #wrapper #dashboard .charcontainer {
   width: 380px;
-  border-width: 0;
+  border-width: 0px;
   border-style: solid;
   border-color: black;
   padding: 10px;
-  float: left
+  float: left;
 }
 body #wrapper #dashboard .charcontainer .chartop {
   float: left;
   margin-bottom: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #dashboard .charcontainer .chartop .charimg {
   background-color: grey;
@@ -693,12 +940,12 @@ body #wrapper #dashboard .charcontainer .chartop .charimg {
   float: left;
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  -moz-border-radius: 5px 0 0 5px;
 }
 body #wrapper #dashboard .charcontainer .chartop .charimg img {
   border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
-  -moz-border-radius: 5px 0 0 5px
+  -moz-border-radius: 5px 0 0 5px;
 }
 body #wrapper #dashboard .charcontainer .chartop .charattr {
   background-color: lightgrey;
@@ -707,32 +954,32 @@ body #wrapper #dashboard .charcontainer .chartop .charattr {
   float: left;
   border-radius: 0 5px 5px 0;
   -webkit-border-radius: 0 5px 5px 0;
-  -moz-border-radius: 0 5px 5px 0
+  -moz-border-radius: 0 5px 5px 0;
 }
 body #wrapper #dashboard .charcontainer .chartop .charattr h2 {
   font-size: 20px;
   height: 30px;
   border-bottom: 1px solid black;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #dashboard .charcontainer .chartop .charattr h3 {
   font-size: 17px;
   height: 20px;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #dashboard .charcontainer .chartop .charattr table.charattrtable {
   width: 178px;
-  padding: 5px 5px 5px 5px
+  padding: 5px 5px 5px 5px;
 }
 body #wrapper #dashboard .charcontainer .chartop .charattr table.charattrtable td {
-  width: 98px
+  width: 98px;
 }
 body #wrapper #dashboard .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
   float: left;
   margin-bottom: 10px;
-  position: relative
+  position: relative;
 }
 body #wrapper #dashboard .charcontainer .progressbar_top {
   height: 30px;
@@ -740,15 +987,12 @@ body #wrapper #dashboard .charcontainer .progressbar_top {
   border-radius: 7px;
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  box-shadow: 0 0 10px #8b0000;
-  -moz-box-shadow: 0 0 10px #8b0000;
-  -webkit-box-shadow: 0 0 10px #8b0000;
-  background-color: #dc0000;
-  background-image: -webkit-linear-gradient(top,#dc0000,#c20000);
-  background-image: -moz-linear-gradient(top,#dc0000,#c20000);
-  background-image: -o-linear-gradient(top,#dc0000,#c20000);
-  background-image: -ms-linear-gradient(top,#dc0000,#c20000);
-  background-image: linear-gradient(top,#dc0000,#c20000)
+  background-color: #2f9e2e;
+  background-image: -webkit-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -moz-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -o-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -ms-linear-gradient(top, #2f9e2e, #387831);
+  background-image: linear-gradient(top, #2f9e2e, #387831);
 }
 body #wrapper #dashboard .charcontainer .progressbar_bottom {
   height: 30px;
@@ -759,12 +1003,12 @@ body #wrapper #dashboard .charcontainer .progressbar_bottom {
   -moz-box-shadow: 0 0 10px #8b0000;
   -webkit-box-shadow: 0 0 10px #8b0000;
   background-color: #808080;
-  background-image: -webkit-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -moz-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -o-linear-gradient(top,#808080,#5a5a5a);
-  background-image: -ms-linear-gradient(top,#808080,#5a5a5a);
-  background-image: linear-gradient(top,#808080,#5a5a5a);
-  width: 100%
+  background-image: -webkit-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -o-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -ms-linear-gradient(top, #808080, #5a5a5a);
+  background-image: linear-gradient(top, #808080, #5a5a5a);
+  width: 100%;
 }
 body #wrapper #dashboard .charcontainer .charmiddle span.progresstext {
   position: absolute;
@@ -775,8 +1019,32 @@ body #wrapper #dashboard .charcontainer .charmiddle span.progresstext {
   margin-left: -150px;
   left: 50%;
   text-align: center;
-  color: #fff;
-  font-weight: bold
+  color: #FFFFFF;
+  font-weight: bold;
+}
+body #wrapper #dashboard .charcontainer .full {
+  background-color: #2f9e2e;
+  background-image: -webkit-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -moz-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -o-linear-gradient(top, #2f9e2e, #387831);
+  background-image: -ms-linear-gradient(top, #2f9e2e, #387831);
+  background-image: linear-gradient(top, #2f9e2e, #387831);
+}
+body #wrapper #dashboard .charcontainer .half {
+  background-color: #d9b504;
+  background-image: -webkit-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -moz-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -o-linear-gradient(top, #d9b504, #d98e04);
+  background-image: -ms-linear-gradient(top, #d9b504, #d98e04);
+  background-image: linear-gradient(top, #d9b504, #d98e04);
+}
+body #wrapper #dashboard .charcontainer .danger {
+  background-color: #a60303;
+  background-image: -webkit-linear-gradient(top, #a60303, #590202);
+  background-image: -moz-linear-gradient(top, #a60303, #590202);
+  background-image: -o-linear-gradient(top, #a60303, #590202);
+  background-image: -ms-linear-gradient(top, #a60303, #590202);
+  background-image: linear-gradient(top, #a60303, #590202);
 }
 body #wrapper #dashboard .charcontainer .charbottom {
   float: left;
@@ -786,14 +1054,14 @@ body #wrapper #dashboard .charcontainer .charbottom {
   background-color: lightgrey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
 body #wrapper #dashboard .charcontainer .charbottom .skill {
   float: left;
   width: 70px;
   height: 70px;
-  padding: 0;
-  margin: 0 5px 4px 0;
+  padding: 0px;
+  margin: 0px 5px 4px 0px;
   background-color: grey;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -801,7 +1069,7 @@ body #wrapper #dashboard .charcontainer .charbottom .skill {
   text-decoration: none;
   color: black;
   font-weight: normal;
-  border: 0
+  border: 0px;
 }
 body #wrapper #dashboard .charcontainer .charbottom .skill img {
   border-radius: 5px;
@@ -810,22 +1078,22 @@ body #wrapper #dashboard .charcontainer .charbottom .skill img {
   height: 70px;
   width: 70px;
   cursor: pointer;
-  border: 0
+  border: 0px;
 }
 body #wrapper #dashboard .charcontainer .charbottom .skilltext {
   position: absolute;
   display: none;
-  background-color: #f5ecec;
+  background-color: #F5ECEC;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  box-shadow: 0 0 5px #000;
-  -moz-box-shadow: 0 0 5px #000;
-  -webkit-box-shadow: 0 0 5px #000
+  box-shadow: 0 0 5px #000000;
+  -moz-box-shadow: 0 0 5px #000000;
+  -webkit-box-shadow: 0 0 5px #000000;
 }
 body #wrapper #dashboard .charcontainer .charbottom .skillright {
-  margin-right: 0
+  margin-right: 0px;
 }
 body #wrapper #dashboard .battlelog {
   margin-top: 3px;
@@ -834,7 +1102,7 @@ body #wrapper #dashboard .battlelog {
   float: left;
   border-width: 0 1px 0 1px;
   border-style: solid;
-  border-color: #000
+  border-color: #000000;
 }
 body #wrapper #dashboard .battlelog .battlelogvs {
   font-size: 80px;
@@ -843,22 +1111,24 @@ body #wrapper #dashboard .battlelog .battlelogvs {
   text-align: center;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: #000
+  border-color: #000000;
 }
 body #wrapper #dashboard .battlelog .battlelogtext {
-  padding: 10px
+  padding: 10px;
 }
 body #wrapper #home {
-  padding: 10px
+  padding: 10px;
 }
 body #wrapper #about {
-  padding: 10px
+  padding: 10px;
 }
 body #wrapper #about .aboutboxes {
   width: 100%;
-  float: left
+  float: left;
 }
-body #wrapper #about .aboutboxes .left, body #wrapper #about .aboutboxes .middle, body #wrapper #about .aboutboxes .right {
+body #wrapper #about .aboutboxes .left,
+body #wrapper #about .aboutboxes .middle,
+body #wrapper #about .aboutboxes .right {
   padding: 1% 1% 1% 1%;
   float: left;
   width: 30%;
@@ -867,22 +1137,22 @@ body #wrapper #about .aboutboxes .left, body #wrapper #about .aboutboxes .middle
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   background-color: #d3d3d3;
-  background-image: -webkit-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -moz-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -o-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -ms-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: linear-gradient(top,#d3d3d3,#8c8a8a)
+  background-image: -webkit-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -moz-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -o-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -ms-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: linear-gradient(top, #d3d3d3, #8c8a8a);
 }
 body #wrapper #about .aboutboxes .right {
-  margin-right: 0
+  margin-right: 0%;
 }
 body #wrapper #login {
-  padding: 10px
+  padding: 10px;
 }
 body #wrapper #login table td.label {
   width: 120px;
-  color: #ddd;
-  font-weight: bold
+  color: #DDDDDD;
+  font-weight: bold;
 }
 body #wrapper #login input {
   padding: 3px;
@@ -891,44 +1161,47 @@ body #wrapper #login input {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border: 1px solid white;
-  background: -webkit-gradient(linear,left top,left 20,from(#fff),color-stop(4%,#ddd),to(#fff))
+  background: -webkit-gradient(linear, left top, left 20, from(#ffffff), color-stop(4%, #dddddd), to(#ffffff));
 }
 body #wrapper #login input[type="submit"] {
   font-weight: bold;
   float: right;
-  padding: 3px 10px 3px 10px
+  padding: 3px 10px 3px 10px;
 }
 body #wrapper #profile {
-  padding: 10px
+  padding: 10px;
 }
-body #wrapper #profile .left, body #wrapper #profile .right {
+body #wrapper #profile .left,
+body #wrapper #profile .right {
   width: 50%;
-  float: left
+  float: left;
 }
-body #wrapper #profile .left table, body #wrapper #profile .right table {
+body #wrapper #profile .left table,
+body #wrapper #profile .right table {
   background-color: #d3d3d3;
-  background-image: -webkit-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -moz-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -o-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: -ms-linear-gradient(top,#d3d3d3,#8c8a8a);
-  background-image: linear-gradient(top,#d3d3d3,#8c8a8a);
+  background-image: -webkit-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -moz-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -o-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: -ms-linear-gradient(top, #d3d3d3, #8c8a8a);
+  background-image: linear-gradient(top, #d3d3d3, #8c8a8a);
   width: 95%;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px
+  -moz-border-radius: 5px;
 }
-body #wrapper #profile .left table td.label, body #wrapper #profile .right table td.label {
+body #wrapper #profile .left table td.label,
+body #wrapper #profile .right table td.label {
   width: 120px;
-  font-weight: bold
+  font-weight: bold;
 }
 body #wrapper #registration {
-  padding: 10px
+  padding: 10px;
 }
 body #wrapper #registration table td.label {
   width: 120px;
-  color: #ddd;
-  font-weight: bold
+  color: #DDDDDD;
+  font-weight: bold;
 }
 body #wrapper #registration input {
   padding: 3px;
@@ -937,10 +1210,10 @@ body #wrapper #registration input {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border: 1px solid white;
-  background: -webkit-gradient(linear,left top,left 20,from(#fff),color-stop(4%,#ddd),to(#fff))
+  background: -webkit-gradient(linear, left top, left 20, from(#ffffff), color-stop(4%, #dddddd), to(#ffffff));
 }
 body #wrapper #registration input[type="submit"] {
   font-weight: bold;
   float: right;
-  padding: 3px 10px 3px 10px
+  padding: 3px 10px 3px 10px;
 }

@@ -31,7 +31,7 @@ class Character extends Model {
   }
 
   protected function insert() {
-    Database::getInstance() -> insert('`'.self::TABLENAME.'`', "(cUserId,cName,cLvlExp,cNextLvlExp,cMagAtk,cMagDef,cPhyAtk,cPhyDef,cHp,cImage,cAp,cLevelUp,) VALUES('" . 
+    Database::getInstance() -> insert('`'.self::TABLENAME.'`', "(cUserId,cName,cLvlExp,cNextLvlExp,cMagAtk,cMagDef,cPhyAtk,cPhyDef,cHp,cImage,cAp,cLevelUp,cDurability) VALUES('" . 
       encode($this -> cUserId) . "','" . 
       encode($this -> cName) . "','" . 
       encode($this -> cLvlExp) . "','" . 
@@ -139,9 +139,9 @@ class Character extends Model {
         }else{
           move_uploaded_file($image['tmp_name'],'img/avatar/' . $charactername.'.'.$extension);
           $this->cImage = 'img/avatar/' . $charactername.'.'.$extension;
-        //  $im = new imagick($this->cImage);
-       //   $im->cropThumbnailImage(190, 190);
-       //   $im->writeImage($this->cImage);
+          $im = new imagick($this->cImage);
+          $im->cropThumbnailImage(190, 190);
+          $im->writeImage($this->cImage);
           $this->save();
           return true;
         }
@@ -267,7 +267,7 @@ class Character extends Model {
   
   public function setDurability($setVal) {
     $this -> cDurability = $setVal;
-    $this -> cHp = $setVal * 30;
+    $this -> cHp = $setVal * 25;
   }
 
   public function getDurability() {
@@ -361,6 +361,13 @@ class Character extends Model {
    // error_log("got in loseGrow"."\n",3,"C:/xampp/apache/logs/baka.log");
     $exp = Exp::getLoseLvlUp($otherChar->getLevel());
     $this->growing($exp);
+  }
+  public function getWins(){
+    return Battle::wins($this -> cId);
+  }
+  
+  public function getLoses(){
+    return Battle::loses($this -> cId);
   }
   
   private function growing($exp){
@@ -458,7 +465,7 @@ class Character extends Model {
     //error_log("growth =".$growth,3,"C:/xampp/apache/logs/baka.log");
     $this->cAp += $giveaway;
     $this->cDurability += $growth;
-    $this->cHp = $this->cDurability * 30;
+    $this->cHp = $this->cDurability * 25;
     $this->cMagAtk += $growth;
     $this->cMagDef += $growth;
     $this->cPhyAtk += $growth;

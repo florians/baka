@@ -10,21 +10,26 @@ function characterProfile($char, $button = null) {
         <table class="charattrtable">
           <tr>
             <td>PhyAtk</td>
-            <td>' . $char -> getPhyAtk() . '</td>
+            <td class="PhyAtk">' . $char -> getPhyAtk() . '</td>
           </tr>
           <tr>
             <td>MagAtk</td>
-            <td>' . $char -> getMagAtk() . '</td>
+            <td class="MagAtk">' . $char -> getMagAtk() . '</td>
           </tr>
           <tr>
             <td>PhyDef</td>
-            <td>' . $char -> getPhyDef() . '</td>
+            <td class="PhyDef">' . $char -> getPhyDef() . '</td>
           </tr>
           <tr>
             <td>MagDef</td>
-            <td>' . $char -> getMagDef() . '</td>
+            <td class="MagDef">' . $char -> getMagDef() . '</td>
+          </tr>
+          <tr>
+            <td>EXP</td>
+            <td>' . $char -> getLvlExp() . '/' . ($char -> getLvlExp() + $char -> getNextLvlExp()) . '</td>
           </tr>
         </table>
+        <input class="Durability" type="hidden" value="'.$char -> getDurability().'" />
       </div>
     </div>';
 
@@ -32,15 +37,19 @@ function characterProfile($char, $button = null) {
 }
 
 function characterLifeRaw($maxLife, $liveLeft) {
-  /*$content = '
-   <div class="charmiddle">
-   <progress value="' . $liveLeft . '" max="' . $maxLife . '"></progress>
-   <span class="progresstext">' . $liveLeft . ' / ' . $maxLife . '</span>
-   </div>';*/
+  $class = '';
   $liveLeftProzent = (100 / $maxLife) * $liveLeft;
+  if ($liveLeftProzent >= 50) {
+    $class = 'full';
+  } elseif ($liveLeftProzent < 50 && $liveLeftProzent > 25) {
+    $class = 'half';
+  }
+  if ($liveLeftProzent < 25) {
+    $class = 'danger';
+  }
   $content = '
     <div class="charmiddle">
-      <div style="width:' . $liveLeftProzent . '%"class="progressbar_top"></div>
+      <div style="width:' . $liveLeftProzent . '%"class="progressbar_top ' . $class . '"></div>
       <div class="progressbar_bottom"></div>
       <span class="progresstext">' . $liveLeft . ' / ' . $maxLife . '</span>
     </div>';
@@ -53,13 +62,21 @@ function characterLife($maxLife, $liveLeft) {
 
 function characterAtk($atks = null) {
   if (count($atks) > 0) {
+
     $content = '
       <div class="charbottom">';
     $countatk = 1;
     foreach ($atks as $atk) {
+      if ($atk -> getTyp() == 'p') {
+        $atkTyp = 'Physical';
+      } elseif ($atk -> getTyp() == 'm') {
+        $atkTyp = 'Magical';
+      } elseif ($atk -> getTyp() == 'a') {
+        $atkTyp = 'Special';
+      }
       ($countatk % 5 == 0) ? $addclass = 'skillright' : $addclass = '';
       $content .= '<a href="#" rel="' . $atk -> getId() . '" class="skill ' . $addclass . '" title="' . $atk -> getName() . '"><img src="' . getAtkImag($atk -> getId()) . '" /></a>
-                    <span class="skilltext"><b>' . $atk -> getName() . '</b><br />Damage ' . $atk -> getDmgPt() . '<br />Typ ' . $atk -> getTyp() . '</span>';
+                    <span class="skilltext"><b>' . $atk -> getName() . '</b><br />Damage ' . $atk -> getDmgPt() . '<br />' . $atkTyp . '</span>';
       $countatk++;
     }
     $content .= '</div>';
@@ -116,5 +133,4 @@ function getAtkImag($atk) {
   }
   return $atkimg;
 }
-
 ?>

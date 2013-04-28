@@ -113,8 +113,7 @@
       height:30px;
       position:absolute;
       .radius(7px);
-      .box-shadow(0 0 10px #8b0000);
-      .background-gradient(@origin:top,@start:#dc0000,@stop:#C20000);
+      .background-gradient(@origin:top,@start:#2F9E2E,@stop:#387831);
     }
     .progressbar_bottom{
       height:30px;
@@ -123,74 +122,6 @@
       .background-gradient(@origin:top,@start:#808080,@stop:#5a5a5a);
       width:100%;
     }
-    //.charmiddle progress,          /* All HTML5 progress enabled browsers */
-    //.charmiddle progress[role]{     /* polyfill */
-      /* Turns off styling - not usually needed, but good to know. */
-      //appearance: none;
-      //-moz-appearance: none;
-      //-webkit-appearance: none;
-      /* gets rid of default border in Firefox and Opera.  */
-      //border: none;
-      //border-radius:7px;
-      /* Needs to be in here for Safari polyfill so background images work as expected. */
-      //background-size: auto;
-    
-      /* Dimensions */
-      //height:30px;
-      //width:380px;
-    //}
-    /* Polyfill */
-    /*progress[role]:after {
-      background-image: none; /* removes default background from polyfill */
-    //}
-    /* Ensure fallback text doesn't appear in polyfill */
-    /*progress[role] strong {
-      display: none;
-    }
-    progress,                          /* Firefox  */ 
-    /*progress[role][aria-valuenow] {    /* Polyfill */
-      //background: lightgrey !important; /* !important is needed by the polyfill */
-      /*background: -moz-linear-gradient(#808080, #5a5a5a) !important;
-      .radius(7px);
-      .box-shadow(0 0 10px #8b0000);
-    }
-    /* Chrome */
-    /*progress::-webkit-progress-bar {
-        .radius(7px);
-        .box-shadow(0 0 10px #8b0000);
-        background: lightgrey;
-        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#808080), to(#5a5a5a));
-        background: -webkit-linear-gradient(#808080, #5a5a5a);
-        background: -ms-linear-gradient(#808080, #5a5a5a);
-        background: -o-linear-gradient(#808080, #5a5a5a);
-        background: linear-gradient(#808080, #5a5a5a)
-    }
-    /* IE10 */
-    /*progress {
-      background: darkred;  
-      background: -ms-linear-gradient(#e60000, #8b0000);
-      .radius(7px);
-    }
-    /* Firefox */
-    /*progress::-moz-progress-bar { 
-        background: darkred;  
-        background: -moz-linear-gradient(#e60000, #8b0000);
-        .radius(7px);
-    }
-    /* Chrome */
-    /*progress::-webkit-progress-value {
-        background: darkred;       
-        .radius(7px);
-        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#e60000), to(#8b0000));
-        background: -webkit-linear-gradient(#e60000, #8b0000);
-        background: -ms-linear-gradient(#e60000, #8b0000);
-        background: -o-linear-gradient(#e60000, #8b0000);
-        background: linear-gradient(#e60000, #8b0000);
-    }
-    /* Polyfill */
-    /*progress[aria-valuenow]:before  {
-        background: darkred;
-    }*/
     .charmiddle span.progresstext{
       position:absolute;
       height:20px;
@@ -202,6 +133,15 @@
       text-align:center;
       color:#FFFFFF;
       font-weight:bold;
+    }
+    .full{
+      .background-gradient(@origin:top,@start:#2F9E2E,@stop:#387831);
+    }
+    .half{
+      .background-gradient(@origin:top,@start:#D9B504,@stop:#D98E04);
+    }
+    .danger{
+      .background-gradient(@origin:top,@start:#A60303,@stop:#590202);
     }
     .charbottom{
       float:left;

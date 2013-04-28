@@ -19,13 +19,22 @@ class views_character extends views {
     if ($this -> character) {
       // gets all attacks
       $attak = new Attack();
-      $this -> phyAtk = Attack::select('WHERE aTyp = "p"');
-      $this -> magAtk = Attack::select('WHERE aTyp = "m"');
-      $this -> specialAtk = Attack::select('WHERE aTyp = "a"');
+      $this -> phyAtk = Attack::select('WHERE aTyp = "p" AND aLearnLvl <=' . $this -> character -> getLevel());
+      $this -> magAtk = Attack::select('WHERE aTyp = "m" AND aLearnLvl <=' . $this -> character -> getLevel());
+      $this -> specialAtk = Attack::select('WHERE aTyp = "a" AND aLearnLvl <=' . $this -> character -> getLevel());
+
+      $this -> attrpoints = $this -> character -> getAp();
     }
   }
 
   public function additionalHeaders() {
+    $header = '
+      <script type="text/javascript">
+        jQuery(document).ready(function() {
+          jQuery(".partnaviright").click();
+        });
+      </script>';
+    echo $header;
   }
 
 }

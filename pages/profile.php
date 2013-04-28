@@ -26,16 +26,16 @@
     <h1>Statistic</h1>
     <table>
       <tr>
-        <td class="label">Fights done</td>
-        <td>20</td>
+        <td class="label">Fights fought</td>
+        <td><?= $this -> user -> getBattleTotal() ?></td>
       </tr>
       <tr>
-        <td class="label">Won</td>
-        <td>10</td>
+        <td class="label">Wins</td>
+        <td><?= $this -> user -> getWins() ?></td>
       </tr>
       <tr>
-        <td class="label">Lose</td>
-        <td>10</td>
+        <td class="label">Loses</td>
+        <td><?= $this -> user -> getLoses() ?></td>
       </tr>
     </table>
   </div>

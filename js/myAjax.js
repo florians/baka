@@ -117,7 +117,16 @@ function delCharAtk(val) {
     jQuery('head').append(html);
   });
 }
-
+function setAttribute(val) {
+  jQuery.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'setAttribute',
+      'value' : val
+    }
+  });
+}
 function requestCheck(battleId){
   $.ajax({
     type : 'POST',
@@ -180,7 +189,7 @@ function waiting(){
           $(".otherChar .status").text("Attacking");
         }
         jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
-        jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
+        jQuery(".otherChar .charmiddle").replaceWith(obj.oHp); 
         var log = obj.bLog.replace(/\n/g, "<br>");
         jQuery(".battlelogtext").html(log);
       }

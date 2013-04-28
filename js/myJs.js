@@ -1,12 +1,11 @@
 jQuery(document).ready(function() {
   var mouseX;
-  var mouseY;
-  
+  var mouseY;
   jQuery(document).mousemove(function(e) {
     mouseX = e.pageX;
     mouseY = e.pageY;
   });
-    
+
   jQuery('.variation .physical').addClass('chosen');
   jQuery('.skills .physical').addClass('show');
   jQuery('.variation a').click(function(e) {
@@ -17,7 +16,7 @@ jQuery(document).ready(function() {
     jQuery('.skills .' + attrClass).addClass('show');
     e.preventDefault();
   });
-  
+
   jQuery('.skills a').draggable({
     helper : 'clone'
   });
@@ -39,8 +38,8 @@ jQuery(document).ready(function() {
     count = jQuery('.charbottom .skill').length;
     return count;
   }
-  
-  function isChallenging(battleId){
+
+  function isChallenging(battleId) {
     renewDash = false;
     challangeable = true;
     clearInterval(dashboardTime);
@@ -49,7 +48,8 @@ jQuery(document).ready(function() {
     requestCheck(battleId);
     checkRequestTime = setInterval("requestCheck(battleId)", 3000);
   }
-  
+
+
   jQuery('.charbottom').droppable({
     drop : function(event, ui) {
       jQuery('.charbottom p').hide();
@@ -65,28 +65,28 @@ jQuery(document).ready(function() {
       }
     }
   });
-  
+
   jQuery('#character .charbottom p').replaceWith('<p style="height:50px">Drag your Skills to this place</p>');
 
   jQuery('a.delAtk').click(function(e) {
     delCharAtk();
     e.preventDefault();
   });
-  
+
   jQuery('.charbottom a').mouseover(function() {
     jQuery(this).next('span').css({
       'top' : mouseY - 100,
       'left' : mouseX
-    }).fadeIn('100');
+    }).show().stop();
   });
   jQuery('.charbottom a').mouseleave(function() {
     jQuery(this).next('span').css({
       'top' : mouseY - 100,
       'left' : mouseX
-    }).fadeOut('100');
+    }).show().hide();
   });
 
-  jQuery(".right").on("click",".challenge" ,function(){
+  jQuery(".right").on("click", ".challenge", function() {
     clearInterval(dashboardTime);
     clearInterval(receiveChallengeTime);
     renewDash = false;
@@ -95,18 +95,50 @@ jQuery(document).ready(function() {
     var challenger = $("#myCharId").val();
     battleRequest(challenger, challengee);
   });
-  
-  jQuery(".myChar a.skill").click(function(e){
+
+  jQuery(".myChar a.skill").click(function(e) {
     e.preventDefault();
     var attackId = $(this).attr("rel");
     attack(attackId);
   });
-  
-  jQuery(".myChar a.retreat").click(function(e){
+
+  jQuery(".myChar a.retreat").click(function(e) {
     e.preventDefault();
-    if(confirm("Are you sure you want to flee?")){
+    if (confirm("Are you sure you want to flee?")) {
       retreat();
     }
   });
   jQuery('.success').delay(5000).fadeOut('3000');
+
+  jQuery('.partnavi div').click(function() {
+    var rel = jQuery(this).attr('rel');
+    jQuery('.innerdiv').addClass('hidden');
+    jQuery('.' + rel).removeClass('hidden');
+    jQuery('.partnavipoint').removeClass('active');
+    jQuery(this).addClass('active');
+  });
+
+  jQuery('.skillpoint').draggable();
+
+  jQuery('.apcontentleft .att').droppable({
+    hoverClass : "shadow",
+    drop : function(event, ui) {
+      jQuery(ui.draggable).hide();
+      var attRel = jQuery(this).attr('rel');
+      if (attRel) {
+        var attrNewContent = '.charattrtable .' + attRel;
+        var attrContent = parseInt(jQuery(attrNewContent).html());
+        setAttribute(attRel);
+        jQuery(attrNewContent).html(attrContent + 1);
+        if (attRel == 'Durability') {
+          var valueDurability = jQuery('.Durability').attr('value');
+          var newValueDurability = parseInt(valueDurability) + 1;
+          jQuery('.Durability').val(newValueDurability);
+          var newLife = (newValueDurability * 5) + 125;
+          jQuery('.progresstext').html(newLife + ' / ' + newLife);
+        }
+      }
+    }
+  });
+
 });

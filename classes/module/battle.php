@@ -190,21 +190,26 @@ class Battle extends Model {
     return $opponent;
   }
   public static function wins($charId){
-    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".encode($charId)."' bcPlayer = bWinner AND bOver = true;"));
+    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer = bWinner AND bOver = true;"));
   }
   
   public static function loses($charId){
-    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'a' AND bcCharId = '".encode($charId)."' bcPlayer <> bWinner AND bOver = true;"));
+    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer <> bWinner AND bOver = true;"));
   }
   
   public function attack($agrChar, $defChar, $attack){
     $this->bRound++;
     $defBattleChar = $defChar->getBattleChar($this->bId);
     $hitInfo = $defBattleChar->hit($attack,$agrChar);
-    $this->bLog .= "".$agrChar->getName()." attacked ".$defChar->getName()." with ".$attack->getName().".\n"; 
-    $this->bLog .= "".$hitInfo['status']." ".$defChar->getName()." took ".$hitInfo['dmg']." damage\n\n"; 
+    //$this->bLog .= "".$agrChar->getName()." attacked ".$defChar->getName()." with ".$attack->getName().".\n"; 
+    //$this->bLog .= "".$hitInfo['status']." ".$defChar->getName()." took ".$hitInfo['dmg']." damage\n\n"; 
+    $class = '';
+    ($this->bRound % 2 == 0)?$class = '/odd':$class = '/even';
+    $this->bLog = $class.'front'.$agrChar->getName()." attacked ".$defChar->getName()." with ".$attack->getName().".\n".$hitInfo['status']." ".$defChar->getName()." took ".$hitInfo['dmg']." damage".$class.'back'.$this->bLog;
+    //$this->bLog = $agrChar->getName()." attacked ".$defChar->getName()." with ".$attack->getName().".\n".$hitInfo['status']." ".$defChar->getName()." took ".$hitInfo['dmg']." damage\n\n".$this->bLog;
+    
     if($defBattleChar->getHp() <= 0){
-    error_log("battle is over",3,"C:/xampp/apache/logs/baka.log");
+    //error_log("battle is over",3,"C:/xampp/apache/logs/baka.log");
       $this->bOver = 1;
       $this->bWinner = $agrChar->getBattleChar($this->bId)->getPlayer();
       $agrChar->winGrow($defChar);

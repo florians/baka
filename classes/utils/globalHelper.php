@@ -144,4 +144,12 @@ function getConfig($val = null) {
   }
   return $returnval;
 }
+
+function bLogReplace($val) {
+  $val = str_replace('/evenfront', '<span class="even">', $val);
+  $val = str_replace('/evenback', '</span>', $val);
+  $val = str_replace('/oddfront', '<span class="odd">', $val);
+  $val = str_replace('/oddback', '</span>', $val);
+  return $val;
+}
 ?>
