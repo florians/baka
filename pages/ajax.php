@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL ^ E_STRICT);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL ^ E_STRICT);
+//ini_set('display_errors', 1);
 session_start();
 
 // include module
@@ -216,14 +216,14 @@ switch(post('event')) {
     $response['attack'] = ($battle -> getWhosTurn() == $myBattleChar -> getPlayer());
     $response['over'] = (boolean)$battle -> getOver();
     if($response['over'] == true){
-      error_log("Got here\n",3,3,"C:/xampp/apache/logs/baka.log");  
+      //error_log("Got here\n",3,"C:/xampp/apache/logs/baka.log");  
       $response['overmessage'] = "You ".($battle->getWinner() == $myChar->getBattleChar(post("battleId"))->getPlayer()?"Won":"Lost");
-      error_log($response['overmessage']."\n",3,3,"C:/xampp/apache/logs/baka.log");  
+      //error_log($response['overmessage']."\n",3,"C:/xampp/apache/logs/baka.log");  
     }
     $response['oHp'] = characterLifeRaw($oChar -> getHp(), $oChar -> getHpLeft(post("battleId")));
     $response['myHp'] = characterLifeRaw($myChar -> getHp(), $myBattleChar -> getHp());
     $response['bLog'] = bLogReplace($battle -> getLog());
-    error_log("is leaving\n",3,3,"C:/xampp/apache/logs/baka.log");  
+    //error_log("is leaving\n",3,"C:/xampp/apache/logs/baka.log");  
     $content = json_encode($response);
     break;
   case 'livepoints' :

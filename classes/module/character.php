@@ -383,8 +383,8 @@ class Character extends Model {
   //    error_log("level up"."\n",3,"C:/xampp/apache/logs/baka.log");
       $this->cLevelUp = true;
       $this->cNextLvlExp = (Exp::getExpToNext($this->cLvlExp) - $this->cLvlExp);
-      for($i = $oldLvl+1; $oldLvl <= $newLvel; $i++){
-        $this->grow($i);
+      for($i = $oldLvl; $i < $newLvel; $i++){
+        $this->grow($i+1);
       }
     } else {
       $this->cLevelUp = false;

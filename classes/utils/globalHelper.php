@@ -114,6 +114,7 @@ function getNavigation($navigation) {
 
 // gets the ViweId of the actual page if exists
 function getViewId($value) {
+  $viewId = '';
   if ($value != '' && in_array($value, getConfig('allowed'))) {
     $viewId = 'views_' . strtolower($value);
   } elseif ($value == '') {

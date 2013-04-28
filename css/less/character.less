@@ -49,6 +49,37 @@
       .chartop .charattr table.charattrtable td{
         width:98px;
       }
+      .exp{
+        height:15px;
+        width:378px;
+        float:left;
+        margin-bottom:10px;
+        position:relative;
+      }
+      .exp_top{
+        height:15px;
+        position:absolute;
+        .radius(7px);
+        .background-gradient(@origin:top,@start:#E8B300,@stop:#FF730A);
+      }
+      .exp_bottom{
+        height:15px;
+        .radius(7px);
+        .background-gradient(@origin:top,@start:#808080,@stop:#5a5a5a);
+        width:100%;
+      }
+      .exp span.exptext{
+        position:absolute;
+        height:20px;
+        width:300px;
+        display:block;
+        margin-top:-16px;
+        margin-left:-150px;
+        left:50%;
+        text-align:center;
+        color:#FFFFFF;
+        font-size:15px;
+      }
       .charmiddle{
         height:30px;
         width:378px;
@@ -125,6 +156,7 @@
           padding:10px;
           .radius(5px);
           .box-shadow(0 0 5px black);
+          font-size:13px;
         }
         .skillright{
           margin-right:0px;
@@ -239,6 +271,7 @@
               .skilltext{
                 padding-top:5px;
                 display:block;
+                font-size:13px;
               }
             }
           }

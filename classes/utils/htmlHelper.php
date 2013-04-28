@@ -1,6 +1,8 @@
 <?php
 
 function characterProfile($char, $button = null) {
+  $characterExp = Exp::getCharLvlExp($char -> getLvlExp());
+  $expProcent = (100 / (($char -> getLvlExp() + $char -> getNextLvlExp())-$characterExp)) * ($char->getLvlExp() - $characterExp);  
   $content = '
     <div class="chartop">
       <div class="charimg"><img style="height:190px" src="' . $char -> getImage() . '" /></div>
@@ -24,13 +26,19 @@ function characterProfile($char, $button = null) {
             <td>MagDef</td>
             <td class="MagDef">' . $char -> getMagDef() . '</td>
           </tr>
-          <tr>
-            <td>EXP</td>
-            <td>' . $char -> getLvlExp() . '/' . ($char -> getLvlExp() + $char -> getNextLvlExp()) . '</td>
-          </tr>
         </table>
-        <input class="Durability" type="hidden" value="'.$char -> getDurability().'" />
+        <input class="Durability" type="hidden" value="' . $char -> getDurability() . '" />
       </div>
+    </div>
+    <div class="exp">
+      <div style="width:' . $expProcent . '%"class="exp_top"></div>
+      <div class="exp_bottom"></div>
+      <span class="exptext">EXP: ' .
+      //pre($char->getLvlExp().'__'.$charcterExp);
+      //pre($char -> getNextLvlExp());
+      
+      
+      ($char->getLvlExp() - $characterExp) . ' / ' . (($char -> getLvlExp() + $char -> getNextLvlExp())-$characterExp) . '</span>
     </div>';
 
   echo $content;
@@ -51,7 +59,7 @@ function characterLifeRaw($maxLife, $liveLeft) {
     <div class="charmiddle">
       <div style="width:' . $liveLeftProzent . '%"class="progressbar_top ' . $class . '"></div>
       <div class="progressbar_bottom"></div>
-      <span class="progresstext">' . $liveLeft . ' / ' . $maxLife . '</span>
+      <span class="progresstext">HP: ' . $liveLeft . ' / ' . $maxLife . '</span>
     </div>';
   return $content;
 }
@@ -114,7 +122,7 @@ function getSkillTable($val, $typ) {
   $content = '';
   $content .= '<div class="' . $typ . ' selectable">';
   foreach ($val as $atk) {
-   if ($atk -> getTyp() == 'p') {
+    if ($atk -> getTyp() == 'p') {
       $atkTyp = 'Physical';
     } elseif ($atk -> getTyp() == 'm') {
       $atkTyp = 'Magical';

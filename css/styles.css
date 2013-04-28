@@ -209,6 +209,51 @@ body #wrapper #battle .charcontainer .chartop .charattr table.charattrtable {
 body #wrapper #battle .charcontainer .chartop .charattr table.charattrtable td {
   width: 98px;
 }
+body #wrapper #battle .charcontainer .exp {
+  height: 15px;
+  width: 378px;
+  float: left;
+  margin-bottom: 10px;
+  position: relative;
+}
+body #wrapper #battle .charcontainer .exp_top {
+  height: 15px;
+  position: absolute;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  background-color: #e8b300;
+  background-image: -webkit-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -moz-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -o-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -ms-linear-gradient(top, #e8b300, #ff730a);
+  background-image: linear-gradient(top, #e8b300, #ff730a);
+}
+body #wrapper #battle .charcontainer .exp_bottom {
+  height: 15px;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  background-color: #808080;
+  background-image: -webkit-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -o-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -ms-linear-gradient(top, #808080, #5a5a5a);
+  background-image: linear-gradient(top, #808080, #5a5a5a);
+  width: 100%;
+}
+body #wrapper #battle .charcontainer .exp span.exptext {
+  position: absolute;
+  height: 20px;
+  width: 300px;
+  display: block;
+  margin-top: -16px;
+  margin-left: -150px;
+  left: 50%;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 15px;
+}
 body #wrapper #battle .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
@@ -326,6 +371,7 @@ body #wrapper #battle .charcontainer .charbottom .skilltext {
   box-shadow: 0 0 5px #000000;
   -moz-box-shadow: 0 0 5px #000000;
   -webkit-box-shadow: 0 0 5px #000000;
+  font-size: 13px;
 }
 body #wrapper #battle .charcontainer .charbottom .skillright {
   margin-right: 0px;
@@ -448,6 +494,51 @@ body #wrapper #character .left .charcontainer .chartop .charattr table.charattrt
 body #wrapper #character .left .charcontainer .chartop .charattr table.charattrtable td {
   width: 98px;
 }
+body #wrapper #character .left .charcontainer .exp {
+  height: 15px;
+  width: 378px;
+  float: left;
+  margin-bottom: 10px;
+  position: relative;
+}
+body #wrapper #character .left .charcontainer .exp_top {
+  height: 15px;
+  position: absolute;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  background-color: #e8b300;
+  background-image: -webkit-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -moz-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -o-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -ms-linear-gradient(top, #e8b300, #ff730a);
+  background-image: linear-gradient(top, #e8b300, #ff730a);
+}
+body #wrapper #character .left .charcontainer .exp_bottom {
+  height: 15px;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  background-color: #808080;
+  background-image: -webkit-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -o-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -ms-linear-gradient(top, #808080, #5a5a5a);
+  background-image: linear-gradient(top, #808080, #5a5a5a);
+  width: 100%;
+}
+body #wrapper #character .left .charcontainer .exp span.exptext {
+  position: absolute;
+  height: 20px;
+  width: 300px;
+  display: block;
+  margin-top: -16px;
+  margin-left: -150px;
+  left: 50%;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 15px;
+}
 body #wrapper #character .left .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
@@ -565,6 +656,7 @@ body #wrapper #character .left .charcontainer .charbottom .skilltext {
   box-shadow: 0 0 5px #000000;
   -moz-box-shadow: 0 0 5px #000000;
   -webkit-box-shadow: 0 0 5px #000000;
+  font-size: 13px;
 }
 body #wrapper #character .left .charcontainer .charbottom .skillright {
   margin-right: 0px;
@@ -724,6 +816,7 @@ body #wrapper #character .right .parts .leftdiv .skills .magical .skillcontainer
 body #wrapper #character .right .parts .leftdiv .skills .special .skillcontainer .skilltext {
   padding-top: 5px;
   display: block;
+  font-size: 13px;
 }
 body #wrapper #character .right .parts .leftdiv .skills .physical {
   background-color: #d75d51;
@@ -974,6 +1067,51 @@ body #wrapper #dashboard .charcontainer .chartop .charattr table.charattrtable {
 body #wrapper #dashboard .charcontainer .chartop .charattr table.charattrtable td {
   width: 98px;
 }
+body #wrapper #dashboard .charcontainer .exp {
+  height: 15px;
+  width: 378px;
+  float: left;
+  margin-bottom: 10px;
+  position: relative;
+}
+body #wrapper #dashboard .charcontainer .exp_top {
+  height: 15px;
+  position: absolute;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  background-color: #e8b300;
+  background-image: -webkit-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -moz-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -o-linear-gradient(top, #e8b300, #ff730a);
+  background-image: -ms-linear-gradient(top, #e8b300, #ff730a);
+  background-image: linear-gradient(top, #e8b300, #ff730a);
+}
+body #wrapper #dashboard .charcontainer .exp_bottom {
+  height: 15px;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  background-color: #808080;
+  background-image: -webkit-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -moz-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -o-linear-gradient(top, #808080, #5a5a5a);
+  background-image: -ms-linear-gradient(top, #808080, #5a5a5a);
+  background-image: linear-gradient(top, #808080, #5a5a5a);
+  width: 100%;
+}
+body #wrapper #dashboard .charcontainer .exp span.exptext {
+  position: absolute;
+  height: 20px;
+  width: 300px;
+  display: block;
+  margin-top: -16px;
+  margin-left: -150px;
+  left: 50%;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 15px;
+}
 body #wrapper #dashboard .charcontainer .charmiddle {
   height: 30px;
   width: 378px;
@@ -1091,6 +1229,7 @@ body #wrapper #dashboard .charcontainer .charbottom .skilltext {
   box-shadow: 0 0 5px #000000;
   -moz-box-shadow: 0 0 5px #000000;
   -webkit-box-shadow: 0 0 5px #000000;
+  font-size: 13px;
 }
 body #wrapper #dashboard .charcontainer .charbottom .skillright {
   margin-right: 0px;

@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
   //onlineCheckAll();
   //setInterval('onlineCheckAll()', 10000);
 });
-
+var waitingNotOver = true;
 var onDashboard = false;
 
 function onlineCheck(val) {
@@ -26,25 +26,24 @@ function dashboard() {
       'event' : 'dashboard'
     }
   }).done(function(html) {
-    if(renewDash){
+    if (renewDash) {
       jQuery('.right').html(html);
-    } 
+    }
   });
 }
 
-
-function battleRequest(challenger, challengee){
-	$.ajax({
-		type : 'POST',
-		url : 'pages/ajax.php',
-		data : {
-			'event' : 'makeRequest',
-			'challenger' : challenger,
-			'challengee' : challengee
-		}
-	}).done(function(data){
-   var response = $.parseJSON(data);
-   if(response.success == true){
+function battleRequest(challenger, challengee) {
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'makeRequest',
+      'challenger' : challenger,
+      'challengee' : challengee
+    }
+  }).done(function(data) {
+    var response = $.parseJSON(data);
+    if (response.success == true) {
       $(".right").html('<pre>You have challanged an opponent</pre>');
       checkRequest = true;
       battleId = response.battleId;
@@ -56,32 +55,32 @@ function battleRequest(challenger, challengee){
   });
 }
 
-function hasChallange(charId){
-	$.ajax({
-		type : 'POST',
-		url : 'pages/ajax.php',
-		data : {
-			'event' : 'hasChallange',
-			'charId' : charId
-		}
-	}).done(function(data){
-  // alert(data);
-	  var obj = $.parseJSON(data);
-	  if(obj.has == true && challangeable){
-	    challangeable = false;
-	    clearInterval(receiveChallengeTime);
-	    if(confirm(obj.message)){
-        requestResponse(obj.battle,"a");
+function hasChallange(charId) {
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'hasChallange',
+      'charId' : charId
+    }
+  }).done(function(data) {
+    // alert(data);
+    var obj = $.parseJSON(data);
+    if (obj.has == true && challangeable) {
+      challangeable = false;
+      clearInterval(receiveChallengeTime);
+      if (confirm(obj.message)) {
+        requestResponse(obj.battle, "a");
       } else {
-        requestResponse(obj.battle,"r");
+        requestResponse(obj.battle, "r");
         checkRequestTime = setInterval("hasChallange(thisCharId)", 3000);
-	    }
-	  }
-	});
+      }
+    }
+  });
 }
 
-function requestResponse(battleId,val){
-   $.ajax({
+function requestResponse(battleId, val) {
+  $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
     data : {
@@ -90,9 +89,9 @@ function requestResponse(battleId,val){
       'charId' : thisCharId,
       'status' : val
     }
-  }).done(function(data){
-    if(val == "a"){
-      window.location.href = "?page=Battle&fight="+battleId;
+  }).done(function(data) {
+    if (val == "a") {
+      window.location.href = "?page=Battle&fight=" + battleId;
     } else {
       challangeable = true;
     }
@@ -121,6 +120,7 @@ function delCharAtk(val) {
     jQuery('head').append(html);
   });
 }
+
 function setAttribute(val) {
   jQuery.ajax({
     type : 'POST',
@@ -131,7 +131,8 @@ function setAttribute(val) {
     }
   });
 }
-function requestCheck(battleId){
+
+function requestCheck(battleId) {
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -139,13 +140,13 @@ function requestCheck(battleId){
       'event' : 'requestCheck',
       'battleId' : battleId
     }
-  }).done(function(data){  
-    if(checkRequest){
+  }).done(function(data) {
+    if (checkRequest) {
       var obj = $.parseJSON(data);
-      if(obj.accepted == true){
-        window.location.href = "?page=Battle&fight="+battleId;
+      if (obj.accepted == true) {
+        window.location.href = "?page=Battle&fight=" + battleId;
       } else {
-        if(obj.rejected == true){
+        if (obj.rejected == true) {
           alert(obj.message);
           checkRequest = false;
           challangeable = true;
@@ -153,56 +154,59 @@ function requestCheck(battleId){
           clearInterval(checkRequestTime);
           receiveChallengeTime = setInterval("hasChallange(thisCharId)", 3000);
           dashboardTime = setInterval("dashboard()", 3000);
-        } 
+        }
       }
-    } 
+    }
   });
 }
 
-function waiting(){
+function waiting() {
   console.debug("waiting");
-    $(".otherChar .status").text("Attacking");
-    $.ajax({
-      type : 'POST',
-      url : 'pages/ajax.php',
-      data : {
-        'event' : 'waiting',
-        'battleId' : battleId,
-        'charId' : thisCharId
-      }
-    }).done(function(data){
+  $(".otherChar .status").text("Attacking");
+  $.ajax({
+    type : 'POST',
+    url : 'pages/ajax.php',
+    data : {
+      'event' : 'waiting',
+      'battleId' : battleId,
+      'charId' : thisCharId
+    }
+  }).done(function(data) {
+    if (waitingNotOver == true) {
       console.debug(data);
       var obj = $.parseJSON(data);
-      if(obj.fled){
+      if (obj.fled) {
         alert("you're opponent has fled");
       }
-      if(obj.over){
+      if (obj.over) {
+        waitingNotOver = false;
         alert(obj.overmessage);
         livepoints();
         hasLevelUp();
       } else {
-        if(obj.attack == true){
+        if (obj.attack == true) {
           attacking = true;
           clearInterval(waitingTime);
           $(".myChar .status").text("Attacking");
           $(".otherChar .status").text("Waiting");
           livepoints();
         } else {
-          if(waitingTime == null){
-            waitingTime = setInterval("waiting()",3000);
+          if (waitingTime == null) {
+            waitingTime = setInterval("waiting()", 3000);
           }
           $(".myChar .status").text("Waiting");
           $(".otherChar .status").text("Attacking");
         }
         jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
-        jQuery(".otherChar .charmiddle").replaceWith(obj.oHp); 
+        jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
         var log = obj.bLog.replace(/\n/g, "<br>");
         jQuery(".battlelogtext").html(log);
       }
+    }
   });
 }
 
-function livepoints(){
+function livepoints() {
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -211,16 +215,16 @@ function livepoints(){
       'battleId' : battleId,
       'charId' : thisCharId
     }
-  }).done(function(data){
-      var obj = $.parseJSON(data);
-      jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
-      jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
-      var log = obj.bLog.replace(/\n/g, "<br>");
-      jQuery(".battlelogtext").html(log);
+  }).done(function(data) {
+    var obj = $.parseJSON(data);
+    jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
+    jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
+    var log = obj.bLog.replace(/\n/g, "<br>");
+    jQuery(".battlelogtext").html(log);
   });
 }
 
-function hasLevelUp(){
+function hasLevelUp() {
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -228,20 +232,20 @@ function hasLevelUp(){
       'event' : 'hasLevelUp',
       'charId' : thisCharId
     }
-  }).done(function(data){
-      console.debug(data);
-      var obj = $.parseJSON(data);
-      if(obj.levelup == true){
-        alert(obj.message);
-        window.location.href = "?page=Character";
-      } else {
-        alert(obj.message);
-        window.location.href = "index.php";
-      }
+  }).done(function(data) {
+    console.debug(data);
+    var obj = $.parseJSON(data);
+    if (obj.levelup == true) {
+      alert(obj.message);
+      window.location.href = "?page=Character";
+    } else {
+      alert(obj.message);
+      window.location.href = "index.php";
+    }
   });
 }
 
-function retreat(){
+function retreat() {
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -249,15 +253,15 @@ function retreat(){
       'event' : 'flee',
       'battleId' : battleId
     }
-  }).done(function(data){
+  }).done(function(data) {
     window.location.href = "index.php";
   });
 }
 
-function attack(atkId){
+function attack(atkId) {
   if (attacking == true) {
-     attacking = false;
-     $.ajax({
+    attacking = false;
+    $.ajax({
       type : 'POST',
       url : 'pages/ajax.php',
       data : {
@@ -266,20 +270,20 @@ function attack(atkId){
         'charId' : thisCharId,
         'atkId' : atkId
       }
-    }).done(function(data){
+    }).done(function(data) {
       var obj = $.parseJSON(data);
-      if(obj.valid){
+      if (obj.valid) {
         jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
         jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
         var log = obj.bLog.replace(/\n/g, "<br>");
         jQuery(".battlelogtext").html(log);
-        if(obj.over){
+        if (obj.over) {
           alert(obj.overmessage);
           livepoints();
           hasLevelUp();
         } else {
           waiting();
-          waitingTime = setInterval("waiting()",3000);
+          waitingTime = setInterval("waiting()", 3000);
           $(".myChar .status").text("Waiting");
           $(".otherChar .status").text("Attacking");
         }

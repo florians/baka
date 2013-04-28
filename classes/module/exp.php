@@ -109,6 +109,16 @@ class Exp extends Model {
       return 0;
     }
   }
+  public static function getCharLvlExp($lvlExp){
+    //pre($lvlExp.'^--');
+    $exp = self::select('WHERE eExp <= ' . encode($lvlExp) . ' AND eTyp = "n"  ORDER BY eExp DESC LIMIT 1');
+    //pre($exp);
+    if(isset($exp[0]) && is_numeric($exp[0]->getLvl())){
+      return $exp[0]->getExp();
+    } else {
+      return 0;
+    }
+  }
   
   public static function getWinLvlUp($lvl){
     $exp = self::select('WHERE eLvl = ' . encode($lvl) . ' AND eTyp = "g"  ORDER BY eExp DESC LIMIT 1');
