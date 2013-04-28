@@ -134,7 +134,7 @@ jQuery(document).ready(function() {
           var valueDurability = jQuery('.Durability').attr('value');
           var newValueDurability = parseInt(valueDurability) + 1;
           jQuery('.Durability').val(newValueDurability);
-          var newLife = (newValueDurability * 10) + 55;
+          var newLife = (newValueDurability * 10) + 60;
           jQuery('.progresstext').html(newLife + ' / ' + newLife);
         }
       }

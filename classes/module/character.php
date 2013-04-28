@@ -267,7 +267,7 @@ class Character extends Model {
   
   public function setDurability($setVal) {
     $this -> cDurability = $setVal;
-    $this -> cHp = ($setVal * 10)+65;
+    $this -> cHp = ($setVal * 10)+60;
   }
 
   public function getDurability() {
@@ -442,7 +442,6 @@ class Character extends Model {
     //error_log("growth =".$growth,3,"C:/xampp/apache/logs/baka.log");
     $this->cAp += $giveaway;
     $this->setDurability($this->cDurability + $growth);
-    $this->cHp = $this->cDurability * 25;
     $this->cMagAtk += $growth;
     $this->cMagDef += $growth;
     $this->cPhyAtk += $growth;

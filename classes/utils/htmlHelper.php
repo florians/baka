@@ -114,10 +114,17 @@ function getSkillTable($val, $typ) {
   $content = '';
   $content .= '<div class="' . $typ . ' selectable">';
   foreach ($val as $atk) {
+   if ($atk -> getTyp() == 'p') {
+      $atkTyp = 'Physical';
+    } elseif ($atk -> getTyp() == 'm') {
+      $atkTyp = 'Magical';
+    } elseif ($atk -> getTyp() == 'a') {
+      $atkTyp = 'Special';
+    }
     $content .= '
       <div class="skillcontainer">
         <a href="#" rel="' . $atk -> getId() . '" class="skill" title="' . $atk -> getName() . '"><img src="' . getAtkImag($atk -> getId()) . '" /></a>
-        <span class="skilltext"><b>' . $atk -> getName() . '</b><br />Damage ' . $atk -> getDmgPt() . '<br />Typ ' . $atk -> getTyp() . '</span>
+        <span class="skilltext"><b>' . $atk -> getName() . '</b><br />Damage ' . $atk -> getDmgPt() . '<br />Typ ' . $atkTyp . '</span>
       </div>';
   }
   $content .= '</div>';
