@@ -267,7 +267,7 @@ class Character extends Model {
   
   public function setDurability($setVal) {
     $this -> cDurability = $setVal;
-    $this -> cHp = ($setVal * 5)+125;
+    $this -> cHp = ($setVal * 10)+65;
   }
 
   public function getDurability() {
