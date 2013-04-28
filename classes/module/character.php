@@ -267,7 +267,7 @@ class Character extends Model {
   
   public function setDurability($setVal) {
     $this -> cDurability = $setVal;
-    $this -> cHp = $setVal * 25;
+    $this -> cHp = ($setVal * 5)+125;
   }
 
   public function getDurability() {
@@ -397,66 +397,43 @@ class Character extends Model {
     $giveaway = 1;
     switch (true) {
       case $lvl == 100:
-        $growth += 1;
-      case $lvl > 89 && $lvl < 100:
-        $growth += 1;
-      case $lvl > 79 && $lvl < 90:
-        $growth += 1;
-      case $lvl > 69 && $lvl < 80:
-        $growth += 1;
-      case $lvl > 59 && $lvl < 70:
-        $growth += 1;
-      case $lvl > 49 && $lvl < 60:
-        $growth += 1;
-      case $lvl > 39 && $lvl < 50:
-        $growth += 1;
-      case $lvl > 29 && $lvl < 40:
-        $growth += 1;
-      case $lvl > 19 && $lvl < 30:
-        $growth += 1;
-      case $lvl > 9 && $lvl < 20:
-        $growth += 1;
-        break;
-    }
-    switch (true) {
-      case $lvl == 100:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 94 && $lvl < 100:
         $giveaway +=  1;
       case $lvl > 89 && $lvl < 95:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 84 && $lvl < 90:
         $giveaway +=  1;
       case $lvl > 79 && $lvl < 85:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 74 && $lvl < 80:
         $giveaway +=  1;
       case $lvl > 69 && $lvl < 75:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 64 && $lvl < 70:
         $giveaway +=  1;
       case $lvl > 59 && $lvl < 65:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 54 && $lvl < 60:
         $giveaway +=  1;
       case $lvl > 49 && $lvl < 55:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 44 && $lvl < 50:
         $giveaway +=  1;
       case $lvl > 39 && $lvl < 45:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 34 && $lvl < 40:
         $giveaway +=  1;
       case $lvl > 29 && $lvl < 35:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 24 && $lvl < 30:
         $giveaway +=  1;
       case $lvl > 19 && $lvl < 25:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 14 && $lvl < 20:
         $giveaway +=  1;
       case $lvl > 9 && $lvl < 15:
-        $giveaway +=  1;
+        $giveaway +=  2;
       case $lvl > 4 && $lvl < 10:
         $giveaway +=  1;
         break;
@@ -464,7 +441,7 @@ class Character extends Model {
     //error_log("giveaway =".$giveaway,3,"C:/xampp/apache/logs/baka.log");
     //error_log("growth =".$growth,3,"C:/xampp/apache/logs/baka.log");
     $this->cAp += $giveaway;
-    $this->cDurability += $growth;
+    $this->setDurability($this->cDurability + $growth);
     $this->cHp = $this->cDurability * 25;
     $this->cMagAtk += $growth;
     $this->cMagDef += $growth;

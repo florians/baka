@@ -28,6 +28,8 @@ class views_dashboard extends views {
       var dashboardTime = setInterval("dashboard()", 3000);
       var checkRequestTime;
       var checkRequest = false;
+      onDashboard = true;
+      console.debug(onDashboard);
         ';
     if ($this -> character) {
 

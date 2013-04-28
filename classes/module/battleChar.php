@@ -171,24 +171,24 @@ class BattleChar extends Model {
     $def = 0;
   switch ($attack->getTyp()) {
     case 'p':
-      $def = ($defChar->getPhyDef())/2;
+      $def = ($defChar->getPhyDef())/3;
       $atk = ($agrChar->getPhyAtk())/2;
       break;
     case 'm':
-      $def = ($defChar->getMagDef())/2;
+      $def = ($defChar->getMagDef())/3;
       $atk = ($agrChar->getMagAtk())/2;
       break;
     case 'a':
-      $def = (($defChar->getMagDef()+$defChar->getPhyDef())/2)/2;
+      $def = (($defChar->getMagDef()+$defChar->getPhyDef())/2)/3;
       $atk = (($agrChar->getMagAtk()+$agrChar->getMagAtk())/2)/2;
       break;
     default:
-      $def = ($myChar->getPhyDef())/2;
+      $def = ($myChar->getPhyDef())/3;
       $atk = ($oChar->getPhyAtk())/2;
       break;
   }
   $hit = self::hitCrit( $attack->getDmgPt()+$atk-$def);
-  $hit['dmg'] = round(($hit['dmg']>= 0)?$hit['dmg']:0);
+  $hit['dmg'] = round(($hit['dmg']> 0)?$hit['dmg']:1);
   $this->bcHp -= $hit['dmg'];
   $this->save();
   return $hit;

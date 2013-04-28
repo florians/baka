@@ -1,6 +1,6 @@
 <?php
-//error_reporting(E_ALL ^ E_STRICT);
-//ini_set('display_errors', 1);
+error_reporting(E_ALL ^ E_STRICT);
+ini_set('display_errors', 1);
 session_start();
 
 // include module
@@ -48,7 +48,7 @@ switch(post('event')) {
     $user = User::byId(session('id'));
     $user -> setOnline(post('value'));
     $user -> setLastActivity(strtotime('now'));
-    $user -> setListOnDashboard(1);
+    $user -> setListOnDashboard(post('dashboard')?1:0);
     $user -> save();
     break;
   case 'setCharAtk' :

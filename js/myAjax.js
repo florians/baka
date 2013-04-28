@@ -3,12 +3,16 @@ jQuery(document).ready(function() {
   //setInterval('onlineCheckAll()', 10000);
 });
 
+var onDashboard = false;
+
 function onlineCheck(val) {
+  console.debug(onDashboard);
   jQuery.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
     data : {
       'event' : 'onlineCheck',
+      'dashboard' : onDashboard,
       'value' : val
     }
   });
