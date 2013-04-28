@@ -215,9 +215,15 @@ switch(post('event')) {
     $myBattleChar = BattleChar::byId(post("battleId"), post("charId"));
     $response['attack'] = ($battle -> getWhosTurn() == $myBattleChar -> getPlayer());
     $response['over'] = (boolean)$battle -> getOver();
+    if($response['over'] == true){
+      error_log("Got here\n",3,3,"C:/xampp/apache/logs/baka.log");  
+      $response['overmessage'] = "You ".($battle->getWinner() == $myChar->getBattleChar(post("battleId"))->getPlayer()?"Won":"Lost");
+      error_log($response['overmessage']."\n",3,3,"C:/xampp/apache/logs/baka.log");  
+    }
     $response['oHp'] = characterLifeRaw($oChar -> getHp(), $oChar -> getHpLeft(post("battleId")));
     $response['myHp'] = characterLifeRaw($myChar -> getHp(), $myBattleChar -> getHp());
     $response['bLog'] = bLogReplace($battle -> getLog());
+    error_log("is leaving\n",3,3,"C:/xampp/apache/logs/baka.log");  
     $content = json_encode($response);
     break;
   case 'livepoints' :
@@ -236,7 +242,11 @@ switch(post('event')) {
     $response['levelup'] = $agrChar -> getLevelUp();
     $agrChar -> setLevelUp(FALSE);
     $agrChar -> save();
-    $response['message'] = "you have reached Level " . $agrChar -> getLevel();
+    if($response['levelup'] == true){
+      $response['message'] = "You have reached Level " . $agrChar -> getLevel()."\n To reach the next Level you need " . $agrChar -> getNextLvlExp()." more EXP.";
+    } else {
+      $response['message'] = "To reach the next Level you need " . $agrChar -> getNextLvlExp()." more EXP.";
+    }
     $content = json_encode($response);
     break;
   case 'attack' :
@@ -265,6 +275,9 @@ switch(post('event')) {
       $response['myHp'] = characterLifeRaw($agrChar -> getHp(), $agrChar -> getHpLeft(post("battleId")));
       $response['bLog'] = bLogReplace($battle -> getLog());
       $response['over'] = (boolean)$battle -> getOver();
+      if($response['over'] == true){  
+        $response['overmessage'] = "You ".($battle->getWinner() == $agrChar->getBattleChar(post("battleId"))->getPlayer()?"Won":"Lost");
+      }
     } else {
       $response['valid'] = false;
     }

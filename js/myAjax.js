@@ -171,11 +171,13 @@ function waiting(){
         'charId' : thisCharId
       }
     }).done(function(data){
+      console.debug(data);
       var obj = $.parseJSON(data);
       if(obj.fled){
         alert("you're opponent has fled");
       }
       if(obj.over){
+        alert(obj.overmessage);
         livepoints();
         hasLevelUp();
       } else {
@@ -201,7 +203,6 @@ function waiting(){
 }
 
 function livepoints(){
-  console.debug("livepoints!");
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -216,12 +217,10 @@ function livepoints(){
       jQuery(".otherChar .charmiddle").replaceWith(obj.oHp);
       var log = obj.bLog.replace(/\n/g, "<br>");
       jQuery(".battlelogtext").html(log);
-      console.debug("logged");
   });
 }
 
 function hasLevelUp(){
-  console.debug("haslevelup check started");
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -234,17 +233,15 @@ function hasLevelUp(){
       var obj = $.parseJSON(data);
       if(obj.levelup == true){
         alert(obj.message);
-        console.debug("bye");
         window.location.href = "?page=Character";
       } else {
-        console.debug("bye 2");
+        alert(obj.message);
         window.location.href = "index.php";
       }
   });
 }
 
 function retreat(){
-  console.debug("flee");
   $.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -254,12 +251,10 @@ function retreat(){
     }
   }).done(function(data){
     window.location.href = "index.php";
-    console.debug("fled");
   });
 }
 
 function attack(atkId){
-  console.log(attacking);
   if (attacking == true) {
      attacking = false;
      $.ajax({
@@ -272,7 +267,6 @@ function attack(atkId){
         'atkId' : atkId
       }
     }).done(function(data){
-      console.log(data);
       var obj = $.parseJSON(data);
       if(obj.valid){
         jQuery(".myChar .charmiddle").replaceWith(obj.myHp);
@@ -280,6 +274,7 @@ function attack(atkId){
         var log = obj.bLog.replace(/\n/g, "<br>");
         jQuery(".battlelogtext").html(log);
         if(obj.over){
+          alert(obj.overmessage);
           livepoints();
           hasLevelUp();
         } else {

@@ -87,13 +87,15 @@ jQuery(document).ready(function() {
   });
 
   jQuery(".right").on("click", ".challenge", function() {
-    clearInterval(dashboardTime);
-    clearInterval(receiveChallengeTime);
-    renewDash = false;
-    challengeable = false;
-    var challengee = $(this).attr("id");
-    var challenger = $("#myCharId").val();
-    battleRequest(challenger, challengee);
+    if(confirm("Are you sure, you want to challenge this character?")){
+      clearInterval(dashboardTime);
+      clearInterval(receiveChallengeTime);
+      renewDash = false;
+      challengeable = false;
+      var challengee = $(this).attr("id");
+      var challenger = $("#myCharId").val();
+      battleRequest(challenger, challengee);
+    }
   });
 
   jQuery(".myChar a.skill").click(function(e) {

@@ -372,15 +372,20 @@ class Character extends Model {
   
   private function growing($exp){
    //  error_log("Exp = ".$exp."\n",3,"C:/xampp/apache/logs/baka.log");
+    $oldLvl = $this->getLevel();
+    
     $this->cLvlExp += $exp;
   //  error_log("cLvlExp = ".$this->cLvlExp."\n",3,"C:/xampp/apache/logs/baka.log");
     $this->cNextLvlExp -= $exp;
   //  error_log("cNextLvlExp = ".$this->cNextLvlExp."\n",3,"C:/xampp/apache/logs/baka.log");
     if($this->cNextLvlExp <= 0 && $this->cLvlExp ){
+      $newLvel = $this->getLevel();
   //    error_log("level up"."\n",3,"C:/xampp/apache/logs/baka.log");
       $this->cLevelUp = true;
       $this->cNextLvlExp = (Exp::getExpToNext($this->cLvlExp) - $this->cLvlExp);
-      $this->grow();
+      for($i = $oldLvl+1; $oldLvl <= $newLvel; $i++){
+        $this->grow($i);
+      }
     } else {
       $this->cLevelUp = false;
       if($this->cLvlExp > 1570909908495){
@@ -390,9 +395,8 @@ class Character extends Model {
     $this->save();
    // error_log("saved winGrow\n",3,"C:/xampp/apache/logs/baka.log");
   }
-  private function grow(){
+  private function grow($lvl){
   //  error_log("growing",3,"C:/xampp/apache/logs/baka.log");
-    $lvl = $this->getLevel();
     $growth = 1;
     $giveaway = 1;
     switch (true) {

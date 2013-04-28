@@ -188,7 +188,7 @@ class BattleChar extends Model {
       break;
   }
   $hit = self::hitCrit( $attack->getDmgPt()+$atk-$def);
-  $hit['dmg'] = round(($hit['dmg']> 0)?$hit['dmg']:1);
+  $hit['dmg'] = round(($hit['dmg'] > 0 || $hit['status'] == "Missed")?$hit['dmg']:1);
   $this->bcHp -= $hit['dmg'];
   $this->save();
   return $hit;
