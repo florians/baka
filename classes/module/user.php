@@ -162,7 +162,7 @@ class User extends Model {
   public static function selectByUsername($username) {
     // select from db with that usernam in the where
     if (isset($username)) {
-      $user = self::select("WHERE uUsername = '" . $username . "'");
+      $user = self::select("WHERE uUsername like '" . $username . "'");
       if(count($user)){
         return $user[0];
       }
@@ -319,16 +319,30 @@ class User extends Model {
     return Character::byUserId($this->uId);
   }
   public function getWins(){
-    return $this->getChar()->getWins();
+    $char = $this->getChar();
+	if($char != null && is_object($char)){
+    	return $char->getLoses()+$char->getWins();
+	} else {
+		return 0;
+	}
   }
   
   public function getLoses(){
-    return $this->getChar()->getLoses();
+    $char = $this->getChar();
+	if($char != null && is_object($char)){
+    	return $char->getLoses();
+	} else {
+		return 0;
+	}
   }
   
   public function getBattleTotal(){
     $char = $this->getChar();
-    return $char->getLoses()+$char->getWins();
+	if($char != null && is_object($char)){
+    	return $char->getLoses()+$char->getWins();
+	} else {
+		return 0;
+	}
   }
 }
 ?>

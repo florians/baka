@@ -55,8 +55,10 @@ switch(post('event')) {
     $char = $character -> byUserId(session('id'));
     $charAtk -> setAtkId(post('value'));
     $charAtk -> setCharId($char -> getId());
-
-    $charAtk -> save();
+    $atklvl = $charAtk->getAtk($charAtk->getAtkId);
+    if($atklvl->getLearnLvl() <= $char->getLevel()){
+      $charAtk -> save();
+    }
     break;
   case 'delCharAtk' :
     $char = $character -> byUserId(session('id'));
@@ -66,25 +68,27 @@ switch(post('event')) {
     break;
   case 'setAttribute' :
     $char = $character -> byUserId(session('id'));
-    switch (post('value')) {
-      case 'MagAtk' :
-        $char -> setMagAtk($char -> getMagAtk() + 1);
-        break;
-      case 'PhyAtk' :
-        $char -> setPhyAtk($char -> getPhyAtk() + 1);
-        break;
-      case 'MagDef' :
-        $char -> setMagDef($char -> getMagDef() + 1);
-        break;
-      case 'PhyDef' :
-        $char -> setPhyDef($char -> getPhyDef() + 1);
-        break;
-      case 'Durability' :
-        $char -> setDurability($char -> getDurability() + 1);
-        break;
+    if ($char -> getAp() > 0) {
+      switch (post('value')) {
+        case 'MagAtk' :
+          $char -> setMagAtk($char -> getMagAtk() + 1);
+          break;
+        case 'PhyAtk' :
+          $char -> setPhyAtk($char -> getPhyAtk() + 1);
+          break;
+        case 'MagDef' :
+          $char -> setMagDef($char -> getMagDef() + 1);
+          break;
+        case 'PhyDef' :
+          $char -> setPhyDef($char -> getPhyDef() + 1);
+          break;
+        case 'Durability' :
+          $char -> setDurability($char -> getDurability() + 1);
+          break;
+      }
+      $char -> setAp($char -> getAp() - 1);
+      $char -> save();
     }
-    $char -> setAp($char->getAp()-1);
-    $char -> save();
     break;
   case 'makeRequest' :
     $response = array();
