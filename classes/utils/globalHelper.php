@@ -1,14 +1,12 @@
 <?php
-
-/* getDirContent - reads all the JS files from the folder in the parameter
- * get - with the parameter you get the checked value back
- * post - see get
- * files - see get
- * session - seet get
- * encode - checks the parameter with htmlentities and mysql_real_escape_string
- * pre - plus parameter gives you a nice output for varables or arrays
+/**
+ * @Author Florian Stettler
+ * Create Date:   14.03.2013  create of the file
+ * 
+ * this file contains functions that are used throught out the Web applikation
  */
 
+ // this function reads all the JS files from the folder in the parameter
 function getDirContent($dir) {
   $content = null;
   $allfiles = scandir($dir);
@@ -23,7 +21,7 @@ function getDirContent($dir) {
   echo $content;
 }
 
-// function to get the GET with the parameter
+// this function gets the GET with the parameter
 function get($parameter = null) {
   if (isset($_GET[$parameter])) {
     $get = $_GET[$parameter];
@@ -35,7 +33,7 @@ function get($parameter = null) {
   return $get;
 }
 
-// function to get the POST with the parameter
+// this function gets the POST with the parameter
 function post($parameter = null) {
   if (isset($_POST[$parameter])) {
     $post = $_POST[$parameter];
@@ -47,7 +45,7 @@ function post($parameter = null) {
   return $post;
 }
 
-// function to get the FILE with the parameter
+// this function gets the FILE with the parameter
 function files($parameter = null) {
   if (isset($_FILES[$parameter])) {
     $file = $_FILES[$parameter];
@@ -59,7 +57,7 @@ function files($parameter = null) {
   return $file;
 }
 
-// function to get the SESSION with the parameter
+// this function gets the SESSION with the parameter
 function session($parameter = null) {
 
   if (isset($_SESSION[$parameter])) {
@@ -72,26 +70,26 @@ function session($parameter = null) {
   return $session;
 }
 
-// injections encode
+// this function  checks the parameter with htmlspecialchars and mysql_real_escape_string
 function encode($entry) {
   $encoded = htmlspecialchars($entry);
   $encoded = Database::getInstance() -> mysqlRealEscapeStringCheck($encoded);
   return $encoded;
 }
-
+// this function decodes the variable with htmlspecialchars_decode
 function decode($encoded) {
   $decoded = htmlspecialchars_decode($encoded);
   return $decoded;
 }
 
-// formated output
+// this function is mainly used for checking variables while looking for errors and bugs in the code
 function pre($string) {
   print '<pre>';
   print_r($string);
   print '</pre>';
 }
 
-// password crypt
+// this function crypts the password 
 function pwCrypt($password) {
   if (CRYPT_SHA512 == 1) {
     $pw = crypt($password, '$6$rounds=4000$zasduqwclbvwjkqowie$');
@@ -100,7 +98,7 @@ function pwCrypt($password) {
   }
 }
 
-// generates the Whole Navigation
+// this function generates the Whole Navigation
 function getNavigation($navigation) {
   $mainlink = 'index.php?page=';
   foreach ($navigation as $navipoint) {
@@ -112,7 +110,7 @@ function getNavigation($navigation) {
   }
 }
 
-// gets the ViweId of the actual page if exists
+// this function gets the ViewId of the actual page if exists
 function getViewId($value) {
   $viewId = '';
   if ($value != '' && in_array($value, getConfig('allowed'))) {
@@ -127,7 +125,7 @@ function getViewId($value) {
   }
 }
 
-// get configs which you have written in config.php
+// this function gets configs which you have written in config.php
 function getConfig($val = null) {
   $config = new Config();
   if (!$val) {
@@ -146,7 +144,8 @@ function getConfig($val = null) {
   return $returnval;
 }
 
-function bLogReplace($val) {
+// this function replaces some keywords to style the Battlelog
+function battleLogReplace($val) {
   $val = str_replace('/evenfront', '<span class="even">', $val);
   $val = str_replace('/evenback', '</span>', $val);
   $val = str_replace('/oddfront', '<span class="odd">', $val);

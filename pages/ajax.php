@@ -26,7 +26,6 @@ $charAtk = new CharAtk();
 $content = null;
 switch(post('event')) {
   case 'dashboard' :
-    //$opponents = Character::select('AS c INNER JOIN user AS u ON u.uId = c.cUserId WHERE c.cUserId <>' . session('id') . ' AND u.uOnline = "1" AND uListOnDashboard = "1" ORDER BY c.cLvlExp,c.cName ASC');
     $opponents = Character::select('AS c INNER JOIN user AS u ON u.uId = c.cUserId WHERE c.cUserId <> ' . session('id') . ' AND u.uOnline = "1" AND u.uListOnDashboard = "1" AND (SELECT count(caCharId) as countatk FROM charatk WHERE caCharId = c.cId )  <> "0" ORDER BY c.cLvlExp,c.cName ASC');
 
     if (isset($opponents[0])) {
@@ -226,7 +225,7 @@ switch(post('event')) {
     }
     $response['oHp'] = characterLifeRaw($oChar -> getHp(), $oChar -> getHpLeft(post("battleId")));
     $response['myHp'] = characterLifeRaw($myChar -> getHp(), $myBattleChar -> getHp());
-    $response['bLog'] = bLogReplace($battle -> getLog());
+    $response['bLog'] = battleLogReplace($battle -> getLog());
     //error_log("is leaving\n",3,"C:/xampp/apache/logs/baka.log");  
     $content = json_encode($response);
     break;
@@ -237,7 +236,7 @@ switch(post('event')) {
     $defChar = $battle -> getOpponent(post("charId"));
     $response['oHp'] = characterLifeRaw($defChar -> getHp(), $defChar -> getHpLeft(post("battleId")));
     $response['myHp'] = characterLifeRaw($agrChar -> getHp(), $agrChar -> getHpLeft(post("battleId")));
-    $response['bLog'] = bLogReplace($battle -> getLog());
+    $response['bLog'] = battleLogReplace($battle -> getLog());
     $content = json_encode($response);
     break;
   case 'hasLevelUp' :
@@ -277,7 +276,7 @@ switch(post('event')) {
       }
       $response['oHp'] = characterLifeRaw($defChar -> getHp(), $defChar -> getHpLeft(post("battleId")));
       $response['myHp'] = characterLifeRaw($agrChar -> getHp(), $agrChar -> getHpLeft(post("battleId")));
-      $response['bLog'] = bLogReplace($battle -> getLog());
+      $response['bLog'] = battleLogReplace($battle -> getLog());
       $response['over'] = (boolean)$battle -> getOver();
       if($response['over'] == true){  
         $response['overmessage'] = "You ".($battle->getWinner() == $agrChar->getBattleChar(post("battleId"))->getPlayer()?"Won":"Lost");

@@ -1,4 +1,12 @@
 <?php
+/**
+ * @Author Florian Stettler
+ * @Version 1
+ * Create Date:   14.03.2013  create of the file
+ * 
+ * includes all the neccessary files
+ */
+ 
 // include events
 include_once 'classes/events/battleEvent.php';
 include_once 'classes/events/characterEvent.php';

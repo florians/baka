@@ -221,10 +221,10 @@ class User extends Model {
     $absendermail = "stettler.florian@gmail.com";
     $betreff = "Password Activation";
     $text = "Here is your Password Activation Link \n
-    Firstname: ".$this->firstname."\n
-    Lastname: ".$this->lastname."\n
-    Username: ".$this->username."\n
-    Email: ".$this->email."\n
+    Firstname: ".$this->uFirstname."\n
+    Lastname: ".$this->uLastname."\n
+    Username: ".$this->uUsername."\n
+    Email: ".$this->uEmail."\n
     http://".$_SERVER['HTTP_HOST']."/index.php?page=Registration&activate=".$link;
     mail($empfaenger, $betreff, $text, "From:".$absendername." <".$absendermail.">"."Reply-To: ".$absendername." <".$absendermail.">");
   }
