@@ -1,19 +1,25 @@
 <?php
-
+/**
+ * @Author Florian Stettler
+ * @Version 1
+ * Create Date:   19.03.2013  create of the file
+ *
+ * This class is responsible for the Messages
+ */
 class Message {
 
+  // this variable is responsible for the Object instance
   protected static $ins = null;
-
+  // this variable contains the errors of the Object
   protected $error = array();
-
+  // this variable contains the notices of the Object
   protected $notice = array();
-
+  // this variable contains the success of the Object
   protected $success = array();
-
-  protected function __construct() {
-
-  }
-
+  /*
+   *  this function creates a new instance of the Object of not already set.
+   *  If set the Object will get returned
+   */
   public static function getInstance() {
 
     if (self::$ins == null) {
@@ -53,6 +59,7 @@ class Message {
     return $arr;
   }
 
+  // this function generates the html with the messages
   public function getMessageHtml() {
     $message = '';
 

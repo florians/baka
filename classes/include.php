@@ -8,7 +8,6 @@
  */
  
 // include events
-include_once 'classes/events/battleEvent.php';
 include_once 'classes/events/characterEvent.php';
 include_once 'classes/events/event.php';
 include_once 'classes/events/userEvent.php';

@@ -1,23 +1,41 @@
 <?php
 /**
+ * @Author Florian Stettler
+ * @Version 1
+ * Create Date:   14.03.2013  create of the file
  *
+ * This Class is responsible for the User and stores all the
+ * Attributes and makes them aviable for the rest of the Program 
  */
 class User extends Model {
 
+  // this constant defines the table name of the MySQL Database
   const TABLENAME = 'user';
+  // this constant defines the name of this class it is used while fetching the object 
   const CLASSNAME = 'User';
 
+  // id of the user
   private $uId;
+  // firstname of the user
   private $uFirstname;
+  // lastname of the user
   private $uLastname;
+  // username of the user
   private $uUsername;
+  // password of the user
   private $uPassword;
+  // email adress of the user
   private $uEmail;
+  // last activity of the user
   private $uLastActivity;
+  // online status of the user
   private $uOnline;
+  // status of the activation of the account
   private $uActive;
+  // if the user is listet on the dashboard
   private $uListOnDashboard;
 
+  // this function selects the user that fulfill the given clause
   public static function select($clause = "") {
     $objs = array();
     $query = Database::getInstance() -> select(self::TABLENAME, $clause);
@@ -28,7 +46,7 @@ class User extends Model {
     }
     return $objs;
   }
-
+  // this inserts the current object into the Database
   protected function insert() {
     Database::getInstance() -> insert(self::TABLENAME, "(uFirstname,uLastname,uUsername,uPassword,uEmail,uLastActivity,uOnline,uActive,uListOnDashboard) VALUES('" . 
       encode($this -> uFirstname) . "','" . 
@@ -43,12 +61,12 @@ class User extends Model {
       $this->uId = Database::getInstance()->insertId();
     return (Database::getInstance()->affectedRows() > 0);
   }
-
+  // this updates all attacks that fulfill the given clause
   public static function updates($clause = "") {
     return Database::getInstance() -> update(self::TABLENAME, $clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
-
+  // this updates the attack of this object in the database
   protected function update() {
     return self::updates("
 	    uFirstname='" . encode($this -> uFirstname) . "',
@@ -61,16 +79,16 @@ class User extends Model {
   	  uListOnDashboard='" . encode($this -> uListOnDashboard) . "', 
   	  uActive='" . encode($this -> uActive) . "' WHERE uId='" . encode($this -> uId) . "';");
   }
-
+  // this deletes the attaks that fulfill the given clause
   public static function deletes($clause = "") {
     Database::getInstance() -> delete(self::TABLENAME, $clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
-
+  // this deletes the attack of this object in the database
   public function delete() {
     return self::deletes(" WHERE uId='" . encode($this -> uId) . "';");
   }
-
+  // this function saves the current object either by insert it into the Database or updating the entry
   public function save() {
     if (is_null($this -> uId)) {
       return self::insert();
@@ -78,7 +96,7 @@ class User extends Model {
       return self::update();
     }
   }
-
+  // this function gets the record with the coresponding ID
   public static function byId($id = 0) {
     if (is_numeric($id)) {
       $users = self::select(" WHERE uId = '" . $id . "';");
@@ -88,7 +106,10 @@ class User extends Model {
     }
     return null;
   }
-
+  /*
+   * This function is triggered if the user creates a new useraccount.
+   * It validates the sent post record and generates the error messages
+   */
   public function registration($passwordb) {
     //pre($firstname . ' ' . $lastname . ' ' . $username . ' ' . $passworda . ' ' . $passwordb . ' ' . $email);
     $userwrite = false;
@@ -116,6 +137,7 @@ class User extends Model {
        *          email has to be valid
        */
       if (strlen($this->uFirstname) > 2 && strlen($this->uLastname) > 2 && strlen($this->uUsername) > 2 && $this->uPassword == $passwordb && strlen($this->uPassword) > 4 && filter_var($this->uEmail, FILTER_VALIDATE_EMAIL) != false) {
+        $this->uPassword = pwCrypt($this->uPassword);
         $this -> save();
         $this -> sendActivateMail();
         return true;
@@ -158,7 +180,7 @@ class User extends Model {
       }
     }
   }
-
+  // this function selects the whole user which has the specifig username
   public static function selectByUsername($username) {
     // select from db with that usernam in the where
     if (isset($username)) {
@@ -169,7 +191,7 @@ class User extends Model {
     }
     return false;
   }
-  
+  // this function selects the whole user which has the specifig email adress
   public static function selectByEmail($email) {
     // select from db with that email in the where
     if (isset($email)) {
@@ -180,7 +202,10 @@ class User extends Model {
     }
     return false;
   }
-
+  /* 
+   * This function is triggered if the user wants to login.
+   * It validates the sent post record and sets Session variables
+   */
   public static function login($username, $password) {
     $user = self::selectByUsername($username);
     //pre($user);
@@ -189,7 +214,7 @@ class User extends Model {
     } 
     else {
       if ($user->getUsername() == $username && $user->getPassword() == $password && $user->getActive() == '1') {
-        session_start();
+        //session_start();
         //$_SESSION['user'] = serialize($user);
         $_SESSION['id'] = $user->getId();
         $_SESSION['login'] = true;
@@ -213,7 +238,10 @@ class User extends Model {
     
     return false;
   }
-
+  /*
+   * this function is triggered when the user creates an account.
+   * It creates a simple php mail and sends it to the registered email adress.  
+   */
   public function sendActivateMail(){
     $link = crypt($this->getUsername().$this->getEmail(),'iuqfapuiasdjb');
     $empfaenger = $this->getEmail();
@@ -228,7 +256,7 @@ class User extends Model {
     http://".$_SERVER['HTTP_HOST']."/index.php?page=Registration&activate=".$link;
     mail($empfaenger, $betreff, $text, "From:".$absendername." <".$absendermail.">"."Reply-To: ".$absendername." <".$absendermail.">");
   }
-  
+  // this function is triggered when the user clicks on the activations link in the mail. It sets the user Accoutn activation to true
   public function checkActivateMail($hash){;
     $users = $this->select();
     foreach($users as $user){
@@ -315,34 +343,36 @@ class User extends Model {
     return $this -> uActive;
   }
   
+  // this function gets the char of the User back
   public function getChar(){
     return Character::byUserId($this->uId);
   }
+  // this function get the wins of the character of the user
   public function getWins(){
     $char = $this->getChar();
-	if($char != null && is_object($char)){
-    	return $char->getLoses()+$char->getWins();
-	} else {
-		return 0;
-	}
+  	if($char != null && is_object($char)){
+      	return $char->getLoses()+$char->getWins();
+  	} else {
+  		return 0;
+  	}
   }
-  
+  // this function get the loses of the character of the user
   public function getLoses(){
     $char = $this->getChar();
-	if($char != null && is_object($char)){
-    	return $char->getLoses();
-	} else {
-		return 0;
-	}
+  	if($char != null && is_object($char)){
+      	return $char->getLoses();
+  	} else {
+  		return 0;
+  	}
   }
-  
+  // this function get the total amount of fight the character had
   public function getBattleTotal(){
     $char = $this->getChar();
-	if($char != null && is_object($char)){
-    	return $char->getLoses()+$char->getWins();
-	} else {
-		return 0;
-	}
+  	if($char != null && is_object($char)){
+      	return $char->getLoses()+$char->getWins();
+  	} else {
+  		return 0;
+  	}
   }
 }
 ?>

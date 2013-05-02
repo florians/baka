@@ -1,13 +1,22 @@
 <?php
+/**
+ * @Author Florian Stettler
+ * @Version 1
+ * Create Date:   19.03.2013  create of the file
+ * 
+ * This Class is responsible for the Character page.
+ * In it there are some classes which are needed on the Page.
+ */
 class views_character extends views {
-
+  // this variable is responcible to get the right page
   public $view_id = 'character';
-
+  
+  // this function contains initialized classes
   public function init() {
     $this -> attak = new Attack();
     $this -> charAtk = new CharAtk();
   }
-
+  // this function contains some actions which are needed on the page
   public function processAction() {
     // gets the userinformation of the logged in user
     $this -> user = User::byId(session('id'));
@@ -26,7 +35,7 @@ class views_character extends views {
       $this -> attrpoints = $this -> character -> getAp();
     }
   }
-
+  // this function contains a additional Header scripts
   public function additionalHeaders() {
     $header = '
       <script type="text/javascript">

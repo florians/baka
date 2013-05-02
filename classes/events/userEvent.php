@@ -25,10 +25,10 @@ class UserEvents {
     $user -> setFirstname($firstname);
     $user -> setLastname($lastname);
     $user -> setUsername($username);
-    $user -> setPassword(pwCrypt($passworda));
+    $user -> setPassword($passworda);
     $user -> setEmail($email);
 
-    if ($user -> registration(pwCrypt($passwordb)) != false) {
+    if ($user -> registration($passwordb) != false) {
       header('Location:index.php?success=Registration successful');
     }
   }
@@ -44,7 +44,8 @@ class UserEvents {
     $password = encode($post['password']);
 
     if (User::login($username, pwCrypt($password)) != false) {
-      header('Location:index.php?page=Dashboard&success=successfully logged in');
+      header('Location:index.php?success=successfully logged in');
+      exit ;
     }
   }
 

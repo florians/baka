@@ -46,7 +46,7 @@ class Attack extends Model {
     $this->aId = Database::getInstance()->insertId();
     return (Database::getInstance()->affectedRows() > 0);
   }
-  // this updates all attacks that fulfill the given clausse
+  // this updates all attacks that fulfill the given clause
   public static function updates($clause = "") {
     Database::getInstance() -> update(self::TABLENAME, $clause);
     return (Database::getInstance()->affectedRows() > 0);
@@ -59,7 +59,7 @@ class Attack extends Model {
     aLearnLvl='" . encode($this -> aLearnLvl) . "',
     aTyp='" . encode($this -> aTyp). "' WHERE aId='" . encode($this -> aId) . "';");
   }
-  // this deletes the attaks that fulfill theh given clause
+  // this deletes the attaks that fulfill the given clause
   public static function deletes($clause = "") {
     Database::getInstance() -> delete(self::TABLENAME, $clause);
     return (Database::getInstance()->affectedRows() > 0);
@@ -76,7 +76,7 @@ class Attack extends Model {
       return self::update();
     }
   }
-  // this function gets the entry with the coresponding ID
+  // this function gets the record with the coresponding ID
   public static function byId($id = 0) {
     if (is_numeric($id)) {
       $attack = self::select(" WHERE aId = '" . encode($this -> aId) . "';");

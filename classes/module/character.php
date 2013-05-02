@@ -1,24 +1,50 @@
 <?php
+/**
+ * @Author Florian Stettler & Adrian Locher
+ * @Version 2
+ * Create Date:   19.03.2013  create of the file
+ *                ....        add funtions for lvl up
+ * 
+ * This Class is responsible for the Character and stores all the
+ * Attributes and makes them aviable for the rest of the Program 
+ */
 class Character extends Model {
-
+  
+  // this constant defines the table name of the MySQL Database
   const TABLENAME = 'character';
+  // this constant defines the name of this class it is used while fetching the object
   const CLASSNAME = 'Character';
 
+  // id of the character
   private $cId;
+  // userid of the character
   private $cUserId;
+  // name of the character
   private $cName;
+  // total exp of the character
   private $cLvlExp;
+  // exp the character need for his next lvl up
   private $cNextLvlExp;
+  // magical attack points of the character
   private $cMagAtk;
+  // physical attack points of the character
   private $cPhyAtk;
+  // magical defensive points of the character
   private $cMagDef;
+  // physical defensive points of the character
   private $cPhyDef;
+  // healthpoints of the character
   private $cHp;
+  // image path of the character
   private $cImage;
+  // attribute points of the character
   private $cAp;
+  // 
   private $cLevelUp;
+  // durability points of the character with it the character life is calculated
   private $cDurability;
 
+  // this function selects the character that fulfill the given clause
   public static function select($clause = "") {
     $objs = array();
     $query = Database::getInstance() -> select('`'.self::TABLENAME.'`', $clause);
@@ -29,7 +55,7 @@ class Character extends Model {
     }
     return $objs;
   }
-
+  // this inserts the current object into the Database
   protected function insert() {
     Database::getInstance() -> insert('`'.self::TABLENAME.'`', "(cUserId,cName,cLvlExp,cNextLvlExp,cMagAtk,cMagDef,cPhyAtk,cPhyDef,cHp,cImage,cAp,cLevelUp,cDurability) VALUES('" . 
       encode($this -> cUserId) . "','" . 
@@ -48,12 +74,12 @@ class Character extends Model {
       $this->cId = Database::getInstance()->insertId();
     return (is_numeric($this -> cId) && $this -> cId > 0);
   }
-
+  // this updates all character that fulfill the given clause
   public static function updates($clause = "") {
     Database::getInstance() -> update('`'.self::TABLENAME.'`', $clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
-
+  // this updates the character of this object in the database
   protected function update() {
     return self::updates("
   	  cUserId='" . encode($this -> cUserId) . "',
@@ -70,16 +96,16 @@ class Character extends Model {
       cLevelUp='" . encode($this -> cLevelUp) . "', 
       cDurability='" . encode($this -> cDurability) . "' WHERE cId='" . encode($this -> cId) . "';");
   }
-
+  // this deletes the character that fulfill the given clause
   public static function deletes($clause = "") {
     Database::getInstance() -> delete('`'.self::TABLENAME.'`', $clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
-
+  // this deletes the character of this object in the database
   public function delete() {
     return self::deletes(" WHERE cId='" . encode($this -> cId) . "';");
   }
-
+  // this function saves the current object either by insert it into the Database or updating the entry
   public function save() {
     if (is_null($this -> cId)) {
       return self::insert();
@@ -87,7 +113,7 @@ class Character extends Model {
       return self::update();
     }
   }
-
+  // this function gets the record with the coresponding ID
   public static function byId($id = 0) {
     if (is_numeric($id)) {
       $character = self::select(" WHERE cId = '" . encode($id) . "';");
@@ -97,7 +123,12 @@ class Character extends Model {
     }
     return null;
   }
-
+  
+  /*
+   * This funtion is triggered when a new character is created.
+   * It sets the default attributes for the new Character.
+   * It also uploads the Image to the server and makes a thumbmail out of it.
+   */
   public function newCharacter($image){
     $caracterwrite = false;
     $byCharacterName = false;
@@ -158,7 +189,7 @@ class Character extends Model {
     }
     return false;
   }
-
+  // this function selects the character which has a specific user ID
   static function byUserId($uId){
     if (isset($uId)) {
       $character = self::select("WHERE cUserId = '" . $uId . "'");
@@ -168,6 +199,7 @@ class Character extends Model {
     }
     return false;
   }
+  // this function selects the character which has a specific username
   function byCharacterName($charactername){
     if (isset($charactername)) {
       $character = self::select("WHERE cName = '" . $charactername . "'");
@@ -290,15 +322,15 @@ class Character extends Model {
     return (boolean) $this -> cLevelUp;
   }
   
-
+  // this function gets the lvl of the Character back
   public function getLevel(){
     return Exp::getCharLvl($this->cLvlExp);
   }
-  
+  // this function gets all attacks of the Character back
   public function getCharAtks(){
     return CharAtk::select(" WHERE caCharId = '".encode($this->cId)."' ");
   }
-  
+  // this function gets a attack of the Character back
   public function getCharAtk($atkId){
     $charAtks = CharAtk::select(" WHERE caCharId = '".encode($this->cId)."' AND caAtkId = '".encode($atkId)."'");
     if(is_array($charAtks)){
@@ -306,7 +338,7 @@ class Character extends Model {
     }
     return null;
   }
-  
+  // this function gets all attack in the Database back
   public function getAttaks(){
     $attacks = array();
     foreach($this->getCharAtks() as $charAtk){
@@ -314,7 +346,7 @@ class Character extends Model {
     }
     return $attacks;
   }
-  
+  // this function gets an attack of the Database back
   public function getAttack($atkId){
     $charAtk = $this -> getCharAtk($atkId);
     if($charAtk != null){
@@ -323,11 +355,11 @@ class Character extends Model {
       return NULL;
     }
   }
-  
+  // this function gets the Character back which is in a fight
   public function getBattleChars(){
     return BattleChar::select(" WHERE bcCharId = '".encode($this->cId)."' ");
   }
-  
+  // this function gets the Character back which is in a specific fight
   public function getBattleChar($battleId){
     $battleChars = BattleChar::select(" WHERE bcCharId = '".encode($this->cId)."' AND bcBattleId = '".encode($battleId)."' ;");
     if(is_array($battleChars)){
@@ -337,7 +369,7 @@ class Character extends Model {
     }
     
   }
-  
+  // this function gets the HP which is left back
   public function getHpLeft($battleId = 0){
     if($battleId == 0){
       return $this->getHp();
@@ -350,26 +382,27 @@ class Character extends Model {
       }
     }
   }
-  
+  // this function gets the EXP back how much it will be if the user wins
   public function winGrow($otherChar){
-   // error_log("got in winGrow\n",3,"C:/xampp/apache/logs/baka.log");
+    // error_log("got in winGrow\n",3,"C:/xampp/apache/logs/baka.log");
     $exp = Exp::getWinLvlUp($otherChar->getLevel());
     $this->growing($exp);
   }
-  
+  // this function gets the EXP back how much it will be if the user loses
   public function loseGrow($otherChar){
-   // error_log("got in loseGrow"."\n",3,"C:/xampp/apache/logs/baka.log");
+    // error_log("got in loseGrow"."\n",3,"C:/xampp/apache/logs/baka.log");
     $exp = Exp::getLoseLvlUp($otherChar->getLevel());
     $this->growing($exp);
   }
+  // this function gets the wins of the character back
   public function getWins(){
     return Battle::wins($this -> cId);
   }
-  
+  // this function gets the loses of the characte back
   public function getLoses(){
     return Battle::loses($this -> cId);
   }
-  
+  // this function sets the Character stats after a lvl up
   private function growing($exp){
    //  error_log("Exp = ".$exp."\n",3,"C:/xampp/apache/logs/baka.log");
     $oldLvl = $this->getLevel();
@@ -395,6 +428,8 @@ class Character extends Model {
     $this->save();
    // error_log("saved winGrow\n",3,"C:/xampp/apache/logs/baka.log");
   }
+  // this function gets how much attribute points the character will rise after a lvl up.
+  // It alos sets the amount of attribute points the character will gain
   private function grow($lvl){
   //  error_log("growing",3,"C:/xampp/apache/logs/baka.log");
     $growth = 1;
@@ -451,7 +486,7 @@ class Character extends Model {
     $this->cPhyAtk += $growth;
     $this->cPhyDef += $growth;
   }
-
+  // this function checks if the user is online
   public function isOnline(){
     return (boolean) $this->getUser()->getOnline();
   }
