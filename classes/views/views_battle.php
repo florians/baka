@@ -1,8 +1,17 @@
 <?php
+/**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 9
+ * Create Date:   19.03.2013  creation of the file
+ * 
+ * This class is responsible for loading the Battle page and it's content
+ */
 class views_battle extends views {
 
+  // this is responsible for loading the right page
   public $view_id = 'battle';
 
+  // this initilizes the variables of the classes used on the page
   public function init() {
     $this -> character = new Character();
     $this -> battle = new Battle();
@@ -10,6 +19,7 @@ class views_battle extends views {
     $this -> user = new User();
   }
 
+  // this processes the infrmation goten from the getter and defines the initialized variables
   public function processAction() {
     // gets the userinformation of the logged in user
     $this -> user = User::byId(session('id'));

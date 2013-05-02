@@ -1,4 +1,12 @@
 <?php
+/**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 9
+ * Create Date:   03.04.2013  creation of the file
+ * 
+ * This file is responsible for all of the Ajax request and caring out verious actions
+ */
+// These lines are needed for developing on a windows with Xampp
 //error_reporting(E_ALL ^ E_STRICT);
 //ini_set('display_errors', 1);
 session_start();
@@ -24,7 +32,9 @@ $user = new User();
 $charAtk = new CharAtk();
 
 $content = null;
+// This switch case is responsible for carring out code according to the even passed by the Ajax code.
 switch(post('event')) {
+  // this loads the content of the dashboard
   case 'dashboard' :
     $opponents = Character::select('AS c INNER JOIN user AS u ON u.uId = c.cUserId WHERE c.cUserId <> ' . session('id') . ' AND u.uOnline = "1" AND u.uListOnDashboard = "1" AND (SELECT count(caCharId) as countatk FROM charatk WHERE caCharId = c.cId )  <> "0" ORDER BY c.cLvlExp,c.cName ASC');
 
@@ -41,6 +51,10 @@ switch(post('event')) {
       pre('There is no Player online');
     }
     break;
+    /**
+     * this checks if the users are online it sets the user as online and the users 
+     * that haven't been on the site for a minute as offline
+     */
   case 'onlineCheck' :
     $oldTime = strtotime('-1 Minute');
     User::updates('uOnline = "0" WHERE uLastActivity <= ' . $oldTime . ' AND uOnline = "1"');
@@ -50,6 +64,9 @@ switch(post('event')) {
     $user -> setListOnDashboard(post('dashboard')?1:0);
     $user -> save();
     break;
+    /**
+     * Gives a character an attack, which has it's value passed on by the ajax request
+     */
   case 'setCharAtk' :
     $char = $character -> byUserId(session('id'));
     $charAtk -> setAtkId(post('value'));
@@ -59,12 +76,18 @@ switch(post('event')) {
       $charAtk -> save();
     }
     break;
+    /**
+     * Delletes all attacks from the character and then reloads the content.
+     */
   case 'delCharAtk' :
     $char = $character -> byUserId(session('id'));
     $charAtk -> setCharId($char -> getId());
     $charAtk -> delete();
     $content = '<script> location.reload();</script>';
     break;
+    /**
+     * add an attribute point to a aharacter "attribute", but only if the character has enough attribute points
+     */
   case 'setAttribute' :
     $char = $character -> byUserId(session('id'));
     if ($char -> getAp() > 0) {
@@ -89,6 +112,9 @@ switch(post('event')) {
       $char -> save();
     }
     break;
+    /**
+     * create a battle record with the status pending  with two battle chars for the potential fighters
+     */
   case 'makeRequest' :
     $response = array();
     if (!is_null(post("challenger")) && is_numeric(post("challenger")) && post("challenger") > 0 && !is_null(post("challengee")) && is_numeric(post("challengee")) && post("challenger") > 0) {
@@ -139,6 +165,11 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
+    /**
+     * Checks if the player has a challange, in other words if he's character is asigned to a pending battle
+     * it also changes the status of battles that had the status pending for over a minute.
+     * It return a JSON string that has verious response values for the ajax function to process.
+     */
   case 'hasChallange' :
     $oldTime = strtotime('-1 Minute');
     Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
@@ -156,6 +187,11 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
+    /**
+     * Checks if the sent Battle request has been accepted or rejected.
+     * It also returns a JSON Object as a string with various information 
+     * to be prossesed in the jquery script.
+     */
   case 'requestCheck' :
     $oldTime = strtotime('-1 Minute');
     Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
@@ -188,6 +224,9 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
+    /**
+     * This handles the response to the request, it either sets it a accepted or rejected
+     */
   case 'requestResponse' :
     $response = array();
     $battle = Battle::byId(post("battleId"));
@@ -202,6 +241,11 @@ switch(post('event')) {
     }
     $content = "yay";
     break;
+    /**
+     * This handles the waiting part of the fight it looks if the attacking player as changed 
+     * and return a Json Object string with the battle log and current HP of both players,
+     * as well as other information.
+     */
   case 'waiting' :
     $response = array();
     $battle = Battle::byId(post("battleId"));
@@ -229,6 +273,10 @@ switch(post('event')) {
     //error_log("is leaving\n",3,"C:/xampp/apache/logs/baka.log");  
     $content = json_encode($response);
     break;
+    /**
+     * gets the current amount of hp of both players and the battle log. 
+     * It returns the values in a JSON object.
+     */
   case 'livepoints' :
     $response = array();
     $battle = Battle::byId(post("battleId"));
@@ -239,6 +287,10 @@ switch(post('event')) {
     $response['bLog'] = battleLogReplace($battle -> getLog());
     $content = json_encode($response);
     break;
+    /**
+     * This checks if the character has gained a level 
+     * and passes on the message to the JQuery funtion that made the Ajax request
+     */
   case 'hasLevelUp' :
     $response = array();
     $agrChar = Character::byId(post("charId"));
@@ -252,6 +304,9 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
+    /**
+     * Sends the attack, changes the current player and returns various information to be processed.
+     */
   case 'attack' :
     $response = array();
     $battle = Battle::byId(post("battleId"));
@@ -286,6 +341,9 @@ switch(post('event')) {
     }
     $content = json_encode($response);
     break;
+    /**
+     * This would get the role of the player and return them as a JSON object but it's not being used.
+     */
   case 'getRole' :
     $response = array();
     $battle = Battle::byId(post("battleId"));
@@ -293,6 +351,9 @@ switch(post('event')) {
     $response['attack'] = ($battle -> getWhosTurn() == $myBattleChar -> getPlayer());
     $response['waiting'] = ($battle -> getWhosTurn() != $myBattleChar -> getPlayer());
     break;
+    /**
+     * This sets the fight as over and the status as fled.
+     */
   case 'flee' :
     $response = array();
     $battle = Battle::byId(post("battleId"));

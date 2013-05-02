@@ -1,3 +1,10 @@
+/**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 9
+ * Create Date:   03.04.2013  creation of the file
+ * 
+ * This file contains all the functions that make a AJAX request and process the information returned. 
+ */
 jQuery(document).ready(function() {
   //onlineCheckAll();
   //setInterval('onlineCheckAll()', 10000);
@@ -5,8 +12,9 @@ jQuery(document).ready(function() {
 var waitingNotOver = true;
 var onDashboard = false;
 
+// This set the user as online and sets users that have sent this request for over a minute
 function onlineCheck(val) {
-  console.debug(onDashboard);
+  //console.debug(onDashboard);
   jQuery.ajax({
     type : 'POST',
     url : 'pages/ajax.php',
@@ -18,6 +26,7 @@ function onlineCheck(val) {
   });
 }
 
+// Loads the dashboard new with the currently online users.
 function dashboard() {
   jQuery.ajax({
     type : 'POST',
@@ -160,8 +169,9 @@ function requestCheck(battleId) {
   });
 }
 
+// this is called while the player is waiting for his turn if its his turn the function attack is called
 function waiting() {
-  console.debug("waiting");
+  //console.debug("waiting");
   $(".otherChar .status").text("Attacking");
   $.ajax({
     type : 'POST',
@@ -173,7 +183,7 @@ function waiting() {
     }
   }).done(function(data) {
     if (waitingNotOver == true) {
-      console.debug(data);
+      //console.debug(data);
       var obj = $.parseJSON(data);
       if (obj.fled) {
         alert("you're opponent has fled");
@@ -206,6 +216,7 @@ function waiting() {
   });
 }
 
+// This gets the current HP of both players and the battle Log it's called by Attack after the attack was successfull
 function livepoints() {
   $.ajax({
     type : 'POST',
@@ -224,6 +235,7 @@ function livepoints() {
   });
 }
 
+// this checks if the player has a level up and redirect the player accordingly if the character
 function hasLevelUp() {
   $.ajax({
     type : 'POST',
@@ -233,7 +245,7 @@ function hasLevelUp() {
       'charId' : thisCharId
     }
   }).done(function(data) {
-    console.debug(data);
+    //console.debug(data);
     var obj = $.parseJSON(data);
     if (obj.levelup == true) {
       alert(obj.message);
@@ -245,6 +257,7 @@ function hasLevelUp() {
   });
 }
 
+// This set the battle as over and the status as fled
 function retreat() {
   $.ajax({
     type : 'POST',
@@ -258,6 +271,7 @@ function retreat() {
   });
 }
 
+// attacks the oponent with the chosen attack
 function attack(atkId) {
   if (attacking == true) {
     attacking = false;

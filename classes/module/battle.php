@@ -1,26 +1,47 @@
 <?php 
 /**
- * ChallangeStatus:
- *    'a' = accepted
- *    'r' = rejected
- *    'p' = pending
- *    'u' = unavailable
- *    'f' = fled
+ * @Author Florian Stettler
+ * @Version 5
+ * Create Date:   03.04.2013  creation of the file
+ * 
+ * This Class represents the Battles and Requests for a fight.
+ * It stores all Properties that have to do with the fight exepts for
+ * the Ids of the Characters and their current HP. 
  */
+
 class Battle extends Model {
  
+  // this constant defines the table name of the MySQL Database table
   const TABLENAME = 'battle';
+  // this constant defines the name of this class it is used while fetching the object 
   const CLASSNAME = 'Battle';
   
+  // id of the Battle record
   private $bId;
+  // time the Battle was created aka when player 1 challanges player 2
   private $bTimeOfChallenge;
+  // current number of rounds in the fight
   private $bRound;
+  // the plaer number of the winner can be 1 or 2
   private $bWinner;
+  /*
+   * Status of the challange or fight
+   * Possible values:
+   *    'a' = accepted
+   *    'r' = rejected
+   *    'p' = pending
+   *    'u' = unavailable
+   *    'f' = fled
+   */
   private $bChallengeStatus;
+  // wether the fights over (1) or not (0) 
   private $bOver;
+  // number of the player who's turn it is can e 1 or 2
   private $bWhosTurn;
+  // the log of the battle
   private $bLog;
 
+  // this function selects the battles that fulfill the given clause
   public static function select($clause = ""){
     $objs = array();
     $query=  Database::getInstance()->select(self::TABLENAME,$clause);
@@ -32,6 +53,7 @@ class Battle extends Model {
     return $objs;
   }
   
+  // this inserts the current object into the Database
   protected function insert(){
     Database::getInstance()->insert(self::TABLENAME, "(bTimeOfChallenge,bRound,bWinner,bChallengeStatus,bOver,bWhosTurn,bLog) VALUES('".
     encode($this->bTimeOfChallenge)."','".
@@ -45,13 +67,13 @@ class Battle extends Model {
     return (Database::getInstance()->affectedRows() > 0);
   }
   
-  
-  
+  // this updates all battles that fulfill the given clausse
   public static function updates($clause = ""){
     Database::getInstance()->update(self::TABLENAME,$clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
   
+  // this updates the record of this battle of this object in the database
   protected  function update(){
     return self::updates("
      bTimeOfChallenge='".encode($this->bTimeOfChallenge)."',
@@ -63,11 +85,13 @@ class Battle extends Model {
      bLog='".encode($this->bLog)."' WHERE bId='".encode($this->bId)."';");
   }
 
+  // this deletes the battles that fulfill theh given clause
   public static function deletes($clause = ""){
     Database::getInstance()->delete(self::TABLENAME,$clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
   
+  // this deletes the battle record of this object in the database
   public function delete(){
     foreach($this->getBattleChars() as $battleChar){
       $battleChar->delete();
@@ -75,6 +99,7 @@ class Battle extends Model {
     return self::deletes(" WHERE bId='".encode($this->bId)."';");
   }
   
+  // this function saves the current object either by insert it into the Database or updating the record
   public function save(){
     if(is_null($this->bId)){
       return self::insert();
@@ -83,6 +108,7 @@ class Battle extends Model {
     }
   }
   
+  // this function gets the record with the coresponding ID
   public static function byId($id = 0){
   if(is_numeric($id)){
     $objs = self::select(" WHERE bId = '".encode($id)."';");
@@ -149,6 +175,7 @@ class Battle extends Model {
     return BattleChar::select(" WHERE bcBattleId = '".$this->bId."';");
   }
   
+  // get the Character objects that are in the fight
   public function getChars(){
     $chars = array();
     foreach($this->getBattleChars() as $battleChar){
@@ -157,6 +184,7 @@ class Battle extends Model {
     return $chars;
   }
   
+  // get the player of with the coresponding player number
   public function getPlayer($num){
     $getPlayer = BattleChar::select(" WHERE bcBattleId = '".$this->bId."' AND bcPlayer = '".encode($num)."' LIMIT 1;");
     return $getPlayer[0];
@@ -166,18 +194,22 @@ class Battle extends Model {
     return $this->bLog;
   }
   
+  // get challanges for the character with the Id 
   public static function challanges($charId){
     return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".encode($charId)."' AND bcPlayer = '2' ORDER BY bTimeOfChallenge, bId ASC;");
   }
   
+  // get challangings for the character with the Id
   public static function challengeings($charId){
     return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bChallengeStatus = 'p' AND bcCharId = '".encode($charId)."' AND bcPlayer = '1' ORDER BY bTimeOfChallenge, bId ASC;");
   }
   
+  // Check if the fight exists
   public static function fightExists($battleId, $charId){
     return self::select(" JOIN battlechar ON bId = bcBattleId WHERE bId = ".encode($battleId)." AND bChallengeStatus = 'a' AND bOver = 0 AND bcCharId = '".encode($charId)."' ORDER BY bTimeOfChallenge, bId ASC;");
   }
   
+  // gets the Opponent for the character for the given Id
   public function getOpponent($myCharId =''){
     $opponent = null;
     $chars = array();
@@ -189,14 +221,18 @@ class Battle extends Model {
     }
     return $opponent;
   }
+  
+  // gets the amount of wins for the characters with the given Id
   public static function wins($charId){
     return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer = bWinner AND bOver = true;"));
   }
   
+  // gets the amount of loses for the character with the given Id
   public static function loses($charId){
     return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer <> bWinner AND bOver = true;"));
   }
   
+  // carries out the attack and the cauculations that come with it
   public function attack($agrChar, $defChar, $attack){
     $this->bRound++;
     $defBattleChar = $defChar->getBattleChar($this->bId);

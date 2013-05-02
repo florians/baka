@@ -1,3 +1,13 @@
+<?php
+ /**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 9
+ * Create Date:   19.03.2013  creation of the file
+ * 
+ * This is the page where the oponents are listed and the user can challenge them
+  * 
+ */
+?>
 <div class="left">
   <div class="usercontainer">
     <div class="userimage"></div>

@@ -1,3 +1,12 @@
+<?php
+/**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 9
+ * Create Date:   19.03.2013  creation of the file
+ * 
+ * This is the battle page this is where the fight happens
+ */
+?>
 <div class="charcontainer myChar">
   <div><p class="status">Waiting</p></div>
   <?php

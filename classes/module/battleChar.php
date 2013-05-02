@@ -1,17 +1,28 @@
 <?php 
 /**
- *
+ * @Author Adrian Locher
+ * @Version 5
+ * Create Date:   03.04.2013  creation of the file
+ * 
+ * This class represents the Character in a battle.
  */
 class BattleChar extends Model {
  
+  // this constant defines the table name of the MySQL Database table
   const TABLENAME = 'battlechar';
+  // this constant defines the name of this class it is used while fetching the object 
   const CLASSNAME = 'BattleChar';
   
+  // Battle Id
   private $bcBattleId;
+  // Character Id 
   private $bcCharId;
+  // current HP that left during a fight
   private $bcHp;
+  // the number of the fight 1 or 2
   private $bcPlayer;
 
+  // this function selects the battle characters (BattleChar) that fulfill the given clause
   public static function select($clause = ""){
     $objs = array();
     $query=  Database::getInstance()->select(self::TABLENAME,$clause);
@@ -23,6 +34,7 @@ class BattleChar extends Model {
     return $objs;
   }
   
+  // this inserts the current object into the Database
   protected function insert(){
     Database::getInstance()->insert(self::TABLENAME, "(bcBattleId,bcCharId,bcHp,bcPlayer) VALUES('".
     encode($this->bcBattleId)."','".
@@ -32,13 +44,13 @@ class BattleChar extends Model {
     return (Database::getInstance()->affectedRows() > 0);
   }
   
-  
-  
+  // this updates all battle characters (BattleChar) that fulfill the given clausse
   public static function updates($clause = ""){
     Database::getInstance()->update(self::TABLENAME,$clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
   
+  // this updates the battle character of this object in the database
   protected function update(){
    return self::updates("
    bcHp='".encode($this->bcHp)."', 
@@ -47,15 +59,18 @@ class BattleChar extends Model {
   
   }
 
+  // this deletes the battle characters that fulfill theh given clause
   public static function deletes($clause = ""){
     Database::getInstance()->delete(self::TABLENAME,$clause);
     return (Database::getInstance()->affectedRows() > 0);
   }
   
+  // this deletes the battle character record of this object in the database
   public function delete(){
     return self::deletes(" WHERE bcCharId='".encode($this->bcCharId)."' and bcBattleId='".encode($this->bcBattleId)."';");
   }
   
+  // this function saves the current object either by inserting it into the database or updating the corresponding record
   public function save(){
      if(self::byId($this->bcBattleId, $this->bcCharId)){
        return $this->update();
@@ -64,11 +79,13 @@ class BattleChar extends Model {
      }     
   }
   
+  // reduces the HP of the battle character by the given lose
   public function reduceHP($lose){
     $this->bcHp -= $lose;
     $this->update();
   }
   
+  // gets the record with the corresponding Id
   public static function byId($bcBattleId = 0, $bcCharId = 0){
   if(is_numeric($bcBattleId) && is_numeric($bcCharId)){
     $objs = self::select(" WHERE bcCharId='".encode($bcCharId)."' and bcBattleId='".encode($bcBattleId)."';");
@@ -79,8 +96,9 @@ class BattleChar extends Model {
   return null;
   }
   
+  // gets the battle object with the corresponding Id
   public function getBattle(){
-    return Battle::$this->bcBattleId;
+    return Battle::byId($this->bcBattleId);
   }
   
   public function getBattleId(){
@@ -95,6 +113,7 @@ class BattleChar extends Model {
     return $this->bcCharId;
   }
   
+  // gets the character with the corresponding Id
   public function getChar(){
     return Character::byId($this->bcCharId);
   }
@@ -119,6 +138,7 @@ class BattleChar extends Model {
     $this->bcPlayer = $setVal;
   }
   
+  // determinse how critical the hit was and how much damage is done to the character
   private static function hitCrit($damage){
     $returnValue = array();
     $hitCrit = rand(0, 1000);
@@ -165,6 +185,7 @@ class BattleChar extends Model {
   }
   }
   
+  // determines how much damage is done by the attack to the character
   public function hit($attack, $agrChar){
     $defChar = $this->getChar();
     $atk = 0;

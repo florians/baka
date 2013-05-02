@@ -68,7 +68,7 @@ class Attack extends Model {
   public function delete() {
     return self::deletes(" WHERE aId='" . encode($this -> aId) . "';");
   }
-  // this function saves the current object either by insert it into the Database or updating the entry
+  // this function saves the current object either by insert it into the Database or updating the record
   public function save() {
     if (is_null($this -> aId)) {
       return self::insert();
@@ -76,7 +76,7 @@ class Attack extends Model {
       return self::update();
     }
   }
-  // this function gets the entry with the coresponding ID
+  // this function gets the record with the coresponding ID
   public static function byId($id = 0) {
     if (is_numeric($id)) {
       $attack = self::select(" WHERE aId = '" . encode($this -> aId) . "';");

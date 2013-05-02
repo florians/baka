@@ -1,11 +1,24 @@
 <?php
+/**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 3
+ * Create Date:   19.03.2013  creation of the file
+ * 
+ * This class is responsible for loading the Dashboard page and it's content
+ */
 class views_dashboard extends views {
 
+  // this is responsible for loading the right page
   public $view_id = 'dashboard';
 
+  // this initilizes the variables of the classes used on the page
   public function init() {
+    $this -> user = new User();
+    $this -> character = new Character();
+    $this -> battle = new Battle();
   }
 
+  // this processes the infrmation goten from the getter and defines the initialized variables
   public function processAction() {
     // gets the userinformation of the logged in user
     $this -> user = User::byId(session('id'));
@@ -16,6 +29,7 @@ class views_dashboard extends views {
     }
   }
 
+  // Adds new tags to the header with Javascript for this page that is determined by the variables.
   public function additionalHeaders() {
     $header = '
       <script type="text/javascript">

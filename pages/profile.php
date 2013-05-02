@@ -1,3 +1,12 @@
+<?php  
+ /**
+ * @Author Florian Stettler, Adrian Locher
+ * @Version 9
+ * Create Date:   19.03.2013  creation of the file
+ * 
+ * This is the profile page it lists you userinformation as well as you battle statistics
+ */
+?>
 <div class="left">
   <div class="userinfo">
     <h1>Profile</h1>
