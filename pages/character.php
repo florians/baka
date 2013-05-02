@@ -1,5 +1,20 @@
+<?php
+/**
+ * @Author Florian Stettler
+ * @Version 1
+ * Create Date:   19.03.2013  create of the file
+ * 
+ * This file contains the content of the Character Page.
+ * 
+ * Most of the Objects are generated in htmlHelper.php.
+ */
+?>
 <h1>Character</h1>
 <?php
+/*
+ * this is the part to display the Character with it's informations
+ * it is all outsourced in the htmlHelper.php file 
+ */
 if($this->character){
 ?>
 <div class="left">
@@ -32,13 +47,16 @@ if($this->character){
       </div>
       <div class="skills">
         <?php
+        // gets the different attacks out of the db an generate the html out of the htmlHelper.php
         getSkillTable($this -> phyAtk, 'physical');
         getSkillTable($this -> magAtk, 'magical');
         getSkillTable($this -> specialAtk, 'special');
         ?>
       </div>
     </div>
-    <?php if($this -> attrpoints){ ?>
+    <?php 
+    // this parts show the attribut points but only if there are left on the character
+    if($this -> attrpoints){ ?>
     <div class="rightdiv hidden innerdiv">
       <div class="charap">
         <div class="apheader">
@@ -82,6 +100,7 @@ if($this->character){
 </div>
 <?php
 }else{
+// this part is only shown if the user hasn't a character yet
 ?>
 <div class="newChar">
   <form enctype="multipart/form-data" method="post">

@@ -1,5 +1,17 @@
 <?php
-
+/**
+ * @Author Florian Stettler 
+ * @Version 1
+ * Create Date:   19.03.2013  create of the file
+ * 
+ * This file contains html Functions for bigger generated parts 
+ */
+ 
+ /*
+  * this function generates the html of the Character Profile
+  * It shows the Avatar of the Character and it's Attribut Points.
+  * Also the EXP Progressbar will get generated.
+  */
 function characterProfile($char, $button = null) {
   $characterExp = Exp::getCharLvlExp($char -> getLvlExp());
   $expProcent = (100 / (($char -> getLvlExp() + $char -> getNextLvlExp())-$characterExp)) * ($char->getLvlExp() - $characterExp);  
@@ -44,6 +56,7 @@ function characterProfile($char, $button = null) {
   echo $content;
 }
 
+// this function generates the html of the Character Life bar
 function characterLifeRaw($maxLife, $liveLeft) {
   $class = '';
   $liveLeftProzent = (100 / $maxLife) * $liveLeft;
@@ -63,11 +76,11 @@ function characterLifeRaw($maxLife, $liveLeft) {
     </div>';
   return $content;
 }
-
+// this function calls the Character Lifebar
 function characterLife($maxLife, $liveLeft) {
   echo characterLifeRaw($maxLife, $liveLeft);
 }
-
+// this function generates the html of Character Attacks container
 function characterAtk($atks = null) {
   if (count($atks) > 0) {
 
@@ -95,6 +108,7 @@ function characterAtk($atks = null) {
   echo $content;
 }
 
+// this function generates the html of the different buttons wich are needed in a fight or on the Character Page
 function characterButton($button) {
   $content = "";
   if ($button == 'retreat') {
@@ -104,7 +118,7 @@ function characterButton($button) {
   }
   echo $content;
 }
-
+// this function generates the html of battlelog
 function battlelog() {
   $content = null;
   $content .= '
@@ -117,7 +131,7 @@ function battlelog() {
   </div>';
   echo $content;
 }
-
+// this function generates the html of the Skill Table 
 function getSkillTable($val, $typ) {
   $content = '';
   $content .= '<div class="' . $typ . ' selectable">';
@@ -138,7 +152,7 @@ function getSkillTable($val, $typ) {
   $content .= '</div>';
   echo $content;
 }
-
+// this function generates the Attack picture if it is set. Otherwise it will show a default image
 function getAtkImag($atk) {
   $atkimgpath = 'img/atkimg/' . $atk . '.jpg';
   if (file_exists($atkimgpath)) {
