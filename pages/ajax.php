@@ -194,7 +194,7 @@ switch(post('event')) {
      */
   case 'requestCheck' :
     $oldTime = strtotime('-1 Minute');
-    Battle::updates('bChallengeStatus = "u" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
+    Battle::updates('bChallengeStatus = "u" bOver = "1" WHERE bTimeOfChallenge <= ' . $oldTime . ' AND bChallengeStatus = "p"');
     $response = array();
     $challenge = Battle::byId(post("battleId"));
     if (isset($challenge)) {
@@ -230,12 +230,17 @@ switch(post('event')) {
   case 'requestResponse' :
     $response = array();
     $battle = Battle::byId(post("battleId"));
-    $battle -> setChallengeStatus(post("status"));
-    $battle -> save();
-    if (post("status") == "a") {
+    if($battle->getChallengeStatus() == "p"){
+      $battle -> setChallengeStatus(post("status"));
+      $battle -> save();
+    }
+    if ( post("status") == "a" ) {
+      Battle::updates(" bChallengeStatus = 'f' WHERE bId in (SELECT bcBattleId FROM battlechar WHERE bcBattleId <> ".encode($battle -> getId())
+      ." bcCharId ='".encode($battle -> getPlayer(1)->getCharId())."' or bcCharId ='".encode($battle -> getPlayer(2)->getCharId())."' AND bChallengeStatus = 'a' AND bOver = 0 )");
       $challenges = Battle::challanges(post('charId'));
       foreach ($challenges as $challenge) {
         $challenge -> setChallengeStatus("u");
+        $challenge -> setOver(TRUE);
         $challenge -> save();
       }
     }
@@ -313,7 +318,7 @@ switch(post('event')) {
     $agrChar = Character::byId(post("charId"));
     $attack = $agrChar -> getAttack(post("atkId"));
 
-    if ($agrChar != null && $battle != null && $attack != null) {
+    if ($agrChar != null && $battle != null && $attack != null && ($battle ->getPlayer(1) == $agrChar->getBattleChar($battle->getId()) || $battle ->getPlayer(2) == $agrChar->getBattleChar($battle->getId()))) {
       $response['valid'] = true;
       $defChar = $battle -> getOpponent(post("charId"));
       //error_log("isNotOnline = ".($defChar->isOnline() ==  false?"true":"false")."\n",0);
@@ -327,7 +332,9 @@ switch(post('event')) {
         $battle -> save();
         $agrChar -> winGrow($defChar);
       } else {
-        $battle -> attack($agrChar, $defChar, $attack);
+        if($battle ->getPlayer($battle -> getWhosTurn()) == $agrChar->getBattleChar($battle->getId())){
+          $battle -> attack($agrChar, $defChar, $attack);
+        }
       }
       $response['oHp'] = characterLifeRaw($defChar -> getHp(), $defChar -> getHpLeft(post("battleId")));
       $response['myHp'] = characterLifeRaw($agrChar -> getHp(), $agrChar -> getHpLeft(post("battleId")));

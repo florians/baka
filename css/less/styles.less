@@ -1,20 +1,14 @@
-/*
+/**
  * @Author Florian Stettler
- * Create Date:   01.12.2012  create of the file  
- *                05.01.2013  update of #content  
+ * @Verison 2
+ * Create Date:   13.03.2013  create of the file  
  */
-
-/* import functions */
   @import 'functions';
 
-/* base constants */
-
-/* body */
   @body_color:#424242;
   @body_width:100%;
   @body_height:auto;
 
-/* Base */
   @base_width:1200px;
   @base_box_shadow:0 0 10px #000000;
   
@@ -37,7 +31,6 @@
   @base_gradient_start:white;
   @base_gradient_stop:black;
   
-/* CSS */
 *{
   .reset;
 }
@@ -54,12 +47,10 @@ body{
     .set_center(@body_width,auto auto auto auto);
     height:@body_height;
     
-    // Siteparts
     @import 'banner';
     @import 'navi';
     @import 'content';
     
-    // different Contents
     @import 'battle';
     @import 'character';
     @import 'dashboard';

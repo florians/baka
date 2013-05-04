@@ -22,7 +22,7 @@ class CharacterEvents {
     $character -> setName($charactername);
     $character -> setUserId($uId);
     if ($character -> newCharacter($image) != false) {
-      header('Location:index.php?page=Dashboard&success=Character creation successful');
+      header('Location:index.php?page=Character&success=Character creation successful');
     }
   }
 

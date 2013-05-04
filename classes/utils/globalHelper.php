@@ -24,7 +24,7 @@ function getDirContent($dir) {
 // this function gets the GET with the parameter
 function get($parameter = null) {
   if (isset($_GET[$parameter])) {
-    $get = $_GET[$parameter];
+    $get = encode($_GET[$parameter]);
   } else if ($parameter == null) {
     $get = $_GET;
   } else {
@@ -36,7 +36,7 @@ function get($parameter = null) {
 // this function gets the POST with the parameter
 function post($parameter = null) {
   if (isset($_POST[$parameter])) {
-    $post = $_POST[$parameter];
+    $post = encode($_POST[$parameter]);
   } else if ($parameter == null) {
     $post = $_POST;
   } else {

@@ -65,7 +65,7 @@ function characterLifeRaw($maxLife, $liveLeft) {
   } elseif ($liveLeftProzent < 50 && $liveLeftProzent > 25) {
     $class = 'half';
   }
-  if ($liveLeftProzent < 25) {
+  if ($liveLeftProzent <= 25) {
     $class = 'danger';
   }
   $content = '

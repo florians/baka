@@ -224,12 +224,12 @@ class Battle extends Model {
   
   // gets the amount of wins for the characters with the given Id
   public static function wins($charId){
-    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer = bWinner AND bOver = true;"));
+    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer = bWinner AND bOver = 1;"));
   }
   
   // gets the amount of loses for the character with the given Id
   public static function loses($charId){
-    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer <> bWinner AND bOver = true;"));
+    return count(self::select(" JOIN battlechar ON bId = bcBattleId WHERE (bChallengeStatus = 'a' OR bChallengeStatus = 'f') AND bcCharId = '".encode($charId)."' AND bcPlayer <> bWinner AND bOver = 1;"));
   }
   
   // carries out the attack and the cauculations that come with it

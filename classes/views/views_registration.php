@@ -19,8 +19,9 @@ class views_registration extends views {
   public function processAction() {
     if (get('activate')) {
       $user = new User();
-      $user -> checkActivateMail(get('activate'));
-      Message::getInstance() -> addSucces('Account Activation successful!');
+      if ($user -> checkActivateMail(get('activate')) == true) {
+        header('Location:index.php?page=Login&success=Account Activation successful!');
+      }
     }
   }
 

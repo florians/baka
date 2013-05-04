@@ -351,7 +351,7 @@ class User extends Model {
   public function getWins(){
     $char = $this->getChar();
   	if($char != null && is_object($char)){
-      	return $char->getLoses()+$char->getWins();
+      	return $char->getWins();
   	} else {
   		return 0;
   	}

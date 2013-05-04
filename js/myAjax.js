@@ -53,7 +53,7 @@ function battleRequest(challenger, challengee) {
   }).done(function(data) {
     var response = $.parseJSON(data);
     if (response.success == true) {
-      $(".right").html('<pre>You have challanged an opponent</pre>');
+      $(".right").html('<pre>You have challenged an opponent</pre>');
       checkRequest = true;
       battleId = response.battleId;
       requestCheck(battleId);

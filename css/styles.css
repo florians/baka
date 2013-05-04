@@ -1,17 +1,8 @@
-/*
+/**
  * @Author Florian Stettler
- * Create Date:   01.12.2012  create of the file  
- *                05.01.2013  update of #content  
+ * @Verison 2
+ * Create Date:   13.03.2013  create of the file  
  */
-/* import functions */
-/*
- * @Author Florian Stettler
- * Create Date:   01.12.2012  create of the file    
- */
-/* base constants */
-/* body */
-/* Base */
-/* CSS */
 * {
   margin: 0;
   padding: 0;
@@ -31,12 +22,6 @@ body #wrapper {
   width: 100%;
   margin: auto auto auto auto;
   height: auto;
-  /* Banner constants*/
-
-  /* Navigation constants */
-
-  /* Content constants */
-
 }
 body #wrapper #bannermargin #banner {
   width: 1200px;

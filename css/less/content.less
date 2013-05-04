@@ -1,13 +1,10 @@
-/* Content constants */
   @content_padding:20px;
   @content_box_shadow:@base_box_shadow;
   
 .rgba(@colour, @alpha) {
   @alphaColour: hsla(hue(@colour), saturation(@colour), lightness(@colour), @alpha);
   @ieAlphaColour: argb(@alphaColour);  
-   
   background-color: @colour; // Fallback for older browsers 
-   
   // IE hacks
   zoom: 1; // hasLayout
   background-color: transparent\9;
@@ -20,9 +17,7 @@
   .set_center;
   #content{
     width:@base_width;
-    //background-image:url(../../img/design/textur.png);
     float:left;
-    //padding:@content_padding @content_padding @content_padding+20 @content_padding;
     .box-shadow(@content_box_shadow);
     .rgba(rgb(73, 75, 74),0.9);
     min-height:500px;
